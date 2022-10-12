@@ -1,9 +1,9 @@
+import NavigationRoutes from './routes';
 
-import './App.css'; import NavigationRoutes from './routes';
 const App = () => {
 
   return (
-    <div className="App">
+    <div className='my-app'>
       <NavigationRoutes />
     </div>
   );
