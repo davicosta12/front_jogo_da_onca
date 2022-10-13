@@ -24,19 +24,17 @@ const SignIn: FunctionComponent<Props> = (props) => {
 
   return (
     <Segment placeholder className='login-container' >
-      <Grid columns={2} stackable textAlign='center'>
+      <Grid stackable textAlign='center'>
 
         <Divider vertical clearing />
 
-        <Grid.Row verticalAlign='middle'>
+        <Grid.Row columns={2} verticalAlign='middle'>
 
           <Grid.Column>
             <Header as='h1'>Jogo da onça</Header>
-
           </Grid.Column>
 
           <Grid.Column>
-
             <Header as='h1'>Seja bem vindo !</Header>
             <h3>Acesse sua conta</h3>
 
@@ -66,7 +64,6 @@ const SignIn: FunctionComponent<Props> = (props) => {
               <Link to="/signup">Criar conta</Link>
 
             </Form>
-
           </Grid.Column>
 
         </Grid.Row>
