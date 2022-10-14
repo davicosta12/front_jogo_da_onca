@@ -51,6 +51,10 @@ code {
   max-width: 100% !important;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .text-center {
   text-align: center;
 }

@@ -1,0 +1,70 @@
+.home-container {
+
+    .home-navbar {
+        background: #556B2F;
+        padding: 10px 35px;
+
+        .ui.secondary.menu a {
+            color: #fff !important;
+            font-weight: 800;
+            font-size: 30px;
+        }
+
+        .ui.secondary.menu .active.item:hover {
+            box-shadow: none;
+            background: rgba(0, 0, 0, .2);
+            color: #ccc !important;
+        }
+    }
+
+    .home-content {
+        background: #314115;
+        padding: 20px;
+
+        
+        .home-user-icons {
+            h1 {
+                font-style: normal;
+                font-weight: 800;
+                font-size: 30px;
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        .home-user-info {
+
+            .user-info {
+                width: 386px;
+                height: 174px;
+                background: #6B8E23;
+                border: 3px solid #FFFFFF;
+                border-radius: 16px;
+                padding: 0 10px;
+
+                >div p {
+
+                    font-style: normal;
+                    font-weight: 800;
+                    font-size: 25px;
+                    margin: 0;
+                    color: rgba(255, 255, 255, 0.7);
+                    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                }
+            }
+        }
+
+        .home-user-action {
+
+            .home-action-btn {
+                background: #D9D9D9;
+                border: 3px solid #FFFFFF;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                font-style: normal;
+                font-weight: 800;
+                border-radius: 30px;
+                font-size: 20px;
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+    }
+}
