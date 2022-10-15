@@ -55,27 +55,15 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
           </Menu.Item>
           <Menu.Item
             as='a'
-            name='jaguar'
-            active={activeItem === 'jaguar'}
+            name='skin'
+            active={activeItem === 'skin'}
             onClick={() => {
-              navigate("/config/jaguar")
-              setActiveItem('jaguar')
+              navigate("/config/skin")
+              setActiveItem('skin')
               setVisible(false)
             }}>
             <Icon name='camera' />
-            Onça
-          </Menu.Item>
-          <Menu.Item
-            as='a'
-            name='dog'
-            active={activeItem === 'dog'}
-            onClick={() => {
-              navigate("/config/dog")
-              setActiveItem('dog')
-              setVisible(false)
-            }}>
-            <Icon name='home' />
-            Cachorro
+            Skin
           </Menu.Item>
           <Menu.Item
             as='a'

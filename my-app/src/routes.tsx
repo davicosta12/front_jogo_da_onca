@@ -6,8 +6,7 @@ import {
 } from "react-router-dom";
 import Board from "./Components/ConfigsComponent/Board/Board";
 import ConfigsComponent from "./Components/ConfigsComponent/ConfigsComponent";
-import Dogs from "./Components/ConfigsComponent/Dogs/Dogs";
-import Jaguar from "./Components/ConfigsComponent/Jaguar/Jaguar";
+import Skin from "./Components/ConfigsComponent/Skin/Skin";
 import Users from "./Components/ConfigsComponent/Users/Users";
 import Home from "./Components/Home/Home";
 import SignIn from "./Components/SignIn/SignIn";
@@ -55,15 +54,9 @@ const NavigationRoutes = () => (
         </PrivateConfigsRoute>}>
       </Route>
 
-      <Route path="/config/jaguar" element={
+      <Route path="/config/skin" element={
         <PrivateConfigsRoute redirectTo='/'>
-          <Jaguar />
-        </PrivateConfigsRoute>}>
-      </Route>
-
-      <Route path="/config/dog" element={
-        <PrivateConfigsRoute redirectTo='/'>
-          <Dogs />
+          <Skin />
         </PrivateConfigsRoute>}>
       </Route>
 

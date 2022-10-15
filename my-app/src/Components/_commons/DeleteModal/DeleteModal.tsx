@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react'
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import './DeleteModal.scss';
 
 interface Props {
   openModal: boolean;
@@ -31,7 +32,7 @@ const DeleteModal: FunctionComponent<Props> = (props) => {
         <Icon name='archive' />
         {title}
       </Header>
-      <Modal.Content>
+      <Modal.Content className='delete-modal-content'>
         <p>
           {subtitle}
         </p>
