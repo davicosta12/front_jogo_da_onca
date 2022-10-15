@@ -79,7 +79,7 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
           </Menu.Item>
         </Sidebar>
 
-        <Sidebar.Pusher>
+        <Sidebar.Pusher >
           {props.screenRender}
         </Sidebar.Pusher>
 

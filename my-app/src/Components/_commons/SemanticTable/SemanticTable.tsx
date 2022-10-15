@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Button, Icon, Label, Pagination, Table } from 'semantic-ui-react';
+import "./SemanticTable.scss" ;  
 
 interface Props {
   data: any,
@@ -13,7 +14,7 @@ const SemanticTable: FunctionComponent<Props> = (props) => {
   const { data, tableRows, actions, headers } = props;
 
   return (
-    <Table celled>
+    <Table className='semanticTable' celled>
 
       <Table.Header>
         <Table.Row>

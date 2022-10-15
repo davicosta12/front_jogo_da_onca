@@ -1,0 +1,12 @@
+tr:nth-child(even) {
+    background: #CCC !important;
+}
+tr:nth-child(odd) {
+    background: #FFF  !important;
+}
+
+.semanticTable{
+    border-bottom: solid 4px greenyellow !important;
+}
+
+
