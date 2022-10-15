@@ -1,7 +1,8 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Header, Modal } from 'semantic-ui-react';
 
 interface Props {
+  jaguar: any;
   openModal: boolean;
   createMode: boolean;
   loading?: boolean;
@@ -10,7 +11,16 @@ interface Props {
 
 const JaguarDetail: FunctionComponent<Props> = (props) => {
 
-  const { openModal, createMode, setOpenModal } = props;
+  const {
+    jaguar,
+    openModal,
+    createMode,
+    setOpenModal
+  } = props;
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <Modal

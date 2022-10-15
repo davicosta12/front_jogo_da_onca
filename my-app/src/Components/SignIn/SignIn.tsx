@@ -4,7 +4,6 @@ import {
   Link
 } from "react-router-dom";
 import { Form, Button, Input, Segment, Grid, Divider, Header } from 'semantic-ui-react';
-import { login } from "../../Services/AuthService/Auth";
 import './SignIn.scss';
 
 interface Props {
@@ -18,7 +17,7 @@ const SignIn: FunctionComponent<Props> = (props) => {
 
   const handleSignIn = (ev: any) => {
     ev.preventDefault();
-    login("TOKEN");
+    // login("TOKEN");
     navigate("/app");
   };
 

@@ -43,6 +43,18 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
         >
           <Menu.Item
             as='a'
+            name='user'
+            active={activeItem === 'user'}
+            onClick={() => {
+              navigate("/config/user")
+              setActiveItem('user')
+              setVisible(false)
+            }}>
+            <Icon name='user circle' />
+            Usuário
+          </Menu.Item>
+          <Menu.Item
+            as='a'
             name='jaguar'
             active={activeItem === 'jaguar'}
             onClick={() => {

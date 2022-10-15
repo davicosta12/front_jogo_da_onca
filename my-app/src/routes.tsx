@@ -8,6 +8,7 @@ import Board from "./Components/ConfigsComponent/Board/Board";
 import ConfigsComponent from "./Components/ConfigsComponent/ConfigsComponent";
 import Dogs from "./Components/ConfigsComponent/Dogs/Dogs";
 import Jaguar from "./Components/ConfigsComponent/Jaguar/Jaguar";
+import Users from "./Components/ConfigsComponent/Users/Users";
 import Home from "./Components/Home/Home";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
@@ -47,6 +48,12 @@ const NavigationRoutes = () => (
       </Route>
 
       <Route path="/config" element={<PrivateConfigsRoute redirectTo='/' />} />
+
+      <Route path="/config/user" element={
+        <PrivateConfigsRoute redirectTo='/'>
+          <Users />
+        </PrivateConfigsRoute>}>
+      </Route>
 
       <Route path="/config/jaguar" element={
         <PrivateConfigsRoute redirectTo='/'>

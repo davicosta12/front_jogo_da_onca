@@ -4,15 +4,17 @@ import { Button, Icon, Label, Pagination, Table } from 'semantic-ui-react';
 interface Props {
   data: any,
   headers: string[],
+  tableRows: any,
   actions?: boolean
 }
 
 const SemanticTable: FunctionComponent<Props> = (props) => {
 
-  const { data, actions, headers } = props;
+  const { data, tableRows, actions, headers } = props;
 
   return (
     <Table celled>
+
       <Table.Header>
         <Table.Row>
           {headers.map(h => <Table.HeaderCell>{h}</Table.HeaderCell>)}
@@ -21,78 +23,13 @@ const SemanticTable: FunctionComponent<Props> = (props) => {
       </Table.Header>
 
       <Table.Body>
-        <Table.Row>
-          <Table.Cell>
-            <Label ribbon>First</Label>
-          </Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell collapsing>
-            <Button icon>
-              <Icon name='edit' />
-            </Button>
-            <Button icon>
-              <Icon name='trash' />
-            </Button>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell collapsing>
-            <Button icon>
-              <Icon name='edit' />
-            </Button>
-            <Button icon>
-              <Icon name='trash' />
-            </Button>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell collapsing>
-            <Button icon>
-              <Icon name='edit' />
-            </Button>
-            <Button icon>
-              <Icon name='trash' />
-            </Button>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell collapsing>
-            <Button icon>
-              <Icon name='edit' />
-            </Button>
-            <Button icon>
-              <Icon name='trash' />
-            </Button>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell collapsing>
-            <Button icon>
-              <Icon name='edit' />
-            </Button>
-            <Button icon>
-              <Icon name='trash' />
-            </Button>
-          </Table.Cell>
-        </Table.Row>
+        {tableRows}
       </Table.Body>
 
       <Table.Footer>
+
         <Table.Row>
-          <Table.HeaderCell colSpan='4'>
+          <Table.HeaderCell colSpan={headers.length + 1}>
             <Pagination
               boundaryRange={0}
               defaultActivePage={1}
@@ -104,7 +41,9 @@ const SemanticTable: FunctionComponent<Props> = (props) => {
             />
           </Table.HeaderCell>
         </Table.Row>
+
       </Table.Footer>
+
     </Table>
   );
 };
