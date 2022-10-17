@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Icon, Table } from 'semantic-ui-react';
 import GetSkinDto from '../../../Services/Skins/dto/GetSkinDto';
 import SkinService from '../../../Services/Skins/SkinService';
@@ -17,14 +17,63 @@ const Skin: FunctionComponent<Props> = (props) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingForm, setIsLoadingForm] = useState(false);
 
-  const skinService = new SkinService(localStorage.getItem("@airbnb-Token"));
+  const skinService = new SkinService();
+
+  useEffect(() => {
+    getSkins();
+  }, []);
 
   const getSkins = async () => {
     setIsLoading(true);
     try {
       const _skins = await skinService.getSkins();
       console.log(_skins);
+    }
+    catch (err: any) {
+      console.log(err);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleCreateSkin = async (values: GetSkinDto) => {
+    setIsLoadingForm(true);
+    try {
+      await skinService.createSkin(values);
+      getSkins();
+      setOpenModal(false);
+    }
+    catch (err: any) {
+      console.log(err);
+    }
+    finally {
+      setIsLoadingForm(false);
+    }
+  }
+
+  const handleUpdateSkin = async (values: GetSkinDto) => {
+    setIsLoadingForm(true);
+    try {
+      await skinService.updateSkin(values, +skin.id);
+      getSkins();
+      setOpenModal(false);
+    }
+    catch (err: any) {
+      console.log(err);
+    }
+    finally {
+      setIsLoadingForm(false);
+    }
+  }
+
+  const handleDeleteSkin = async () => {
+    setIsLoading(true);
+    try {
+      await skinService.deleteSkin(+skin.id);
+      getSkins();
     }
     catch (err: any) {
       console.log(err);
@@ -46,7 +95,8 @@ const Skin: FunctionComponent<Props> = (props) => {
     setCreateMode(false);
   }
 
-  const handleDelete = (user: GetSkinDto) => {
+  const handleDelete = (skin: GetSkinDto) => {
+    setSkin(skin);
     setOpenDeleteModal(true);
   }
 
@@ -77,7 +127,7 @@ const Skin: FunctionComponent<Props> = (props) => {
             <Button icon onClick={() => handleEdit(d)}>
               <Icon name='edit' />
             </Button>
-            <Button icon onClick={() => handleDelete(d)}>
+            <Button color="red" icon onClick={() => handleDelete(d)}>
               <Icon name='trash' />
             </Button>
           </Table.Cell>
@@ -91,11 +141,11 @@ const Skin: FunctionComponent<Props> = (props) => {
 
       <div className='skin-title'>Skin</div>
 
-      <div className='skin-section mt-3 flex justify-content-end'>
-        <Button icon>
+      <div className='linhaBox skin-section mt-3 flex justify-content-end'>
+        <Button className='p-button-primary' icon>
           <Icon name='refresh' />
         </Button>
-        <Button icon labelPosition='left' onClick={handleAdd}>
+        <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
           <Icon name='plus' />
           Adicionar
         </Button>
@@ -115,6 +165,9 @@ const Skin: FunctionComponent<Props> = (props) => {
         openModal={openModal}
         createMode={createMode}
         setOpenModal={setOpenModal}
+        loading={isLoadingForm}
+        onCreate={handleCreateSkin}
+        onUpdate={handleUpdateSkin}
       />
 
       <DeleteModal
@@ -122,6 +175,7 @@ const Skin: FunctionComponent<Props> = (props) => {
         setOpenModal={setOpenDeleteModal}
         title='Confirmar exclusão'
         subtitle='Deseja realmente excluir a skin?'
+        onDelete={handleDeleteSkin}
       />
     </div>
   );

@@ -8,6 +8,7 @@ interface Props {
   setOpenModal: any;
   title: string;
   subtitle: string;
+  onDelete?: () => void;
 }
 
 const DeleteModal: FunctionComponent<Props> = (props) => {
@@ -17,8 +18,13 @@ const DeleteModal: FunctionComponent<Props> = (props) => {
     loading,
     setOpenModal,
     title,
-    subtitle
+    subtitle,
+    onDelete
   } = props;
+
+  const handleSubmit = () => {
+    onDelete?.();
+  }
 
   return (
     <Modal
@@ -41,7 +47,7 @@ const DeleteModal: FunctionComponent<Props> = (props) => {
         <Button basic color='red' inverted onClick={() => setOpenModal(false)}>
           <Icon name='remove' /> Não
         </Button>
-        <Button color='green' inverted onClick={() => setOpenModal(false)}>
+        <Button color='green' inverted onClick={handleSubmit}>
           <Icon name='checkmark' /> Sim
         </Button>
       </Modal.Actions>

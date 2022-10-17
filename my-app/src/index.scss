@@ -2,16 +2,20 @@ html,
 div#root,
 body,
 .my-app,
-.my-app > div {
+.my-app>div {
   height: 100%;
 }
 
 body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #ccc !important;
+  //background-image: url(./img/fundoVerde.png) !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 code {
@@ -21,10 +25,20 @@ code {
 
 .ui.segment {
   padding: 0 !important;
+  background: none !important;
 }
 
 .flex {
   display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .align-items-center {
@@ -48,7 +62,7 @@ code {
 }
 
 .w-full {
-  max-width: 100% !important;
+  width: 100% !important;
 }
 
 .h-full {
@@ -59,21 +73,30 @@ code {
   text-align: center;
 }
 
-.m-1 {
- margin: 1rem !important;
+.p-0 {
+  padding: 0 !important;
 }
+
+.m-1 {
+  margin: 1rem !important;
+}
+
 .m-2 {
   margin: 2rem !important;
 }
+
 .m-3 {
   margin: 3rem !important;
 }
+
 .m-4 {
   margin: 4rem !important;
 }
+
 .m-5 {
   margin: 5rem !important;
 }
+
 .m-6 {
   margin: 12rem !important;
 }
@@ -100,4 +123,30 @@ code {
 
 .mt-3 {
   margin-top: 3rem !important;
+}
+
+.height-100vh {
+  height: 100vh !important;
+}
+
+.div-menu.ui.menu {
+    background: #556b2f 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 10px 15px #00000029 !important;
+    border-bottom: solid 3px #8db050 !important;
+    border-radius: 16px;
+
+    > .item {
+      color: #222c10 !important;
+    }
+
+    margin: 3rem 2.8rem 3rem 3rem !important;
+}
+
+.p-button-primary {
+  color: #ffffff !important ; 
+  background-color: #323e1c !important ;
+}
+
+.linhaBox{
+  border-bottom: solid 3px #8db050 !important;
 }

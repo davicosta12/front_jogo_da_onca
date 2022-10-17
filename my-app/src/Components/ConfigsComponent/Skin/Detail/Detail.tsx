@@ -1,11 +1,13 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import { Button, Form, Modal } from 'semantic-ui-react';
 import GetSkinDto from '../../../../Services/Skins/dto/GetSkinDto';
 
 interface Props {
   skin: GetSkinDto;
   openModal: boolean;
   createMode: boolean;
+  onCreate: (values: GetSkinDto) => void;
+  onUpdate: (values: GetSkinDto) => void;
   loading?: boolean;
   setOpenModal: any;
 }
@@ -22,6 +24,8 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
     skin,
     openModal,
     createMode,
+    onCreate,
+    onUpdate,
     setOpenModal
   } = props;
 
@@ -40,6 +44,12 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       } as GetSkinDto);
     }
   }, [skin, openModal]);
+
+  const handleSubmit = (values: GetSkinDto) => {
+    createMode
+      ? onCreate(values)
+      : onUpdate(values);
+  }
 
   const handleChange = (ev: any) => {
     setFormValues({ ...formValues, [ev.target.id]: ev.target.value })
@@ -94,7 +104,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
           content="Salvar"
           labelPosition='right'
           icon='checkmark'
-          onClick={() => setOpenModal(false)}
+          onClick={() => handleSubmit(formValues)}
           disabled={!formValues.imgSkin || !formValues.nameSkin}
           positive
         />

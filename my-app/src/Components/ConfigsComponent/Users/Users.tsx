@@ -70,15 +70,15 @@ const Users: FunctionComponent<Props> = (props) => {
   }
 
   return (
-    <div id='dimensao' className='user-content'>
+    <div className='user-content'>
 
       <div className='user-title'>Usuário</div>
 
       <div className='linhaBox user-section mt-3 flex justify-content-end'>
-        <Button className='estiloBarraBotoes' icon>
+        <Button className='p-button-primary' icon>
           <Icon name='refresh' />
         </Button>
-        <Button className='estiloBarraBotoes' icon labelPosition='left' onClick={handleAdd}>
+        <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
           <Icon name='plus' />
           Adicionar
         </Button>

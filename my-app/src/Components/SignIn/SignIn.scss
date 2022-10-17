@@ -1,5 +1,68 @@
 .login-container {
     height: 100%;
     width: 100%;
-    
+
+    @media (max-width: 1000px) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .img-background-left {
+        background-image: url(../../assets/fundoVerde2md.png);
+    }
+
+    .img-background-right {
+        background-image: url(../../assets/fundoVerde.png);
+    }
+
+    .login-title-right {
+        font-size: 64px !important;
+        font-style: normal;
+        font-weight: 600;
+        color: #fff !important;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-title-left {
+        font-size: 64px !important;
+        font-style: normal;
+        font-weight: 600;
+        color: #fff !important;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-subtitle-right {
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        color: #fff;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-signUp-btn {
+        font-size: 32px;
+        color: #fff;
+    }
+
+    .login-entrar {
+        background: #D9D9D9 !important;
+        border: 3px solid #FFFFFF !important;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+        border-radius: 30px !important;
+        font-family: 'Poppins' !important;
+        font-style: normal !important;
+        font-weight: 800 !important;
+        font-size: 40px !important;
+        text-align: center !important;
+        padding: 1rem 3.5rem !important;
+        color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    .img-onca-base {
+        border: none;
+        background-image: url(../../assets/logoOnca.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 50%;
+    }
 }

@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import './ConfigsComponent.scss';
 
 interface Props {
   screenRender: any;
@@ -13,10 +14,10 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className='configs-Component'>
       <Sidebar.Pushable as={Segment}>
 
-        <Menu size='huge'>
+        <Menu className='div-menu' size='huge'>
           <Menu.Item
             onClick={() => setVisible(true)}
           >
@@ -41,7 +42,7 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
           visible={visible}
           width='thin'
         >
-          <Menu.Item
+          {/* <Menu.Item
             as='a'
             name='user'
             active={activeItem === 'user'}
@@ -52,7 +53,7 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
             }}>
             <Icon name='user circle' />
             Usuário
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             as='a'
             name='skin'
@@ -65,7 +66,7 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
             <Icon name='camera' />
             Skin
           </Menu.Item>
-          <Menu.Item
+          {/* <Menu.Item
             as='a'
             name='board'
             active={activeItem === 'board'}
@@ -76,7 +77,7 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
             }}>
             <Icon name='gamepad' />
             Tabuleiro
-          </Menu.Item>
+          </Menu.Item> */}
         </Sidebar>
 
         <Sidebar.Pusher >

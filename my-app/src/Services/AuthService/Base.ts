@@ -4,7 +4,7 @@ import { API_BASE_URL } from '../../environment';
 export default class HttpService {
 
   protected config: AxiosRequestConfig = {
-    baseURL: `http://${this.getSubdomain()}.${API_BASE_URL}`,
+    baseURL: `http://${API_BASE_URL}`,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

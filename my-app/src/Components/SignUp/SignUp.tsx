@@ -33,7 +33,7 @@ const SignUp: FunctionComponent<Props> = (props) => {
         <Header as='h1'>Criar conta</Header>
       </div>
       <div className='signUp-content'>
-        <Header as='h3' className='text-center'>Forneça duas informações</Header>
+        <Header as='h3' className='text-center'>Forneça suas informações</Header>
         <Form>
           <Form.Field>
             <Input
