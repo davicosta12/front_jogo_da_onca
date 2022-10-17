@@ -21,7 +21,7 @@ const SignIn: FunctionComponent<Props> = (props) => {
     ev.preventDefault();
     // await authService.getToken(userName, password);
     authService.saveToken("Token");
-    navigate("/app");
+    navigate("/config");
   };
 
   return (
