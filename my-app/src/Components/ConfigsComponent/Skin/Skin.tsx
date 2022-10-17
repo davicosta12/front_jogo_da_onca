@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Button, Icon, Table } from 'semantic-ui-react';
+import { Button, Icon, Popup, Table } from 'semantic-ui-react';
 import GetSkinDto from '../../../Services/Skins/dto/GetSkinDto';
 import SkinService from '../../../Services/Skins/SkinService';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
@@ -124,12 +124,22 @@ const Skin: FunctionComponent<Props> = (props) => {
           {createTableCell(d)}
 
           <Table.Cell collapsing>
-            <Button icon onClick={() => handleEdit(d)}>
-              <Icon name='edit' />
-            </Button>
-            <Button color="red" icon onClick={() => handleDelete(d)}>
-              <Icon name='trash' />
-            </Button>
+            <Popup
+              content='Editar'
+              trigger={
+                <Button icon onClick={() => handleEdit(d)}>
+                  <Icon name='edit' />
+                </Button>
+              }
+            />
+            <Popup
+              content='Remover'
+              trigger={
+                <Button color="red" icon onClick={() => handleDelete(d)}>
+                  <Icon name='trash' />
+                </Button>
+              }
+            />
           </Table.Cell>
 
         </Table.Row >)
@@ -142,9 +152,15 @@ const Skin: FunctionComponent<Props> = (props) => {
       <div className='skin-title'>Skin</div>
 
       <div className='linhaBox skin-section mt-3 flex justify-content-end'>
-        <Button className='p-button-primary' icon>
-          <Icon name='refresh' />
-        </Button>
+        <Popup
+          content='Atualizar'
+          trigger={
+            <Button className='p-button-primary' icon>
+              <Icon name='refresh' />
+            </Button>
+          }
+        />
+
         <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
           <Icon name='plus' />
           Adicionar
