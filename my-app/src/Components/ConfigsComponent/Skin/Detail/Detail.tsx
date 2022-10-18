@@ -105,7 +105,8 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
           labelPosition='right'
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
-          disabled={!formValues.imgSkin || !formValues.nameSkin}
+          loading={props.loading}
+          disabled={!formValues.nameSkin}
           positive
         />
       </Modal.Actions>

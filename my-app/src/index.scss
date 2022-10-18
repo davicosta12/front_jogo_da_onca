@@ -150,3 +150,10 @@ code {
 .linhaBox{
   border-bottom: solid 3px #8db050 !important;
 }
+
+.segment-loader {
+  position: absolute !important;
+  z-index: 100000 !important;
+  height: 100%;
+  width: 100%;
+}

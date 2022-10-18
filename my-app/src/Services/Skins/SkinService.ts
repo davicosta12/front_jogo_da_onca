@@ -6,7 +6,7 @@ export default class SkinService extends HttpService {
 
   getSkins(): Promise<GetSkinDto[]> {
     return new Promise((resolve, reject) => {
-      this.getApi().get(`/skin/buscar/todos`)
+      this.getApi().get(`/skin/buscar`)
         .then((res: any) => resolve(res.data || []))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -14,7 +14,7 @@ export default class SkinService extends HttpService {
 
   getSkinById(id: number): Promise<GetSkinDto> {
     return new Promise((resolve, reject) => {
-      this.getApi().get(`/skin/buscar/id/${id}`)
+      this.getApi().get(`/skin/buscar/${id}`)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -22,7 +22,7 @@ export default class SkinService extends HttpService {
 
   getSkinByName(name: string): Promise<GetSkinDto> {
     return new Promise((resolve, reject) => {
-      this.getApi().get(`/skin/buscar/nome/${name}`)
+      this.getApi().get(`/skin/buscar/${name}`)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -38,7 +38,7 @@ export default class SkinService extends HttpService {
 
   updateSkin(user: GetSkinDto, id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().put(`/skin/atualizar`, user)
+      this.getApi().put(`/skin/atualizar/${id}`, user)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -46,7 +46,7 @@ export default class SkinService extends HttpService {
 
   deleteSkin(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().delete(`/skin/buscar/id/${id}`)
+      this.getApi().delete(`/skin/deletar/${id}`)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });

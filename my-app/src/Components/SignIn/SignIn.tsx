@@ -19,8 +19,8 @@ const SignIn: FunctionComponent<Props> = (props) => {
 
   const handleSignIn = async (ev: any) => {
     ev.preventDefault();
-    // await authService.getToken(userName, password);
-    authService.saveToken("Token");
+    await authService.getToken(userName, password);
+    // authService.saveToken("Token");
     navigate("/config/skin");
   };
 
