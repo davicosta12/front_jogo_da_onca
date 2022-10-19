@@ -14,7 +14,7 @@ const SignIn: FunctionComponent<Props> = (props) => {
 
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const authService = new AuthService(localStorage.getItem("@airbnb-Token"));
+  const authService = new AuthService();
   const navigate = useNavigate();
 
   const handleSignIn = async (ev: any) => {

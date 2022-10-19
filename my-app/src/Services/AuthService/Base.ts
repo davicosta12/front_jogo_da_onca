@@ -3,17 +3,18 @@ import { API_BASE_URL } from '../../environment';
 
 export default class HttpService {
 
+  constructor() {
+    const token = localStorage.getItem('@airbnb-Token');
+    if (token) {
+      this.setToken(token);
+    }
+  }
+
   protected config: AxiosRequestConfig = {
     baseURL: `http://${API_BASE_URL}`,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-    }
-  }
-
-  constructor(token?: string | null) {
-    if (token) {
-      this.setToken(token);
     }
   }
 
