@@ -61,7 +61,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
             name='season'
             active={activeItem === 'season'}
             onClick={() => handleActiveMenuItem('season')}>
-            <Icon name='user circle' />
+            <Icon name='hourglass half' />
             Usuário
           </Menu.Item>
           <Menu.Item
@@ -69,7 +69,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
             name='board'
             active={activeItem === 'board'}
             onClick={() => handleActiveMenuItem('board')}>
-            <Icon name='gamepad' />
+            <Icon name='chess board' />
             Tabuleiro
           </Menu.Item>
           <Menu.Item
@@ -77,7 +77,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
             name='skin'
             active={activeItem === 'skin'}
             onClick={() => handleActiveMenuItem('skin')}>
-            <Icon name='camera' />
+            <Icon name='black tie' />
             Skin
           </Menu.Item>
         </Sidebar>
