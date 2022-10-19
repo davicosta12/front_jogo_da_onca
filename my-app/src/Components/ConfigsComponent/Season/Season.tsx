@@ -1,36 +1,36 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
-import GetUserDto from '../../../Services/Users/dto/GetUserDto';
-import UserService from '../../../Services/Users/UserService';
+import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
+import SeasonService from '../../../Services/Season/SeasonService';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
-import UserDetail from './Detail/Detail';
-import './Users.scss';
+import SeasonDetail from './Detail/Detail';
+import './Season.scss';
 
 interface Props {
 }
 
-const Users: FunctionComponent<Props> = (props) => {
+const Season: FunctionComponent<Props> = (props) => {
 
-  const [users, setUsers] = useState<GetUserDto[]>([]);
-  const [user, setUser] = useState({} as GetUserDto);
+  const [seasons, setSeasons] = useState<GetSeasonDto[]>([]);
+  const [season, setSeason] = useState({} as GetSeasonDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
 
-  const userService = new UserService();
+  const seasonService = new SeasonService();
 
   useEffect(() => {
-    getUsers();
+    getSeasons();
   }, []);
 
-  const getUsers = async () => {
+  const getSeasons = async () => {
     setIsLoading(true);
     try {
-      const _users = await userService.getUsers();
-      setUsers([..._users]);
+      const _seasons = await seasonService.getSeasons();
+      setSeasons([..._seasons]);
     }
     catch (err: any) {
       console.log(err);
@@ -40,11 +40,11 @@ const Users: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleCreateUser = async (values: GetUserDto) => {
+  const handleCreateSeason = async (values: GetSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      await userService.createUser(values);
-      getUsers();
+      await seasonService.createSeason(values);
+      getSeasons();
       setOpenModal(false);
     }
     catch (err: any) {
@@ -55,11 +55,11 @@ const Users: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateUser = async (values: GetUserDto) => {
+  const handleUpdateSeason = async (values: GetSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      await userService.updateUser(values, +user.id);
-      getUsers();
+      await seasonService.updateSeason(values, +season.id);
+      getSeasons();
       setOpenModal(false);
     }
     catch (err: any) {
@@ -70,11 +70,11 @@ const Users: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleDeleteUser = async (user: GetUserDto) => {
+  const handleDeleteSeason = async () => {
     setIsLoading(true);
     try {
-      await userService.deleteUser(+user.id);
-      getUsers();
+      await seasonService.deleteSeason(+season.id);
+      getSeasons();
       setOpenDeleteModal(false);
     }
     catch (err: any) {
@@ -87,17 +87,18 @@ const Users: FunctionComponent<Props> = (props) => {
 
   const handleAdd = () => {
     setOpenModal(true);
-    setUser({} as any);
+    setSeason({} as GetSeasonDto);
     setCreateMode(true);
   }
 
-  const handleEdit = (user: any) => {
+  const handleEdit = (season: GetSeasonDto) => {
     setOpenModal(true);
-    setUser(user);
+    setSeason(season);
     setCreateMode(false);
   }
 
-  const handleDelete = (user: any) => {
+  const handleDelete = (season: GetSeasonDto) => {
+    setSeason(season);
     setOpenDeleteModal(true);
   }
 
@@ -105,17 +106,15 @@ const Users: FunctionComponent<Props> = (props) => {
     const itemsCell: any[] = [];
 
     for (const prop in item) {
-      if (!["senha"].includes(prop)) {
-        itemsCell.push(item[prop]);
-      }
+      itemsCell.push(item[prop]);
     }
 
     return (
       itemsCell.map(item =>
         <Table.Cell>
           {item}
-        </Table.Cell>
-      ));
+        </Table.Cell>)
+    );
 
   }
 
@@ -123,7 +122,7 @@ const Users: FunctionComponent<Props> = (props) => {
 
     return (
       data.map(d =>
-        <Table.Row key={d.id}>
+        <Table.Row>
           {createTableCell(d)}
 
           <Table.Cell collapsing>
@@ -156,51 +155,57 @@ const Users: FunctionComponent<Props> = (props) => {
           <Loader content='Carregando...' />
         </Dimmer>
       </Segment>}
+      <div className='season-content'>
 
-      <div className='user-content'>
+        <div className='season-title'>Temporada</div>
 
-        <div className='user-title'>Usuário</div>
+        <div className='linhaBox season-section mt-3 flex justify-content-end'>
+          <Popup
+            content='Atualizar'
+            trigger={
+              <Button className='p-button-primary' icon onClick={() => getSeasons()}>
+                <Icon name='refresh' />
+              </Button>
+            }
+          />
 
-        <div className='linhaBox user-section mt-3 flex justify-content-end'>
-          <Button className='p-button-primary' icon>
-            <Icon name='refresh' />
-          </Button>
           <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
             <Icon name='plus' />
             Adicionar
           </Button>
         </div>
 
-        <div className='user-table mt-3'>
+        <div className='season-table mt-3'>
           <SemanticTable
-            data={users}
-            tableRows={createTableRow(users)}
+            data={seasons}
+            tableRows={createTableRow(seasons)}
             headers={headers}
             actions
           />
         </div>
 
-        <UserDetail
-          user={user}
+        <SeasonDetail
+          season={season}
           openModal={openModal}
           createMode={createMode}
-          loading={isLoadingForm}
-          onCreate={handleCreateUser}
-          onUpdate={handleUpdateUser}
           setOpenModal={setOpenModal}
+          loading={isLoadingForm}
+          onCreate={handleCreateSeason}
+          onUpdate={handleUpdateSeason}
         />
 
         <DeleteModal
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
-          subtitle='Deseja realmente excluir o usuário?'
+          subtitle='Deseja realmente excluir a temporada?'
+          onDelete={handleDeleteSeason}
         />
       </div>
     </>
   );
 };
 
-export default Users;
+export default Season;
 
-const headers = ["Id", "Nome", "Email", "Ícones", "N° de Vitórias", "N° de Derrotas"];
+const headers = ["ID", "Nome", "Data Inicial", "Data Final"];

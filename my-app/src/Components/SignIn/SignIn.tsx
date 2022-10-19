@@ -3,7 +3,7 @@ import {
   useNavigate,
   Link
 } from "react-router-dom";
-import { Form, Button, Input, Segment, Grid, Divider, Header } from 'semantic-ui-react';
+import { Form, Button, Input, Header } from 'semantic-ui-react';
 import AuthService from '../../Services/AuthService/Auth';
 import './SignIn.scss';
 
@@ -19,8 +19,8 @@ const SignIn: FunctionComponent<Props> = (props) => {
 
   const handleSignIn = async (ev: any) => {
     ev.preventDefault();
-    await authService.getToken(userName, password);
-    // authService.saveToken("Token");
+    //await authService.getToken(userName, password);
+    authService.saveToken("Token");
     navigate("/config/skin");
   };
 

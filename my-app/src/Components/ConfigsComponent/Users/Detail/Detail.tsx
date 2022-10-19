@@ -1,50 +1,65 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import { Button, Form, Modal } from 'semantic-ui-react';
+import GetUserDto from '../../../../Services/Users/dto/GetUserDto';
 
 interface Props {
-  user: any;
+  user: GetUserDto;
   openModal: boolean;
   createMode: boolean;
+  onCreate: (values: GetUserDto) => void;
+  onUpdate: (values: GetUserDto) => void;
   loading?: boolean;
   setOpenModal: any;
 }
 
+const INITIAL_FORM_VALUES = {
+  id: 0,
+  e_mail: '',
+  icone: '',
+  nome: '',
+  nro_lose: 0,
+  nro_win: 0,
+  senha: ''
+} as GetUserDto;
+
 const UserDetail: FunctionComponent<Props> = (props) => {
 
-  const [id, setId] = useState(0);
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [icone, setIcone] = useState('');
-  const [nroWin, setNroWin] = useState(0);
-  const [nroLose, setNroLose] = useState(0);
+  const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
 
   const {
     user,
     openModal,
     createMode,
+    onCreate,
+    onUpdate,
     setOpenModal
   } = props;
 
   useEffect(() => {
     if (user?.id) {
-      setId(user.id);
-      setNome(user.nome);
-      setEmail(user.e_mail);
-      setSenha(user.senha);
-      setIcone(user.icone);
-      setNroWin(user.nro_win);
-      setNroLose(user.nro_lose);
+      setFormValues({
+        id: user.id,
+        nome: user.nome,
+        e_mail: user.e_mail,
+        icone: user.icone,
+        nro_lose: user.nro_lose,
+        nro_win: user.nro_win,
+        senha: user.senha
+      });
     } else {
-      setId(0);
-      setNome('');
-      setEmail('');
-      setSenha('');
-      setIcone('');
-      setNroWin(0);
-      setNroLose(0);
+      setFormValues(INITIAL_FORM_VALUES);
     }
   }, [user]);
+
+  const handleSubmit = (values: GetUserDto) => {
+    createMode
+      ? onCreate(values)
+      : onUpdate(values);
+  }
+
+  const handleChange = (ev: any) => {
+    setFormValues({ ...formValues, [ev.target.id]: ev.target.value })
+  }
 
   return (
     <Modal
@@ -59,28 +74,28 @@ const UserDetail: FunctionComponent<Props> = (props) => {
             <Form.Group widths='equal'>
               <Form.Input
                 fluid label='Nome'
-                value={nome}
-                onChange={(ev: any) => setNome(ev.value)}
+                value={formValues.nome}
+                onChange={handleChange}
                 placeholder='Nome'
               />
               <Form.Input
                 fluid label='Senha'
-                value={senha}
-                onChange={(ev: any) => setSenha(ev.value)}
+                value={formValues.senha}
+                onChange={handleChange}
                 placeholder='Senha'
               />
             </Form.Group>
             <Form.Group widths='equal'>
               <Form.Input
                 fluid label='Email'
-                value={email}
-                onChange={(ev: any) => setEmail(ev.value)}
+                value={formValues.e_mail}
+                onChange={handleChange}
                 placeholder='Email'
               />
               <Form.Select
                 fluid
-                value={icone}
-                onChange={(ev: any) => setIcone(ev.value)}
+                value={formValues.icone}
+                onChange={handleChange}
                 label='Ícones'
                 options={options}
                 placeholder='Ícones'
@@ -110,7 +125,9 @@ const UserDetail: FunctionComponent<Props> = (props) => {
           content="Salvar"
           labelPosition='right'
           icon='checkmark'
-          onClick={() => setOpenModal(false)}
+          onClick={() => handleSubmit(formValues)}
+          loading={props.loading}
+          disabled={!formValues.nome}
           positive
         />
       </Modal.Actions>
@@ -121,7 +138,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
 export default UserDetail
 
 const options = [
-  { key: 'm', text: 'Ícone 1', value: 'male' },
-  { key: 'f', text: 'Ícone 2', value: 'female' },
-  { key: 'o', text: 'Ícone 3', value: 'other' },
+  { key: 'I1', text: 'Ícone 1', value: 'Ícone1' },
+  { key: 'I2', text: 'Ícone 2', value: 'Ícone2' },
+  { key: 'I3', text: 'Ícone 3', value: 'Ícone3' },
 ];

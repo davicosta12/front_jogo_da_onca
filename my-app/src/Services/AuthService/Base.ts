@@ -41,10 +41,4 @@ export default class HttpService {
       delete this.config.headers['Authorization'];
     }
   }
-
-  private getSubdomain() {
-    const subdomain = /^[^\.]+/.exec(window.location.hostname);
-    return subdomain ? subdomain[0] : null;
-  }
-
 }
