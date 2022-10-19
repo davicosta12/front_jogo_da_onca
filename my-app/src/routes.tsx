@@ -5,7 +5,8 @@ import {
   Navigate
 } from "react-router-dom";
 import Board from "./Components/ConfigsComponent/Board/Board";
-import ConfigsComponent from "./Components/ConfigsComponent/ConfigsComponent";
+import ContentComponent from "./Components/ConfigsComponent/ContentComponent";
+import Season from "./Components/ConfigsComponent/Season/Season";
 import Skin from "./Components/ConfigsComponent/Skin/Skin";
 import Users from "./Components/ConfigsComponent/Users/Users";
 import Home from "./Components/Home/Home";
@@ -25,7 +26,7 @@ const PrivateRoute = ({ children, redirectTo }: { children: any, redirectTo: any
 const PrivateConfigsRoute = ({ children, ...rest }: any) => {
   return isAuthenticated() ?
     <>
-      <ConfigsComponent screenRender={children} />
+      <ContentComponent screenRender={children} />
     </>
     : <Navigate to={rest.redirectTo} />
 }
@@ -54,15 +55,21 @@ const NavigationRoutes = () => (
         </PrivateConfigsRoute>}>
       </Route>
 
-      <Route path="/config/skin" element={
+      <Route path="/config/season" element={
         <PrivateConfigsRoute redirectTo='/'>
-          <Skin />
+          <Season />
         </PrivateConfigsRoute>}>
       </Route>
 
       <Route path="/config/board" element={
         <PrivateConfigsRoute redirectTo='/'>
           <Board />
+        </PrivateConfigsRoute>}>
+      </Route>
+
+      <Route path="/config/skin" element={
+        <PrivateConfigsRoute redirectTo='/'>
+          <Skin />
         </PrivateConfigsRoute>}>
       </Route>
 

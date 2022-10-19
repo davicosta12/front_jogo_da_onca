@@ -1,17 +1,23 @@
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
-import './ConfigsComponent.scss';
+import './ContentComponent.scss';
 
 interface Props {
   screenRender: any;
 }
 
-const ConfigsComponent: FunctionComponent<Props> = (props) => {
+const ContentComponent: FunctionComponent<Props> = (props) => {
 
   const [activeItem, setActiveItem] = useState('jaguar');
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+
+  const handleActiveMenuItem = (path: string) => {
+    navigate(`/config/${path}`);
+    setActiveItem('user');
+    setVisible(false);
+  }
 
   return (
     <div className='configs-Component'>
@@ -42,42 +48,38 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
           visible={visible}
           width='thin'
         >
-          {/* <Menu.Item
+          <Menu.Item
             as='a'
             name='user'
             active={activeItem === 'user'}
-            onClick={() => {
-              navigate("/config/user")
-              setActiveItem('user')
-              setVisible(false)
-            }}>
+            onClick={() => handleActiveMenuItem('user')}>
             <Icon name='user circle' />
             Usuário
-          </Menu.Item> */}
+          </Menu.Item>
+          <Menu.Item
+            as='a'
+            name='season'
+            active={activeItem === 'season'}
+            onClick={() => handleActiveMenuItem('season')}>
+            <Icon name='user circle' />
+            Usuário
+          </Menu.Item>
+          <Menu.Item
+            as='a'
+            name='board'
+            active={activeItem === 'board'}
+            onClick={() => handleActiveMenuItem('board')}>
+            <Icon name='gamepad' />
+            Tabuleiro
+          </Menu.Item>
           <Menu.Item
             as='a'
             name='skin'
             active={activeItem === 'skin'}
-            onClick={() => {
-              navigate("/config/skin")
-              setActiveItem('skin')
-              setVisible(false)
-            }}>
+            onClick={() => handleActiveMenuItem('skin')}>
             <Icon name='camera' />
             Skin
           </Menu.Item>
-          {/* <Menu.Item
-            as='a'
-            name='board'
-            active={activeItem === 'board'}
-            onClick={() => {
-              navigate("/config/board")
-              setActiveItem('board')
-              setVisible(false)
-            }}>
-            <Icon name='gamepad' />
-            Tabuleiro
-          </Menu.Item> */}
         </Sidebar>
 
         <Sidebar.Pusher >
@@ -89,4 +91,4 @@ const ConfigsComponent: FunctionComponent<Props> = (props) => {
   );
 };
 
-export default ConfigsComponent;
+export default ContentComponent;
