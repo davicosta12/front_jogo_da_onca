@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Button, Icon, Label, Pagination, Table } from 'semantic-ui-react';
-import "./SemanticTable.scss" ;  
+import { Pagination, Table } from 'semantic-ui-react';
+import "./SemanticTable.scss";
 
 interface Props {
   data: any,

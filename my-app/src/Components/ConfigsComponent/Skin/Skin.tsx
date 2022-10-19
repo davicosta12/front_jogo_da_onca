@@ -5,6 +5,7 @@ import SkinService from '../../../Services/Skins/SkinService';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import SkinDetail from './Detail/Detail';
+import { toast } from 'react-toastify';
 import './Skin.scss';
 
 interface Props {
@@ -31,6 +32,9 @@ const Skin: FunctionComponent<Props> = (props) => {
     try {
       const _skins = await skinService.getSkins();
       setSkins([..._skins]);
+      toast.success("Custom Style Notification with css class!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
     catch (err: any) {
       console.log(err);

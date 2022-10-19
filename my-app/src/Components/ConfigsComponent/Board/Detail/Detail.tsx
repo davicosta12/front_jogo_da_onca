@@ -113,4 +113,3 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
 }
 
 export default BoardDetail
-
