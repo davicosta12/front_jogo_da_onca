@@ -32,11 +32,11 @@ const Skin: FunctionComponent<Props> = (props) => {
     try {
       const _skins = await skinService.getSkins();
       setSkins([..._skins]);
-      toast.success("Custom Style Notification with css class!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
     }
     catch (err: any) {
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.log(err);
     }
     finally {
@@ -52,6 +52,9 @@ const Skin: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.log(err);
     }
     finally {
@@ -67,6 +70,9 @@ const Skin: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.log(err);
     }
     finally {
@@ -82,6 +88,9 @@ const Skin: FunctionComponent<Props> = (props) => {
       setOpenDeleteModal(false);
     }
     catch (err: any) {
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.log(err);
     }
     finally {
