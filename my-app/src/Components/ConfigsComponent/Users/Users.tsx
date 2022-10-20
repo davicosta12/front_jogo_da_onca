@@ -1,7 +1,11 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { ThemeContext } from '../../../App';
+import { toastError, toastOptions } from '../../../misc/utils/utils';
 import GetUserDto from '../../../Services/Users/dto/GetUserDto';
 import UserService from '../../../Services/Users/UserService';
+import { ActionTypes } from '../../reducer/reducer';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import UserDetail from './Detail/Detail';
@@ -12,13 +16,13 @@ interface Props {
 
 const Users: FunctionComponent<Props> = (props) => {
 
-  const [users, setUsers] = useState<GetUserDto[]>([]);
   const [user, setUser] = useState({} as GetUserDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
+  const { state, dispatch } = useContext(ThemeContext);
 
   const userService = new UserService();
 
@@ -30,10 +34,13 @@ const Users: FunctionComponent<Props> = (props) => {
     setIsLoading(true);
     try {
       const _users = await userService.getUsers();
-      setUsers([..._users]);
+      dispatch({
+        type: ActionTypes.ADD_USER,
+        payload: [..._users]
+      });
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -48,7 +55,7 @@ const Users: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -63,7 +70,7 @@ const Users: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -78,7 +85,7 @@ const Users: FunctionComponent<Props> = (props) => {
       setOpenDeleteModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -173,8 +180,8 @@ const Users: FunctionComponent<Props> = (props) => {
 
         <div className='user-table mt-3'>
           <SemanticTable
-            data={users}
-            tableRows={createTableRow(users)}
+            data={state.users}
+            tableRows={createTableRow(state.users)}
             headers={headers}
             actions
           />

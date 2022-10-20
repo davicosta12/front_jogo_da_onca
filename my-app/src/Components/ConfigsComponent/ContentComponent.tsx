@@ -82,7 +82,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
           </Menu.Item>
         </Sidebar>
 
-        <Sidebar.Pusher >
+        <Sidebar.Pusher className='fix-pusher-semantic'>
           {props.screenRender}
         </Sidebar.Pusher>
 

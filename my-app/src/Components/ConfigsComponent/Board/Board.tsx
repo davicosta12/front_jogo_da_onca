@@ -1,7 +1,11 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { ThemeContext } from '../../../App';
+import { toastError, toastOptions } from '../../../misc/utils/utils';
 import BoardService from '../../../Services/Board/BoardService';
 import GetBoardDto from '../../../Services/Board/dto/GetBoardDto';
+import { ActionTypes } from '../../reducer/reducer';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 
@@ -13,13 +17,13 @@ interface Props {
 
 const Board: FunctionComponent<Props> = (props) => {
 
-  const [boards, setBoards] = useState<GetBoardDto[]>([]);
   const [board, setBoard] = useState({} as GetBoardDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
+  const { state, dispatch } = useContext(ThemeContext);
 
   const boardService = new BoardService();
 
@@ -31,10 +35,13 @@ const Board: FunctionComponent<Props> = (props) => {
     setIsLoading(true);
     try {
       const _boards = await boardService.getBoards();
-      setBoards([..._boards]);
+      dispatch({
+        type: ActionTypes.ADD_BOARD,
+        payload: [..._boards]
+      });
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -49,7 +56,7 @@ const Board: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -64,7 +71,7 @@ const Board: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -79,7 +86,7 @@ const Board: FunctionComponent<Props> = (props) => {
       setOpenDeleteModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -178,8 +185,8 @@ const Board: FunctionComponent<Props> = (props) => {
 
         <div className='board-table mt-3'>
           <SemanticTable
-            data={boards}
-            tableRows={createTableRow(boards)}
+            data={state.boards}
+            tableRows={createTableRow(state.boards)}
             headers={headers}
             actions
           />

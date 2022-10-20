@@ -2,14 +2,25 @@ import NavigationRoutes from './routes';
 import { ToastContainer } from 'react-toastify';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { useReducer, createContext, Dispatch } from 'react';
+import { ActionReducer, InitialState, initialState, reducer } from './Components/reducer/reducer';
+
+export const ThemeContext = createContext({} as { state: InitialState; dispatch: Dispatch<ActionReducer>; });
 
 const App = () => {
 
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div className='my-app'>
-      <NavigationRoutes />
+    <ThemeContext.Provider
+      value={{
+        state, dispatch
+      }}>
+      <div className='my-app'>
+        <NavigationRoutes />
+      </div>
       <ToastContainer />
-    </div>
+    </ThemeContext.Provider>
   );
 }
 

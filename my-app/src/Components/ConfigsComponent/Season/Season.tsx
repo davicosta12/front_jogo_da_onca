@@ -1,7 +1,11 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { ThemeContext } from '../../../App';
+import { toastError, toastOptions } from '../../../misc/utils/utils';
 import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
 import SeasonService from '../../../Services/Season/SeasonService';
+import { ActionTypes } from '../../reducer/reducer';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import SeasonDetail from './Detail/Detail';
@@ -12,13 +16,13 @@ interface Props {
 
 const Season: FunctionComponent<Props> = (props) => {
 
-  const [seasons, setSeasons] = useState<GetSeasonDto[]>([]);
   const [season, setSeason] = useState({} as GetSeasonDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
+  const { state, dispatch } = useContext(ThemeContext);
 
   const seasonService = new SeasonService();
 
@@ -30,10 +34,13 @@ const Season: FunctionComponent<Props> = (props) => {
     setIsLoading(true);
     try {
       const _seasons = await seasonService.getSeasons();
-      setSeasons([..._seasons]);
+      dispatch({
+        type: ActionTypes.ADD_SEASON,
+        payload: [..._seasons]
+      });
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -48,7 +55,7 @@ const Season: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -63,7 +70,7 @@ const Season: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -78,7 +85,7 @@ const Season: FunctionComponent<Props> = (props) => {
       setOpenDeleteModal(false);
     }
     catch (err: any) {
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -177,8 +184,8 @@ const Season: FunctionComponent<Props> = (props) => {
 
         <div className='season-table mt-3'>
           <SemanticTable
-            data={seasons}
-            tableRows={createTableRow(seasons)}
+            data={state.seasons}
+            tableRows={createTableRow(state.seasons)}
             headers={headers}
             actions
           />

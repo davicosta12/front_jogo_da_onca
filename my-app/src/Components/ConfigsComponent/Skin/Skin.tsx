@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import GetSkinDto from '../../../Services/Skins/dto/GetSkinDto';
 import SkinService from '../../../Services/Skins/SkinService';
@@ -7,13 +7,15 @@ import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import SkinDetail from './Detail/Detail';
 import { toast } from 'react-toastify';
 import './Skin.scss';
+import { ThemeContext } from '../../../App';
+import { ActionTypes } from '../../reducer/reducer';
+import { toastError, toastOptions } from '../../../misc/utils/utils';
 
 interface Props {
 }
 
 const Skin: FunctionComponent<Props> = (props) => {
 
-  const [skins, setSkins] = useState<GetSkinDto[]>([]);
   const [skin, setSkin] = useState({} as GetSkinDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -21,6 +23,7 @@ const Skin: FunctionComponent<Props> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
 
+  const { state, dispatch } = useContext(ThemeContext);
   const skinService = new SkinService();
 
   useEffect(() => {
@@ -31,12 +34,13 @@ const Skin: FunctionComponent<Props> = (props) => {
     setIsLoading(true);
     try {
       const _skins = await skinService.getSkins();
-      setSkins([..._skins]);
+      dispatch({
+        type: ActionTypes.ADD_SKIN,
+        payload: [..._skins]
+      });
     }
     catch (err: any) {
-      toast.error(err, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(toastError(err), toastOptions(toast));
       console.log(err);
     }
     finally {
@@ -52,10 +56,7 @@ const Skin: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      toast.error(err, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -70,10 +71,7 @@ const Skin: FunctionComponent<Props> = (props) => {
       setOpenModal(false);
     }
     catch (err: any) {
-      toast.error(err, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoadingForm(false);
@@ -88,10 +86,7 @@ const Skin: FunctionComponent<Props> = (props) => {
       setOpenDeleteModal(false);
     }
     catch (err: any) {
-      toast.error(err, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      console.log(err);
+      toast.error(toastError(err), toastOptions(toast));
     }
     finally {
       setIsLoading(false);
@@ -163,14 +158,14 @@ const Skin: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      {isLoading && <Segment className='segment-loader'>
+      <Segment className='segment-loader'>
         <Dimmer active={isLoading}>
           <Loader content='Carregando...' />
         </Dimmer>
-      </Segment>}
+      </Segment>
       <div className='skin-content'>
 
-        <div className='skin-title'>Skin</div>
+        {/* <div className='skin-title'>Skin</div> */}
 
         <div className='linhaBox skin-section mt-3 flex justify-content-end'>
           <Popup
@@ -190,8 +185,8 @@ const Skin: FunctionComponent<Props> = (props) => {
 
         <div className='skin-table mt-3'>
           <SemanticTable
-            data={skins}
-            tableRows={createTableRow(skins)}
+            data={state.skins}
+            tableRows={createTableRow(state.skins)}
             headers={headers}
             actions
           />
