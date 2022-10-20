@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
+import { DateInput } from "semantic-ui-calendar-react";
 import GetSeasonDto from '../../../../Services/Season/dto/GetSeasonDto';
 
 interface Props {
@@ -55,8 +56,8 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
       : onUpdate(values);
   }
 
-  const handleChange = (ev: any) => {
-    setFormValues({ ...formValues, [ev.target.id]: ev.target.value })
+  const handleChange = (ev: any, { name, value }: any) => {
+    setFormValues({ ...formValues, [name]: value });
   }
 
   return (
@@ -69,57 +70,69 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
       <Modal.Content>
         <Modal.Description>
           <Form>
-            <Form.Group widths='equal'>
-              {/* {!createMode ?
+            {/* {!createMode ?
                 <Form.Input
                   fluid
-                  id="id"
+                  name="id"
                   label='Id'
                   value={formValues.id}
                   onChange={handleChange}
                   placeholder='Id'
                 />
                 : null} */}
-              <Form.Input
-                fluid
-                id="name_season"
-                label='Nome'
-                value={formValues.name_season}
-                onChange={handleChange}
-                placeholder='Nome'
-              />
-              <Form.Input
-                fluid
-                id="inicio"
-                label='Data Inicial'
+            <Form.Input
+              fluid
+              name="name_season"
+              label='Nome'
+              value={formValues.name_season}
+              onChange={handleChange}
+              placeholder='Nome'
+            />
+            <Form.Group widths='equal'>
+              <DateInput
+                name="inicio"
+                label="Data Inicial"
+                placeholder="Data Inicial"
                 value={formValues.inicio}
+                iconPosition="left"
+                dateFormat='DD/MM/YYYY'
+                closable
+                localization='pt-br'
                 onChange={handleChange}
-                placeholder='Data Inicial'
               />
-              <Form.Input
-                fluid
-                id="fim"
-                label='Data Final'
+              <DateInput
+                name="fim"
+                label="Data Final"
+                placeholder="Data Final"
                 value={formValues.fim}
+                iconPosition="left"
+                dateFormat='DD/MM/YYYY'
+                closable
+                localization='pt-br'
                 onChange={handleChange}
-                placeholder='Data Final'
               />
-              {/* <Form.Input
+            </Form.Group>
+            <Form.Group widths='equal'>
+              <Form.Dropdown
                 fluid
-                id="skin_id"
-                label='Url da imagem'
+                name="skin_id"
+                label='SKIN'
                 value={formValues.skin_id}
+                options={friendOptions}
+                selection
                 onChange={handleChange}
-                placeholder='Skin do Tabuleiro'
+                placeholder='SKIN'
               />
-              <Form.Input
+              <Form.Dropdown
                 fluid
-                id="tabuleiro_id"
-                label='Url da imagem'
+                name="tabuleiro_id"
+                label='Tabuleiro'
                 value={formValues.tabuleiro_id}
+                options={friendOptions}
+                selection
                 onChange={handleChange}
-                placeholder='Url da imagem'
-              /> */}
+                placeholder='Tabuleiro'
+              />
             </Form.Group>
           </Form>
         </Modal.Description>
@@ -143,4 +156,43 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
 }
 
 export default SeasonDetail
+
+const friendOptions = [
+  {
+    key: 'Jenny Hess',
+    text: 'Jenny Hess',
+    value: 'Jenny Hess',
+    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+  },
+  {
+    key: 'Elliot Fu',
+    text: 'Elliot Fu',
+    value: 'Elliot Fu',
+    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+  },
+  {
+    key: 'Stevie Feliciano',
+    text: 'Stevie Feliciano',
+    value: 'Stevie Feliciano',
+    image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
+  },
+  {
+    key: 'Christian',
+    text: 'Christian',
+    value: 'Christian',
+    image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
+  },
+  {
+    key: 'Matt',
+    text: 'Matt',
+    value: 'Matt',
+    image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
+  },
+  {
+    key: 'Justen Kitsune',
+    text: 'Justen Kitsune',
+    value: 'Justen Kitsune',
+    image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
+  },
+]
 

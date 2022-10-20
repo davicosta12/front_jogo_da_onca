@@ -1,9 +1,10 @@
 import NavigationRoutes from './routes';
 import { ToastContainer } from 'react-toastify';
-import 'semantic-ui-css/semantic.min.css';
-import 'react-toastify/dist/ReactToastify.css';
 import { useReducer, createContext, Dispatch } from 'react';
 import { ActionReducer, InitialState, initialState, reducer } from './Components/reducer/reducer';
+import 'semantic-ui-css/semantic.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import 'moment/locale/pt-br';
 
 export const ThemeContext = createContext({} as { state: InitialState; dispatch: Dispatch<ActionReducer>; });
 

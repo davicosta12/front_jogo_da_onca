@@ -158,11 +158,12 @@ const Skin: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <Segment className='segment-loader'>
-        <Dimmer active={isLoading}>
-          <Loader content='Carregando...' />
-        </Dimmer>
-      </Segment>
+      {isLoading &&
+        <Segment className='segment-loader'>
+          <Dimmer active={isLoading}>
+            <Loader content='Carregando...' />
+          </Dimmer>
+        </Segment>}
       <div className='skin-content'>
 
         {/* <div className='skin-title'>Skin</div> */}
