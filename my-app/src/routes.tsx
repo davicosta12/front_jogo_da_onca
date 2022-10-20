@@ -10,6 +10,7 @@ import Season from "./Components/ConfigsComponent/Season/Season";
 import Skin from "./Components/ConfigsComponent/Skin/Skin";
 import Users from "./Components/ConfigsComponent/Users/Users";
 import Home from "./Components/Home/Home";
+import JaguarBoard from "./Components/JaguarBoard/JaguarBoard";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
 
@@ -23,7 +24,7 @@ const PrivateRoute = ({ children, redirectTo }: { children: any, redirectTo: any
     : <Navigate to={redirectTo} />
 }
 
-const PrivateConfigsRoute = ({ children, ...rest }: any) => {
+const PrivateContentComponent = ({ children, ...rest }: any) => {
   return isAuthenticated() ?
     <>
       <ContentComponent screenRender={children} />
@@ -38,40 +39,52 @@ const NavigationRoutes = () => (
 
       <Route path="/" element={<SignIn />} />
 
-      <Route path="/signup" element={<SignUp />} />
-
-      <Route path="/app" element={
+      <Route path="/home" element={
         <PrivateRoute redirectTo='/'>
           <Home />
         </PrivateRoute>
       }>
       </Route>
 
-      <Route path="/config" element={<PrivateConfigsRoute redirectTo='/' />} />
+      <Route path="/signup" element={<SignUp />} />
+
+      <Route path="/jaguarboard" element={
+        <PrivateRoute redirectTo='/'>
+          <JaguarBoard />
+        </PrivateRoute>
+      }>
+      </Route>
+
+      <Route path="/config" element={
+        <PrivateContentComponent redirectTo='/' />
+      }>
+      </Route>
 
       <Route path="/config/user" element={
-        <PrivateConfigsRoute redirectTo='/'>
+        <PrivateContentComponent redirectTo='/'>
           <Users />
-        </PrivateConfigsRoute>}>
+        </PrivateContentComponent>}>
       </Route>
 
       <Route path="/config/season" element={
-        <PrivateConfigsRoute redirectTo='/'>
+        <PrivateContentComponent redirectTo='/'>
           <Season />
-        </PrivateConfigsRoute>}>
+        </PrivateContentComponent>}>
       </Route>
 
       <Route path="/config/board" element={
-        <PrivateConfigsRoute redirectTo='/'>
+        <PrivateContentComponent redirectTo='/'>
           <Board />
-        </PrivateConfigsRoute>}>
+        </PrivateContentComponent>}>
       </Route>
 
       <Route path="/config/skin" element={
-        <PrivateConfigsRoute redirectTo='/'>
+        <PrivateContentComponent redirectTo='/'>
           <Skin />
-        </PrivateConfigsRoute>}>
+        </PrivateContentComponent>}>
       </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
 
     </Routes>
 

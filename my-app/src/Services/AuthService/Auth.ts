@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios";
+import { TOKEN_KEY } from "../../environment";
 import HttpService from "./Base";
 import AuthResponseDto from "./dto/AuthResponseDto";
 import AuthRequestDto from "./dto/AuthRestDto";
 
-export const TOKEN_KEY = "@airbnb-Token";
 export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
@@ -22,7 +22,7 @@ export default class AuthService extends HttpService {
   }
 
   saveToken(token: string) {
-    localStorage.setItem('@airbnb-Token', token);
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   logout() {

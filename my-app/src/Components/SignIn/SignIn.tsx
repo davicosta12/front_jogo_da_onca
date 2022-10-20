@@ -21,7 +21,7 @@ const SignIn: FunctionComponent<Props> = (props) => {
     ev.preventDefault();
     //await authService.getToken(userName, password);
     authService.saveToken("Token");
-    navigate("/config/skin");
+    navigate("/home");
   };
 
   return (
@@ -54,6 +54,7 @@ const SignIn: FunctionComponent<Props> = (props) => {
             <Form.Field>
               <Input
                 placeholder="Senha"
+                type='password'
                 size='large'
                 value={password}
                 onChange={e => setPassword(e.target.value)}

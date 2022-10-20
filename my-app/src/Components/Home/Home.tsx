@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-import { Input, Grid, Menu, Button } from 'semantic-ui-react';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Menu, Button } from 'semantic-ui-react';
 import "./Home.scss";
 
 interface Props {
@@ -8,9 +9,14 @@ interface Props {
 const Home: FunctionComponent<Props> = (props) => {
 
   const [activeItem, setActiveItem] = useState('home');
+  const navigate = useNavigate();
 
   const handleActiveItem = (ev: any, { name }: any) => {
     setActiveItem(name);
+  }
+
+  const handleGamePlay = () => {
+    navigate("/jaguarboard");
   }
 
   return (
@@ -55,7 +61,7 @@ const Home: FunctionComponent<Props> = (props) => {
           <Grid.Row columns={1}>
             <Grid.Column mobile={16} tablet={16} computer={16}>
               <div className='home-user-action flex justify-content-center align-items-center'>
-                <Button className='home-action-btn'>Jogar</Button>
+                <Button className='home-action-btn' onClick={handleGamePlay}>Jogar</Button>
               </div>
             </Grid.Column>
           </Grid.Row>

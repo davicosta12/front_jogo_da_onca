@@ -1,10 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { API_BASE_URL } from '../../environment';
+import { API_BASE_URL, TOKEN_KEY } from '../../environment';
 
 export default class HttpService {
 
   constructor() {
-    const token = localStorage.getItem('@airbnb-Token');
+    const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
       this.setToken(token);
     }

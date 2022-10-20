@@ -62,7 +62,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
             active={activeItem === 'season'}
             onClick={() => handleActiveMenuItem('season')}>
             <Icon name='hourglass half' />
-            Usuário
+            Temporada
           </Menu.Item>
           <Menu.Item
             as='a'
