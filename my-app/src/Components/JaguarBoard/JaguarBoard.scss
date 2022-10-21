@@ -1,20 +1,28 @@
-section {
-    text-align: center;
+.jaguarBoard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 0, 0);
+    .jaguarBoard-table {
+        font-size: 20px;
+        width: 100%;
+    }
 }
-table {
-    display: center;
-    margin-top: 40px;
-    font-size: 20px;
+
+.jaguarBoard-section {
+    overflow: hidden;
+    height: 100vh;
+    width: 1200px;
+
+    .jaguarBoard-svg {
+        padding-top: 60px;
+        height: 100%;
+        width: 1200px;
+    }
 }
 
 h2 {
     color: rgb(0, 255, 0);
-}
-
-th {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 40px 12px 12px 40px;
 }
 
 .imgJogo {

@@ -13,7 +13,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #ccc !important;
-  //background-image: url(./img/fundoVerde.png) !important;
+  //background-image: url(./assets/fundoVerde.png) !important;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -157,7 +157,7 @@ code {
   height: 100%;
 }
 
-.ui.segment.pushable  {
+.ui.segment.pushable {
   .fix-pusher-semantic.pusher {
     // position: initial !important;
     min-height: 0 !important;
