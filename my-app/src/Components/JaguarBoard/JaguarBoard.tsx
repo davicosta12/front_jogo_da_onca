@@ -30,8 +30,8 @@ const JaguarBoard: FunctionComponent<Props> = (props) => {
               </clipPath>
             </defs>
             <image
-              width="15"
-              height="15"
+              width="100"
+              height="100"
               xlinkHref="https://www.tutorialspoint.com/videotutorials/images/coding_ground_home.jpg"
               clip-path="url(#myCircle)"
             />
