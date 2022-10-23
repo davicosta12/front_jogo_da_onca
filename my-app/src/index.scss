@@ -2,7 +2,7 @@ html,
 div#root,
 body,
 .my-app,
-.my-app > div {
+.my-app>div {
   height: 100%;
   width: 100%;
 }
@@ -13,7 +13,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #ccc !important;
-  //background-image: url(./assets/fundoVerde.png) !important;
+  background-image: url(./assets/fundoVerde.png) !important;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -28,36 +28,40 @@ code {
 }
 
 .flex {
-  display: flex;
+  display: flex !important;
 }
 
 .flex-wrap {
-  flex-wrap: wrap;
+  flex-wrap: wrap !important;
 }
 
 .flex-column {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .align-items-center {
-  align-items: center;
+  align-items: center !important;
 }
 
 .justify-content-between {
-  justify-content: space-between;
+  justify-content: space-between !important;
 }
 
 .justify-content-center {
-  justify-content: center;
+  justify-content: center !important;
 }
 
 .justify-content-end {
-  justify-content: end;
+  justify-content: end !important;
 }
 
 .justify-content-start {
-  justify-content: start;
+  justify-content: start !important;
+}
+
+.flex-grow {
+  flex-grow: 1 !important;
 }
 
 .w-full {
@@ -65,11 +69,11 @@ code {
 }
 
 .h-full {
-  height: 100%;
+  height: 100% !important;
 }
 
 .text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 .p-0 {
@@ -124,6 +128,42 @@ code {
   margin-top: 3rem !important;
 }
 
+.mt-1 {
+  margin-top: 1rem !important;
+}
+
+.mt-2 {
+  margin-top: 2rem !important;
+}
+
+.mt-3 {
+  margin-top: 3rem !important;
+}
+
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+
+.mb-2 {
+  margin-bottom: 2rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 3rem !important;
+}
+
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+
+.mb-2 {
+  margin-bottom: 2rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 3rem !important;
+}
+
 .height-100vh {
   height: 100vh !important;
 }
@@ -134,7 +174,7 @@ code {
   border-bottom: solid 3px #8db050 !important;
   border-radius: 16px;
 
-  > .item {
+  >.item {
     color: #222c10 !important;
   }
 
@@ -142,8 +182,22 @@ code {
 }
 
 .p-button-primary {
-  color: #ffffff !important ;
-  background-color: #323e1c !important ;
+  color: #ffffff !important;
+  background-color: #323e1c !important;
+}
+
+.p-button-signInAndSignUp {
+  background: #D9D9D9 !important;
+  border: 3px solid #FFFFFF !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 30px !important;
+  font-family: 'Poppins' !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  font-size: 30px !important;
+  text-align: center !important;
+  padding: 1rem 3.5rem !important;
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 .linhaBox {
@@ -161,5 +215,32 @@ code {
   .fix-pusher-semantic.pusher {
     // position: initial !important;
     min-height: 0 !important;
+  }
+}
+
+.login-title {
+  font-size: 64px !important;
+  font-style: normal;
+  font-weight: 600;
+  color: #fff !important;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.login-subtitle {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 1000px) {
+
+  .login-title {
+    font-size: 34px !important;
+  }
+
+  .login-subtitle {
+    font-size: 22px !important;
   }
 }

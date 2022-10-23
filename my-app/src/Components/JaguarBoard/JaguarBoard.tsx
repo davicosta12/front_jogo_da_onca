@@ -1,11 +1,12 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import './JaguarBoard.scss';
+import '../../misc/utils/utils/gameFunctionality';
 
 interface Props {
 }
 
 const JaguarBoard: FunctionComponent<Props> = (props) => {
-
+  
   return (
     <div className='w-full'>
       <div className='jaguarBoard-container'>
@@ -24,17 +25,7 @@ const JaguarBoard: FunctionComponent<Props> = (props) => {
             <line id="tableline" x1="150" y1="750" x2="750" y2="150" />
             <line id="tableline" x1="900" y1="300" x2="900" y2="600" />
             <circle className="target_point" id="b00" cx="850" cy="200" r="15" stroke="white" stroke-width="2" fill="red" />
-            <defs>
-              <clipPath id="myCircle">
-                <circle className="point" cx="150" cy="750" r="20" />
-              </clipPath>
-            </defs>
-            <image
-              width="100"
-              height="100"
-              xlinkHref="https://www.tutorialspoint.com/videotutorials/images/coding_ground_home.jpg"
-              clip-path="url(#myCircle)"
-            />
+            <circle className="point" id="c00" cx="150" cy="750" r="20" />
             <circle className="point" id="c01" cx="150" cy="600" r="20" />
             <circle className="point" id="c02" cx="150" cy="450" r="20" />
             <circle className="point" id="c03" cx="150" cy="300" r="20" />

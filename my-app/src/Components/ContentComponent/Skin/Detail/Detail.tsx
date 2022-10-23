@@ -51,8 +51,8 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       : onUpdate(values);
   }
 
-  const handleChange = (ev: any) => {
-    setFormValues({ ...formValues, [ev.target.id]: ev.target.value })
+  const handleChange = (ev: any, { name, value }: any) => {
+    setFormValues({ ...formValues, [name]: value });
   }
 
   return (
@@ -61,7 +61,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       onOpen={() => setOpenModal(true)}
       open={openModal}
     >
-      <Modal.Header>{createMode ? "Adicionar Onça" : "Editar Onça"}</Modal.Header>
+      <Modal.Header>{createMode ? "Adicionar Skin" : "Editar Skin"}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form>
@@ -69,7 +69,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
               {/* {!createMode ?
                 <Form.Input
                   fluid
-                  id="id"
+                  name="id"
                   label='Id'
                   value={formValues.id}
                   onChange={handleChange}
@@ -78,17 +78,19 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
                 : null} */}
               <Form.Input
                 fluid
-                id="nameSkin"
+                name="nameSkin"
                 label='Nome'
                 value={formValues.nameSkin}
                 onChange={handleChange}
                 placeholder='Nome'
               />
-              <Form.Input
+              <Form.Dropdown
                 fluid
-                id="imgSkin"
+                name="imgSkin"
                 label='Url da imagem'
                 value={formValues.imgSkin}
+                options={friendOptions}
+                selection
                 onChange={handleChange}
                 placeholder='Url da imagem'
               />
@@ -115,4 +117,43 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
 }
 
 export default SkinDetail
+
+const friendOptions = [
+  {
+    key: 'Jenny Hess',
+    text: 'Jenny Hess',
+    value: 'Jenny Hess',
+    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+  },
+  {
+    key: 'Elliot Fu',
+    text: 'Elliot Fu',
+    value: 'Elliot Fu',
+    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+  },
+  {
+    key: 'Stevie Feliciano',
+    text: 'Stevie Feliciano',
+    value: 'Stevie Feliciano',
+    image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
+  },
+  {
+    key: 'Christian',
+    text: 'Christian',
+    value: 'Christian',
+    image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
+  },
+  {
+    key: 'Matt',
+    text: 'Matt',
+    value: 'Matt',
+    image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
+  },
+  {
+    key: 'Justen Kitsune',
+    text: 'Justen Kitsune',
+    value: 'Justen Kitsune',
+    image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
+  },
+]
 

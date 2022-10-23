@@ -21,13 +21,21 @@
         background: #314115;
         padding: 20px;
 
-        
+
         .home-user-icons {
             h1 {
                 font-style: normal;
                 font-weight: 800;
                 font-size: 30px;
                 color: rgba(255, 255, 255, 0.7);
+            }
+
+            .img-onca-base {
+                border: none;
+                background-image: url(../../assets/logoOnca.jpeg);
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-radius: 50%;
             }
         }
 

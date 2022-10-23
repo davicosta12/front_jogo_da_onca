@@ -3,7 +3,7 @@ import {
   useNavigate,
   Link
 } from "react-router-dom";
-import { Form, Button, Input, Header } from 'semantic-ui-react';
+import { Form, Button, Input } from 'semantic-ui-react';
 import AuthService from '../../Services/AuthService/Auth';
 import './SignIn.scss';
 
@@ -28,15 +28,15 @@ const SignIn: FunctionComponent<Props> = (props) => {
     <div className='login-container flex' >
 
       <div className='w-full img-background-left flex-column justify-content-center align-items-center'>
-        <Header as='h1' className='login-title-left'>Jogo da onça</Header>
+        <h1 className='login-title-left'>Jogo da onça</h1>
         <div className='flex justify-content-center align-items-center'>
-          <img className='img-onca-base' height={360} width={360}></img>
+          <img className='img-onca-base' height={250} width={250}></img>
         </div>
       </div>
 
       <div className='w-full img-background-right flex justify-content-center align-items-center'>
         <div>
-          <Header as='h1' className='login-title-right'>Seja bem vindo !</Header>
+          <h1 className='login-title-right'>Seja bem vindo !</h1>
 
           <h3 className='text-center login-subtitle-right'>Acesse sua conta</h3>
 
@@ -62,7 +62,7 @@ const SignIn: FunctionComponent<Props> = (props) => {
             </Form.Field>
 
             <div className='flex justify-content-center mt-2'>
-              <Button onClick={handleSignIn} className="login-entrar">Entrar</Button>
+              <Button onClick={handleSignIn} className="p-button-signInAndSignUp">Entrar</Button>
             </div>
             <div className='flex justify-content-center mt-2'>
               <Link to="/signup" className='login-signUp-btn'>Criar conta</Link>

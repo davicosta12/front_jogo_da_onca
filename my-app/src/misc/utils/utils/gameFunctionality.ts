@@ -1,0 +1,470 @@
+import $ from 'jquery';
+
+let conta: number = -1;
+let position: any[] = [];
+
+for (let i = 0; i <= 6; i++) {
+    for (let j = 0; j <= 4; j++) {
+        if ((i == 5 && j == 0) || (i == 5 && j == 4) || (i == 6 && j == 0) || (i == 6 && j == 4)) {
+            continue
+        }
+        conta++;
+        position[conta] = [i, j];
+    }
+}
+
+//listando as posições criadas    
+for (let num = 0; num <= 30; num++) {
+    console.log("position(" + num + "): " + position[num]);
+}
+
+//iniciando e controlando as posições do tabuleiro *positionIsFree[0] até positionIsFree[30] (true ou false)
+let positionIsFree: any = [];
+for (let i = 0; i <= 14; i++) {
+    positionIsFree[i] = false;
+}
+for (let i = 15; i <= 30; i++) {
+    positionIsFree[i] = true;
+}
+
+//estabelecendo os possiveis movimentos
+let canMove = [[[1, 2], [6, 12], [5, 10]],//0
+[[0], [2, 3], [6, 11]],//1
+[[3, 4], [1, 0], [8, 14], [7, 12], [6, 10]],
+[[4], [2, 1], [8, 13]],
+[[3, 2], [9, 14], [8, 12]],
+[[0], [6, 7], [10, 15]],
+[[0], [1], [2], [5], [7, 8], [10], [12, 18], [11, 16]],
+[[2], [8, 9], [6, 5], [12, 17]],
+[[3], [2], [4], [9], [14], [7, 6], [12, 16], [13, 18]],
+[[4], [8, 7], [14, 19]],
+[[5, 0], [6, 2], [11, 12], [15, 20], [16, 22]],
+[[6, 1], [12, 13], [10], [16, 21]],
+[[7, 2], [8, 4], [6, 0], [13, 14], [11, 10], [18, 24], [16, 20], [17, 22]],
+[[8, 3], [12, 11], [14], [18, 23]],
+[[9, 4], [8, 2], [13, 12], [19, 24], [18, 22]],
+[[10, 5], [16, 17], [20]],
+[[10], [11, 6], [12, 8], [15], [17, 18], [20], [21], [22, 27]],
+[[12, 7], [16, 15], [18, 19], [22, 26]],
+[[13, 8], [12, 6], [14], [17, 16], [19], [14], [23], [22, 25]], //18
+[[14, 9], [18, 17], [24]],
+[[15, 10], [16, 12], [21, 22]],/*************/
+[[16, 11], [20], [22, 23]],
+[[17, 12], [16, 10], [18, 14], [21, 20], [23, 24], [25, 28], [27, 30], [26, 29]],
+[[18, 13], [24], [22, 21]],
+[[19, 14], [18, 12], [23, 22]],
+[[22, 18], [28], [26, 27]],
+[[22, 17], [29], [27], [25], [29]],
+[[22, 16], [30], [26, 25]],
+[[25, 22], [29, 30]],
+[[28], [30], [26, 22]],
+[[27, 22], [29, 28]]];  /*esta lista devolve as possiveis posições de movimento a partir 
+                da posição atual dada. Ex: canMove[0] dá as possiveis posições de 
+                destino a partir da posição 0.*/
+
+//colocando as peças no tabuleiro   
+let initiate = function () {
+    $("#target").removeClass("point");
+    $("#target").addClass("target_point");
+    $("#c00").removeClass("point");
+    $("#c00").addClass("soldier");
+    $("#c01").removeClass("point");
+    $("#c01").addClass("soldier");
+    $("#c02").removeClass("point");
+    $("#c02").addClass("soldier");
+    $("#c03").removeClass("point");
+    $("#c03").addClass("soldier");
+    $("#c04").removeClass("point");
+    $("#c04").addClass("soldier");
+    $("#c05").removeClass("point");
+    $("#c05").addClass("soldier");
+    $("#c06").removeClass("point");
+    $("#c06").addClass("soldier");
+    $("#c07").removeClass("point");
+    $("#c07").addClass("soldier");
+    $("#c08").removeClass("point");
+    $("#c08").addClass("soldier");
+    $("#c09").removeClass("point");
+    $("#c09").addClass("soldier");
+    $("#c10").removeClass("point");
+    $("#c10").addClass("soldier");
+    $("#c11").removeClass("point");
+    $("#c11").addClass("soldier");
+    $("#c12").removeClass("point");
+    $("#c12").addClass("monster");
+    $("#c13").removeClass("point");
+    $("#c13").addClass("soldier");
+    $("#c14").removeClass("point");
+    $("#c14").addClass("soldier");
+}
+
+function wait(time: any): Promise<any> {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(null);
+        }, time);
+    });
+}
+
+//controlando os movimentos do jogador
+let movement: any[] = [];//moviment é um array que recebe posição de origem e posição de destino, conforme a jogada selecionada
+
+//mostrando o soldado selecionado e controlando origem e destino
+let select = function (value: any) {
+
+    let test = "#c" + value;
+    //console.log(monsterTest);
+    if ((movement.length == 0) && ($(test).hasClass("soldier"))) {
+        let options: any = canMove[parseInt(value)];
+        console.log(options);
+        for (let i = 0; i < options.length; i++) {
+            if (positionIsFree[parseInt(options[i][0])] == true) {
+                movement.push(value);
+                break;
+            }
+        }
+    }
+
+    if ((movement.length == 1) && ($(test).hasClass("point"))) {
+        movement.push(value);
+        if (!verifyMovement(movement)) {
+            movement.pop();
+        }
+    }
+
+    console.log(movement);
+
+    if ((movement.length == 1) && (positionIsFree[parseInt(value)] == false)) {
+        let origin = "#c" + movement[0];
+        $(origin).removeClass("soldier");
+        $(origin).addClass("soldierSelect");
+    }
+    if (movement.length == 2) {
+
+        if (verifyMovement(movement)) {
+            moveSoldier(movement); // movimenta o soldado
+            //console.log("movimento possível " + movement);
+        }
+        else if (!(positionIsFree[parseInt(movement[0])])) {
+            console.log("movimento não permitido");
+            let origin = "#c" + movement[0];
+            $(origin).removeClass("soldierSelect");
+            $(origin).addClass("soldier");
+        } // aqui a seleção é tirada da origem porque o movimento não é permitido
+
+        movement = [];
+        //  console.log("antes do monstro"+ movement);
+
+        //Aqui é a vez do monstro atacar...
+        // setTimeout(monsterAttack, 1000)
+    }
+};
+
+// const monsterAttack = () => {
+//     let test = "#c" + "12";
+//     //console.log(monsterTest);
+//     if ((movement.length == 0) && ($(test).hasClass("soldier"))) {
+//         let options: any = canMove[parseInt("12")];
+//         console.log(options);
+//         for (let i = 0; i < options.length; i++) {
+//             if (positionIsFree[parseInt(options[i][0])] == true) {
+//                 movement.push("12");
+//                 break;
+//             }
+//         }
+//     }
+// }
+
+//mudando o soldado de posição
+let moveSoldier = function (movement: any) {
+
+    let origin = "#c" + movement[0];
+    //console.log(origin);
+
+    let destiny = "#c" + movement[1];
+    //console.log(destiny);
+
+
+    //Se há um soldado na origem e o destino está livre
+    if ((!(positionIsFree[parseInt(movement[0])])) && (positionIsFree[parseInt(movement[1])])) {
+        $(origin).removeClass("soldierSelect");
+        $(origin).addClass("point");
+        $(destiny).removeClass("point");
+        $(destiny).addClass("soldier");
+        positionIsFree[parseInt(movement[0])] = true;
+        positionIsFree[parseInt(movement[1])] = false;
+        //  console.log("movimento validado na linha 187");
+
+    } else if (!(positionIsFree[parseInt(movement[0])])) {
+        let origin = "#c" + movement[0];
+        $(origin).removeClass("soldierSelect");
+        $(origin).addClass("soldier");
+        console.log("movimento nao permitido linha 191"); //aqui o movimento não é válido se o destino não estiver livre.
+
+    }
+}
+
+function verifyMovement(movement: any) {
+
+    let origin = parseInt(movement[0]);
+    let destiny = parseInt(movement[1]);
+
+    if (((((position[destiny][0] - position[origin][0]) ** 2 + (position[destiny][1] - position[origin][1]) ** 2) === 1) ||
+
+
+        ((((position[destiny][0] - position[origin][0]) ** 2 + (position[destiny][1] - position[origin][1]) ** 2) === 2) && (((position[origin][0] % 2 === 0) && (position[origin][1] % 2 === 0)) || ((position[origin][0] % 2 === 1) && (position[origin][1] % 2 === 1)))))
+
+        &&
+
+        (!(((position[origin][0] === 4) && ((position[origin][1] === 0) || (position[origin][1] === 1) || (position[origin][1] === 3) || (position[origin][1] === 4))) && (position[destiny][0] === 5)))
+
+        &&
+
+        (!(((position[origin][0] === 5) && (position[origin][1] === 1)) && ((position[destiny][0] === 4) && ((position[destiny][1] === 0) || (position[destiny][1] === 1)))))
+
+        &&
+
+        (!(((position[origin][0] === 5) && (position[origin][1] === 3)) && ((position[destiny][0] === 4) && ((position[destiny][1] === 3) || (position[destiny][1] === 4)))))
+
+        &&
+
+        (!(((position[origin][0] == 5) && ((position[origin][1] == 1) || (position[origin][1] == 3))) && ((position[destiny][0] == 6) && (position[destiny][1] == 2))))
+
+        &&
+
+        (!(((position[destiny][0] == 5) && ((position[destiny][1] == 1) || (position[destiny][1] == 3))) && ((position[origin][0] == 6) && (position[origin][1] == 2))))
+
+        &&
+
+        (origin != destiny)
+
+    ) { return true }
+    else { return false };
+}
+
+$(document).ready(function () {
+
+    $("#b00").click(function () {
+        $(this).hide();
+        setTimeout(initiate, 400)
+    });
+
+    $("#c00").click(function () {
+        //$(this).hide();
+        let val = "00";
+        //  console.log(val);
+        select(val);
+    });
+
+    $("#c01").click(function () {
+
+        let val = "01";
+        console.log(val);
+        select(val);
+
+    });
+
+    $("#c02").click(function () {
+
+        let val = "02";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c03").click(function () {
+        //$(this).hide();
+        let val = "03";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c04").click(function () {
+        //$(this).hide();
+        let val = "04";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c05").click(function () {
+        //$(this).hide();
+        let val = "05";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c06").click(function () {
+        //$(this).hide();
+        let val = "06";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c07").click(function () {
+        //$(this).hide();
+        let val = "07";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c08").click(function () {
+        //$(this).hide();
+        let val = "08";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c09").click(function () {
+        //$(this).hide();
+        let val = "09";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c10").click(function () {
+        //$(this).hide();
+        let val = "10";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c11").click(function () {
+        //$(this).hide();
+        let val = "11";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c12").click(function () {
+        //$(this).hide();
+        let val = "12";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c13").click(function () {
+        //$(this).hide();
+        let val = "13";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c14").click(function () {
+        //$(this).hide();
+        let val = "14";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c15").click(function () {
+        //$(this).hide();
+        let val = "15";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c16").click(function () {
+        //$(this).hide();
+        let val = "16";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c17").click(function () {
+        //$(this).hide();
+        let val = "17";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c18").click(function () {
+        //$(this).hide();
+        let val = "18";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c19").click(function () {
+        //$(this).hide();
+        let val = "19";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c20").click(function () {
+        //$(this).hide();
+        let val = "20";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c21").click(function () {
+        //$(this).hide();
+        let val = "21";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c22").click(function () {
+        //$(this).hide();
+        let val = "22";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c23").click(function () {
+        //$(this).hide();
+        let val = "23";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c24").click(function () {
+        //$(this).hide();
+        let val = "24";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c25").click(function () {
+        //$(this).hide();
+        let val = "25";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c26").click(function () {
+        //$(this).hide();
+        let val = "26";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c27").click(function () {
+        //$(this).hide();
+        let val = "27";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c28").click(function () {
+        //$(this).hide();
+        let val = "28";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c29").click(function () {
+        //$(this).hide();
+        let val = "29";
+        console.log(val);
+        select(val);
+    });
+
+    $("#c30").click(function () {
+        //$(this).hide();
+        let val = "30";
+        console.log(val);
+        select(val);
+    });
+
+});

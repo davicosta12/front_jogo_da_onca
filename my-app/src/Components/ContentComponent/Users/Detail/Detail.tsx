@@ -57,8 +57,8 @@ const UserDetail: FunctionComponent<Props> = (props) => {
       : onUpdate(values);
   }
 
-  const handleChange = (ev: any) => {
-    setFormValues({ ...formValues, [ev.target.id]: ev.target.value })
+  const handleChange = (ev: any, { name, value }: any) => {
+    setFormValues({ ...formValues, [name]: value });
   }
 
   return (
@@ -73,13 +73,15 @@ const UserDetail: FunctionComponent<Props> = (props) => {
           <Form>
             <Form.Group widths='equal'>
               <Form.Input
-                fluid label='Nome'
+                label='Nome'
+                name='nome'
                 value={formValues.nome}
                 onChange={handleChange}
                 placeholder='Nome'
               />
               <Form.Input
-                fluid label='Senha'
+                label='Senha'
+                name='senha'
                 value={formValues.senha}
                 onChange={handleChange}
                 placeholder='Senha'
@@ -87,28 +89,30 @@ const UserDetail: FunctionComponent<Props> = (props) => {
             </Form.Group>
             <Form.Group widths='equal'>
               <Form.Input
-                fluid label='Email'
+                label='Email'
+                name='e_mail'
                 value={formValues.e_mail}
                 onChange={handleChange}
                 placeholder='Email'
               />
-              <Form.Select
-                fluid
+              <Form.Dropdown
+                name='icone'
                 value={formValues.icone}
                 onChange={handleChange}
                 label='Ícones'
-                options={options}
+                options={friendOptions}
+                selection
                 placeholder='Ícones'
               />
             </Form.Group>
             {/* <Form.Group widths='equal'>
               <Form.Input
-                fluid label='Número de Vitórias'
+                 label='Número de Vitórias'
                 value={nroWin}
                 onChange={(ev: any) => setNroWin(ev.value)}
                 placeholder='Número de Vitórias'
               />
-              <Form.Input fluid label='Número de Derrotas'
+              <Form.Input  label='Número de Derrotas'
                 value={nroLose}
                 onChange={(ev: any) => setNroLose(ev.value)}
                 placeholder='Número de Derrotas'
@@ -137,8 +141,41 @@ const UserDetail: FunctionComponent<Props> = (props) => {
 
 export default UserDetail
 
-const options = [
-  { key: 'I1', text: 'Ícone 1', value: 'Ícone1' },
-  { key: 'I2', text: 'Ícone 2', value: 'Ícone2' },
-  { key: 'I3', text: 'Ícone 3', value: 'Ícone3' },
-];
+const friendOptions = [
+  {
+    key: 'Jenny Hess',
+    text: 'Jenny Hess',
+    value: 'Jenny Hess',
+    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+  },
+  {
+    key: 'Elliot Fu',
+    text: 'Elliot Fu',
+    value: 'Elliot Fu',
+    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+  },
+  {
+    key: 'Stevie Feliciano',
+    text: 'Stevie Feliciano',
+    value: 'Stevie Feliciano',
+    image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
+  },
+  {
+    key: 'Christian',
+    text: 'Christian',
+    value: 'Christian',
+    image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
+  },
+  {
+    key: 'Matt',
+    text: 'Matt',
+    value: 'Matt',
+    image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
+  },
+  {
+    key: 'Justen Kitsune',
+    text: 'Justen Kitsune',
+    value: 'Justen Kitsune',
+    image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
+  },
+]

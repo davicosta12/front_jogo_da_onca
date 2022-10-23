@@ -2,21 +2,22 @@ import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
-import { toastError, toastOptions } from '../../../misc/utils/utils';
-import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
-import SeasonService from '../../../Services/Season/SeasonService';
+import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
+import BoardService from '../../../Services/Board/BoardService';
+import GetBoardDto from '../../../Services/Board/dto/GetBoardDto';
 import { ActionTypes } from '../../reducer/reducer';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
-import SeasonDetail from './Detail/Detail';
-import './Season.scss';
+
+import './Board.scss';
+import BoardDetail from './Detail/Detail';
 
 interface Props {
 }
 
-const Season: FunctionComponent<Props> = (props) => {
+const Board: FunctionComponent<Props> = (props) => {
 
-  const [season, setSeason] = useState({} as GetSeasonDto);
+  const [board, setBoard] = useState({} as GetBoardDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
@@ -24,19 +25,19 @@ const Season: FunctionComponent<Props> = (props) => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const { state, dispatch } = useContext(ThemeContext);
 
-  const seasonService = new SeasonService();
+  const boardService = new BoardService();
 
   useEffect(() => {
-    getSeasons();
+    getBoards();
   }, []);
 
-  const getSeasons = async () => {
+  const getBoards = async () => {
     setIsLoading(true);
     try {
-      const _seasons = await seasonService.getSeasons();
+      const _boards = await boardService.getBoards();
       dispatch({
-        type: ActionTypes.ADD_SEASON,
-        payload: [..._seasons]
+        type: ActionTypes.ADD_BOARD,
+        payload: [..._boards]
       });
     }
     catch (err: any) {
@@ -47,11 +48,11 @@ const Season: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleCreateSeason = async (values: GetSeasonDto) => {
+  const handleCreateBoard = async (values: GetBoardDto) => {
     setIsLoadingForm(true);
     try {
-      await seasonService.createSeason(values);
-      getSeasons();
+      await boardService.createBoard(values);
+      getBoards();
       setOpenModal(false);
     }
     catch (err: any) {
@@ -62,11 +63,11 @@ const Season: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateSeason = async (values: GetSeasonDto) => {
+  const handleUpdateBoard = async (values: GetBoardDto) => {
     setIsLoadingForm(true);
     try {
-      await seasonService.updateSeason(values, +season.id);
-      getSeasons();
+      await boardService.updateBoard(values, +board.id);
+      getBoards();
       setOpenModal(false);
     }
     catch (err: any) {
@@ -77,11 +78,11 @@ const Season: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleDeleteSeason = async () => {
+  const handleDeleteBoard = async () => {
     setIsLoading(true);
     try {
-      await seasonService.deleteSeason(+season.id);
-      getSeasons();
+      await boardService.deleteBoard(+board.id);
+      getBoards();
       setOpenDeleteModal(false);
     }
     catch (err: any) {
@@ -94,18 +95,18 @@ const Season: FunctionComponent<Props> = (props) => {
 
   const handleAdd = () => {
     setOpenModal(true);
-    setSeason({} as GetSeasonDto);
+    setBoard({} as GetBoardDto);
     setCreateMode(true);
   }
 
-  const handleEdit = (season: GetSeasonDto) => {
+  const handleEdit = (board: GetBoardDto) => {
     setOpenModal(true);
-    setSeason(season);
+    setBoard(board);
     setCreateMode(false);
   }
 
-  const handleDelete = (season: GetSeasonDto) => {
-    setSeason(season);
+  const handleDelete = (board: GetBoardDto) => {
+    setBoard(board);
     setOpenDeleteModal(true);
   }
 
@@ -162,15 +163,15 @@ const Season: FunctionComponent<Props> = (props) => {
           <Loader content='Carregando...' />
         </Dimmer>
       </Segment>}
-      <div className='season-content'>
+      <div className='board-content'>
 
-        <div className='season-title'>Temporada</div>
+        <div className='board-title'>Tabuleiro</div>
 
-        <div className='linhaBox season-section mt-3 flex justify-content-end'>
+        <div className='linhaBox board-section mt-3 flex justify-content-end'>
           <Popup
             content='Atualizar'
             trigger={
-              <Button className='p-button-primary' icon onClick={() => getSeasons()}>
+              <Button className='p-button-primary' icon onClick={() => getBoards()}>
                 <Icon name='refresh' />
               </Button>
             }
@@ -182,37 +183,37 @@ const Season: FunctionComponent<Props> = (props) => {
           </Button>
         </div>
 
-        <div className='season-table mt-3'>
+        <div className='board-table mt-3'>
           <SemanticTable
-            data={state.seasons}
-            tableRows={createTableRow(state.seasons)}
+            data={state.boards}
+            tableRows={createTableRow(state.boards)}
             headers={headers}
             actions
           />
         </div>
 
-        <SeasonDetail
-          season={season}
+        <BoardDetail
+          board={board}
           openModal={openModal}
           createMode={createMode}
           setOpenModal={setOpenModal}
           loading={isLoadingForm}
-          onCreate={handleCreateSeason}
-          onUpdate={handleUpdateSeason}
+          onCreate={handleCreateBoard}
+          onUpdate={handleUpdateBoard}
         />
 
         <DeleteModal
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
-          subtitle='Deseja realmente excluir a temporada?'
-          onDelete={handleDeleteSeason}
+          subtitle='Deseja realmente excluir o tabuleiro?'
+          onDelete={handleDeleteBoard}
         />
       </div>
     </>
   );
 };
 
-export default Season;
+export default Board;
 
-const headers = ["ID", "Nome", "Data Inicial", "Data Final"];
+const headers = ["ID", "Nome", "Url da Imagem"];

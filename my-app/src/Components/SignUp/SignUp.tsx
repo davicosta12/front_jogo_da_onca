@@ -3,7 +3,7 @@ import {
   useNavigate,
   Link
 } from "react-router-dom";
-import { Form, Button, Input, Segment, Container, Header } from 'semantic-ui-react';
+import { Form, Button, Input, Segment } from 'semantic-ui-react';
 import './SignUp.scss';
 
 interface Props {
@@ -30,10 +30,12 @@ const SignUp: FunctionComponent<Props> = (props) => {
   return (
     <Segment className='signUp-container'>
       <div className='signUp-header'>
-        <Header as='h1'>Criar conta</Header>
+        <h1 className='login-title'>Criar conta</h1>
       </div>
       <div className='signUp-content'>
-        <Header as='h3' className='text-center'>Forneça suas informações</Header>
+        <div className='mb-3'>
+          <h3 className='login-subtitle text-center'>Forneça suas informações</h3>
+        </div>
         <Form>
           <Form.Field>
             <Input
@@ -71,9 +73,13 @@ const SignUp: FunctionComponent<Props> = (props) => {
             />
           </Form.Field>
 
-          <div className='flex justify-content-end'>
-            <Button onClick={handleBackPage}>Voltar</Button>
-            <Button onClick={handleSignUp}>Cadastrar</Button>
+          <div className='flex flex-wrap justify-content-end mt-2'>
+            <div className='flex justify-content-center align-items-center'>
+              <Button className='p-button-signInAndSignUp' onClick={handleBackPage}>Voltar</Button>
+            </div>
+            <div className='flex justify-content-center align-items-center'>
+              <Button className='p-button-signInAndSignUp' onClick={handleSignUp}>Cadastrar</Button>
+            </div>
           </div>
 
         </Form>

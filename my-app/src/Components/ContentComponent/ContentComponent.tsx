@@ -15,7 +15,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
 
   const handleActiveMenuItem = (path: string) => {
     navigate(`/config/${path}`);
-    setActiveItem('user');
+    setActiveItem(path);
     setVisible(false);
   }
 

@@ -1,57 +1,58 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
-import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
-import { ThemeContext } from '../../../App';
-import { toastError, toastOptions } from '../../../misc/utils/utils';
-import GetUserDto from '../../../Services/Users/dto/GetUserDto';
-import UserService from '../../../Services/Users/UserService';
-import { ActionTypes } from '../../reducer/reducer';
+import GetSkinDto from '../../../Services/Skins/dto/GetSkinDto';
+import SkinService from '../../../Services/Skins/SkinService';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
-import UserDetail from './Detail/Detail';
-import './Users.scss';
+import SkinDetail from './Detail/Detail';
+import { toast } from 'react-toastify';
+import './Skin.scss';
+import { ThemeContext } from '../../../App';
+import { ActionTypes } from '../../reducer/reducer';
+import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
 
 interface Props {
 }
 
-const Users: FunctionComponent<Props> = (props) => {
+const Skin: FunctionComponent<Props> = (props) => {
 
-  const [user, setUser] = useState({} as GetUserDto);
+  const [skin, setSkin] = useState({} as GetSkinDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
-  const { state, dispatch } = useContext(ThemeContext);
 
-  const userService = new UserService();
+  const { state, dispatch } = useContext(ThemeContext);
+  const skinService = new SkinService();
 
   useEffect(() => {
-    getUsers();
+    getSkins();
   }, []);
 
-  const getUsers = async () => {
+  const getSkins = async () => {
     setIsLoading(true);
     try {
-      const _users = await userService.getUsers();
+      const _skins = await skinService.getSkins();
       dispatch({
-        type: ActionTypes.ADD_USER,
-        payload: [..._users]
+        type: ActionTypes.ADD_SKIN,
+        payload: [..._skins]
       });
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
+      console.log(err);
     }
     finally {
       setIsLoading(false);
     }
   }
 
-  const handleCreateUser = async (values: GetUserDto) => {
+  const handleCreateSkin = async (values: GetSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await userService.createUser(values);
-      getUsers();
+      await skinService.createSkin(values);
+      getSkins();
       setOpenModal(false);
     }
     catch (err: any) {
@@ -62,11 +63,11 @@ const Users: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateUser = async (values: GetUserDto) => {
+  const handleUpdateSkin = async (values: GetSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await userService.updateUser(values, +user.id);
-      getUsers();
+      await skinService.updateSkin(values, +skin.id);
+      getSkins();
       setOpenModal(false);
     }
     catch (err: any) {
@@ -77,11 +78,11 @@ const Users: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleDeleteUser = async (user: GetUserDto) => {
+  const handleDeleteSkin = async () => {
     setIsLoading(true);
     try {
-      await userService.deleteUser(+user.id);
-      getUsers();
+      await skinService.deleteSkin(+skin.id);
+      getSkins();
       setOpenDeleteModal(false);
     }
     catch (err: any) {
@@ -94,17 +95,18 @@ const Users: FunctionComponent<Props> = (props) => {
 
   const handleAdd = () => {
     setOpenModal(true);
-    setUser({} as any);
+    setSkin({} as GetSkinDto);
     setCreateMode(true);
   }
 
-  const handleEdit = (user: any) => {
+  const handleEdit = (skin: GetSkinDto) => {
     setOpenModal(true);
-    setUser(user);
+    setSkin(skin);
     setCreateMode(false);
   }
 
-  const handleDelete = (user: any) => {
+  const handleDelete = (skin: GetSkinDto) => {
+    setSkin(skin);
     setOpenDeleteModal(true);
   }
 
@@ -112,17 +114,15 @@ const Users: FunctionComponent<Props> = (props) => {
     const itemsCell: any[] = [];
 
     for (const prop in item) {
-      if (!["senha"].includes(prop)) {
-        itemsCell.push(item[prop]);
-      }
+      itemsCell.push(item[prop]);
     }
 
     return (
       itemsCell.map(item =>
         <Table.Cell>
           {item}
-        </Table.Cell>
-      ));
+        </Table.Cell>)
+    );
 
   }
 
@@ -130,7 +130,7 @@ const Users: FunctionComponent<Props> = (props) => {
 
     return (
       data.map(d =>
-        <Table.Row key={d.id}>
+        <Table.Row>
           {createTableCell(d)}
 
           <Table.Cell collapsing>
@@ -158,56 +158,67 @@ const Users: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      {isLoading && <Segment className='segment-loader'>
-        <Dimmer active={isLoading}>
-          <Loader content='Carregando...' />
-        </Dimmer>
-      </Segment>}
+      {isLoading &&
+        <Segment className='segment-loader'>
+          <Dimmer active={isLoading}>
+            <Loader content='Carregando...' />
+          </Dimmer>
+        </Segment>}
+      <div className='skin-content'>
 
-      <div className='user-content'>
+        <div className='skin-title'>Skin</div>
 
-        <div className='user-title'>Usuário</div>
+        <div className='linhaBox skin-section mt-3 flex justify-content-end'>
+          <Popup
+            content='Atualizar'
+            trigger={
+              <Button className='p-button-primary' icon onClick={() => getSkins()}>
+                <Icon name='refresh' />
+              </Button>
+            }
+          />
 
-        <div className='linhaBox user-section mt-3 flex justify-content-end'>
-          <Button className='p-button-primary' icon>
-            <Icon name='refresh' />
-          </Button>
           <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
             <Icon name='plus' />
             Adicionar
           </Button>
         </div>
 
-        <div className='user-table mt-3'>
+        <div className='skin-table mt-3'>
           <SemanticTable
-            data={state.users}
-            tableRows={createTableRow(state.users)}
+            data={state.skins}
+            tableRows={createTableRow(state.skins)}
             headers={headers}
             actions
           />
         </div>
 
-        <UserDetail
-          user={user}
+        <SkinDetail
+          skin={skin}
           openModal={openModal}
           createMode={createMode}
-          loading={isLoadingForm}
-          onCreate={handleCreateUser}
-          onUpdate={handleUpdateUser}
           setOpenModal={setOpenModal}
+          loading={isLoadingForm}
+          onCreate={handleCreateSkin}
+          onUpdate={handleUpdateSkin}
         />
 
         <DeleteModal
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
-          subtitle='Deseja realmente excluir o usuário?'
+          subtitle='Deseja realmente excluir a skin?'
+          onDelete={handleDeleteSkin}
         />
       </div>
     </>
   );
 };
 
-export default Users;
+export default Skin;
 
-const headers = ["Id", "Nome", "Email", "Ícones", "N° de Vitórias", "N° de Derrotas"];
+const headers = ["ID", "Nome", "Url da Imagem"];
+
+
+
+

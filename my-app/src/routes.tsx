@@ -4,11 +4,11 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import Board from "./Components/ConfigsComponent/Board/Board";
-import ContentComponent from "./Components/ConfigsComponent/ContentComponent";
-import Season from "./Components/ConfigsComponent/Season/Season";
-import Skin from "./Components/ConfigsComponent/Skin/Skin";
-import Users from "./Components/ConfigsComponent/Users/Users";
+import Board from "./Components/ContentComponent/Board/Board";
+import ContentComponent from "./Components/ContentComponent/ContentComponent";
+import Season from "./Components/ContentComponent/Season/Season";
+import Skin from "./Components/ContentComponent/Skin/Skin";
+import Users from "./Components/ContentComponent/Users/Users";
 import Home from "./Components/Home/Home";
 import JaguarBoard from "./Components/JaguarBoard/JaguarBoard";
 import SignIn from "./Components/SignIn/SignIn";
