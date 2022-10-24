@@ -7,10 +7,6 @@ interface Props {
 
 const JaguarBoard: FunctionComponent<Props> = (props) => {
 
-  useEffect(() => {
-    MontarTabuleiro();
-  }, []);
-
   return (
     <div className='w-full'>
       <div className='jaguarBoard-container'>
@@ -29,6 +25,8 @@ const JaguarBoard: FunctionComponent<Props> = (props) => {
             <line id="tableline" x1="150" y1="750" x2="750" y2="150" />
             <line id="tableline" x1="900" y1="300" x2="900" y2="600" />
             {/* <circle classname="target_point" id="b00" cx="850" cy="200" r="15" stroke="white" stroke-width="2" fill="red" /> */}
+
+            {MontarTabuleiro()}
 
             {/* <circle className="point" id="c00" cx="150" cy="750" r="20" />
             <circle className="point" id="c01" cx="150" cy="600" r="20" />
@@ -64,7 +62,6 @@ const JaguarBoard: FunctionComponent<Props> = (props) => {
             <circle className="point" id="c30" cx="1050" cy="150" r="20" /> */}
           </svg>
         </section>
-
       </div>
     </div>
   );

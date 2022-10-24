@@ -1,44 +1,97 @@
-import $ from 'jquery';
-
-// let casa_selecionada = null;
-// let peca_selecionada = null;
-
 export const MontarTabuleiro = () => {
 
-  for (let i = 0; i < 6; i++) {
-    // $("#svgTable").append("<div id='linha_" + i.toString() + "' class='linha' >");
+  const gameTable = [];
 
-    for (let j = 0; j < 6; j++) {
+  for (let i = 0; i < 5; i++) {
+
+    for (let j = 0; j < 7; j++) {
+
+      if ((i === 0 && j === 5) || (i === 4 && j === 5) || (i === 1 && j === 6) || (i === 3 && j === 6)) {
+        continue
+      }
+
       const nome_casa = "casa_" + i.toString() + "_" + j.toString();
-      // var classe = (i % 2 == 0 ? (j % 2 == 0 ? "casa_branca" : "casa_preta") : (j % 2 != 0 ? "casa_branca" : "casa_preta"));
 
       let cx = "";
       let cy = "";
 
-      switch (i) {
-        case 0: cx = 150; break;
-        case 1: cx = 300; break;
-        case 2: cx = 450; break;
-        case 3: cx = 600; break;
-        case 4: cx = 750; break;
-        case 5: cx = 750; break;
-        default: break;
+      if (i < 5 && j < 5) {
+        switch (i) {
+          case 0: cx = 150; break;
+          case 1: cx = 300; break;
+          case 2: cx = 450; break;
+          case 3: cx = 600; break;
+          case 4: cx = 750; break;
+          default: break;
+        }
+
+        switch (j) {
+          case 0: cy = 750; break;
+          case 1: cy = 600; break;
+          case 2: cy = 450; break;
+          case 3: cy = 300; break;
+          case 4: cy = 150; break;
+          default: break;
+        }
+      }
+      else {
+        if (i === 1 && j === 5) {
+          cx = 900;
+          cy = 300;
+        }
+
+        if (i === 0 && j === 6) {
+          cx = 1050;
+          cy = 150;
+        }
+
+        if (i === 3 && j === 5) {
+          cx = 900;
+          cy = 600;
+        }
+
+        if (i === 4 && j === 6) {
+          cx = 1050;
+          cy = 750;
+        }
+
+        if (i === 2 && j === 5) {
+          cx = 900;
+          cy = 450;
+        }
+
+        if (i === 2 && j === 6) {
+          cx = 1050;
+          cy = 450;
+        }
       }
 
-      switch (j) {
-        case 0: cy = 750; break;
-        case 1: cy = 600; break;
-        case 2: cy = 450; break;
-        case 3: cy = 300; break;
-        case 4: cy = 150; break;
-        case 5: cy = 150; break;
-        default: break;
-      }
+      if (cx && cy) {
 
-      $("#svgTable").append(`<circle class="point" id=${nome_casa} cx=${cx} cy=${cy} r="20" />`)
+        if (i === 2 && j === 5) {
+          gameTable.push(<circle className="point" id="target" cx="900" cy="450" r="28" stroke="lime" stroke-width="4" />);
+        }
+
+        if (i === 2 && j === 2) {
+          gameTable.push(<circle onClick={handleClick} class="monster" id={nome_casa} cx={cx} cy={cy} r="20" />);
+        }
+
+        if (i < 3 && !(i === 2 && j === 2)) {
+          gameTable.push(<circle onClick={handleClick} class="soldier" id={nome_casa} cx={cx} cy={cy} r="20" />);
+        }
+        else {
+          gameTable.push(<circle onClick={handleClick} class="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
+        }
+      }
 
     }
   }
+
+  return gameTable;
+}
+
+const handleClick = (ev) => {
+  console.log(ev.target.id)
 }
 
   // $(".casa").click(function () {
