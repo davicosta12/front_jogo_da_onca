@@ -1,4 +1,4 @@
-export default interface GetSkinDto {
+export default interface GetDogSkinDto {
     id: string,
     nameSkin: string,
     imgSkin: string

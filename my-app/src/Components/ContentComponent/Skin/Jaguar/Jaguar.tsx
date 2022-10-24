@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../../App';
 import { toastError, toastOptions } from '../../../../misc/utils/utils/utils';
-import GetSkinDto from '../../../../Services/Skins/dto/GetSkinDto';
+import GetJaguarSkinDto from '../../../../Services/Skins/dto/GetJaguarSkinDto';
 import SkinService from '../../../../Services/Skins/SkinService';
 import { ActionTypes } from '../../../reducer/reducer';
 import DeleteModal from '../../../_commons/DeleteModal/DeleteModal';
@@ -14,9 +14,9 @@ import SkinDetail from './Detail/Detail';
 interface Props {
 }
 
-const Skin: FunctionComponent<Props> = (props) => {
+const JaguarSkin: FunctionComponent<Props> = (props) => {
 
-  const [skin, setSkin] = useState({} as GetSkinDto);
+  const [jaguarSkin, setJaguarSkin] = useState({} as GetJaguarSkinDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [createMode, setCreateMode] = useState(false);
@@ -33,9 +33,9 @@ const Skin: FunctionComponent<Props> = (props) => {
   const getSkins = async () => {
     setIsLoading(true);
     try {
-      const _skins = await skinService.getSkins();
+      const _skins = await skinService.getJaguarSkins();
       dispatch({
-        type: ActionTypes.ADD_SKIN,
+        type: ActionTypes.ADD_JAGUAR_SKIN,
         payload: [..._skins]
       });
     }
@@ -47,10 +47,10 @@ const Skin: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleCreateSkin = async (values: GetSkinDto) => {
+  const handleCreateSkin = async (values: GetJaguarSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await skinService.createSkin(values);
+      await skinService.createJaguarSkin(values);
       getSkins();
       setOpenModal(false);
     }
@@ -62,10 +62,10 @@ const Skin: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateSkin = async (values: GetSkinDto) => {
+  const handleUpdateSkin = async (values: GetJaguarSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await skinService.updateSkin(values, +skin.id);
+      await skinService.updateJaguarSkin(values, +jaguarSkin.id);
       getSkins();
       setOpenModal(false);
     }
@@ -80,7 +80,7 @@ const Skin: FunctionComponent<Props> = (props) => {
   const handleDeleteSkin = async () => {
     setIsLoading(true);
     try {
-      await skinService.deleteSkin(+skin.id);
+      await skinService.deleteJaguarSkin(+jaguarSkin.id);
       getSkins();
       setOpenDeleteModal(false);
     }
@@ -94,18 +94,18 @@ const Skin: FunctionComponent<Props> = (props) => {
 
   const handleAdd = () => {
     setOpenModal(true);
-    setSkin({} as GetSkinDto);
+    setJaguarSkin({} as GetJaguarSkinDto);
     setCreateMode(true);
   }
 
-  const handleEdit = (skin: GetSkinDto) => {
+  const handleEdit = (skin: GetJaguarSkinDto) => {
     setOpenModal(true);
-    setSkin(skin);
+    setJaguarSkin(skin);
     setCreateMode(false);
   }
 
-  const handleDelete = (skin: GetSkinDto) => {
-    setSkin(skin);
+  const handleDelete = (skin: GetJaguarSkinDto) => {
+    setJaguarSkin(skin);
     setOpenDeleteModal(true);
   }
 
@@ -183,15 +183,15 @@ const Skin: FunctionComponent<Props> = (props) => {
 
         <div className='dog-table mt-3'>
           <SemanticTable
-            data={state.skins}
-            tableRows={createTableRow(state.skins)}
+            data={state.jaguarSkins}
+            tableRows={createTableRow(state.jaguarSkins)}
             headers={headers}
             actions
           />
         </div>
 
         <SkinDetail
-          skin={skin}
+          skin={jaguarSkin}
           openModal={openModal}
           createMode={createMode}
           setOpenModal={setOpenModal}
@@ -204,7 +204,7 @@ const Skin: FunctionComponent<Props> = (props) => {
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
-          subtitle='Deseja realmente excluir a skin?'
+          subtitle='Deseja realmente excluir a skin da onça?'
           onDelete={handleDeleteSkin}
         />
       </div>
@@ -212,6 +212,6 @@ const Skin: FunctionComponent<Props> = (props) => {
   );
 };
 
-export default Skin;
+export default JaguarSkin;
 
 const headers = ["ID", "Nome", "Url da Imagem"];
