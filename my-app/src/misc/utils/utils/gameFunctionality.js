@@ -66,19 +66,19 @@ export const MontarTabuleiro = () => {
         }
       }
 
-      if (isTargetCircle()) {
+      if (isTargetCircle(i, j)) {
         gameTable.push(<circle className="point" id="target" cx="900" cy="450" r="28" stroke="lime" stroke-width="4" />);
       }
 
-      if (j < 3 && !isPecaMonster()) {
+      if (j < 3 && !isPecaMonster(i, j)) {
         gameTable.push(<circle onClick={handleClick} class="soldier" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
 
-      if (j >= 3 && !isPecaMonster()) {
+      if (j >= 3 && !isPecaMonster(i, j)) {
         gameTable.push(<circle onClick={handleClick} class="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
 
-      if (isPecaMonster()) {
+      if (isPecaMonster(i, j)) {
         gameTable.push(<circle onClick={handleClick} class="monster" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
 
