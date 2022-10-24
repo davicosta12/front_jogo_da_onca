@@ -17,20 +17,20 @@ export const MontarTabuleiro = () => {
 
       if (i < 5 && j < 5) {
         switch (i) {
+          case 0: cy = 150; break;
+          case 1: cy = 300; break;
+          case 2: cy = 450; break;
+          case 3: cy = 600; break;
+          case 4: cy = 750; break;
+          default: break;
+        }
+
+        switch (j) {
           case 0: cx = 150; break;
           case 1: cx = 300; break;
           case 2: cx = 450; break;
           case 3: cx = 600; break;
           case 4: cx = 750; break;
-          default: break;
-        }
-
-        switch (j) {
-          case 0: cy = 750; break;
-          case 1: cy = 600; break;
-          case 2: cy = 450; break;
-          case 3: cy = 300; break;
-          case 4: cy = 150; break;
           default: break;
         }
       }
@@ -66,22 +66,20 @@ export const MontarTabuleiro = () => {
         }
       }
 
-      if (cx && cy) {
+      if (isTargetCircle()) {
+        gameTable.push(<circle className="point" id="target" cx="900" cy="450" r="28" stroke="lime" stroke-width="4" />);
+      }
 
-        if (i === 2 && j === 5) {
-          gameTable.push(<circle className="point" id="target" cx="900" cy="450" r="28" stroke="lime" stroke-width="4" />);
-        }
+      if (j < 3 && !isPecaMonster()) {
+        gameTable.push(<circle onClick={handleClick} class="soldier" id={nome_casa} cx={cx} cy={cy} r="20" />);
+      }
 
-        if (i === 2 && j === 2) {
-          gameTable.push(<circle onClick={handleClick} class="monster" id={nome_casa} cx={cx} cy={cy} r="20" />);
-        }
+      if (j >= 3 && !isPecaMonster()) {
+        gameTable.push(<circle onClick={handleClick} class="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
+      }
 
-        if (i < 3 && !(i === 2 && j === 2)) {
-          gameTable.push(<circle onClick={handleClick} class="soldier" id={nome_casa} cx={cx} cy={cy} r="20" />);
-        }
-        else {
-          gameTable.push(<circle onClick={handleClick} class="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
-        }
+      if (isPecaMonster()) {
+        gameTable.push(<circle onClick={handleClick} class="monster" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
 
     }
@@ -94,15 +92,10 @@ const handleClick = (ev) => {
   console.log(ev.target.id)
 }
 
-  // $(".casa").click(function () {
-  //   $("#" + casa_selecionada).removeClass("casa_selecionada");
-  //   casa_selecionada = $(this).attr("id");
-  //   $("#" + casa_selecionada).addClass("casa_selecionada");
-  //   $("#info_casa_selecionada").text(casa_selecionada);
+const isPecaMonster = (i, j) => {
+  return (i === 2 && j === 2);
+}
 
-  //   peca_selecionada = $("#" + casa_selecionada).children("img:first").attr("id");
-  //   if (peca_selecionada == null) {
-  //     peca_selecionada = "NENHUMA PECA SELECIONADA";
-  //   }
-  //   $("#info_peca_selecionada").text(peca_selecionada.toString());
-  // });
+const isTargetCircle = (i, j) => {
+  return (i === 2 && j === 5);
+}
