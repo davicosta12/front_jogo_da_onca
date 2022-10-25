@@ -1,19 +1,21 @@
-export const MontarTabuleiro = () => {
+import { Tabuleiro } from "./gameBoard/Tabuleiro";
 
-  const gameTable = [];
+export const renderGameBoard = (gameBoard: any, tab: Tabuleiro) => {
 
-  for (let i = 0; i < 5; i++) {
+  const pecas = [];
 
-    for (let j = 0; j < 7; j++) {
+  for (let i = 0; i < tab.linhas; i++) {
 
-      if ((i === 0 && j === 5) || (i === 4 && j === 5) || (i === 1 && j === 6) || (i === 3 && j === 6)) {
-        continue
+    for (let j = 0; j < tab.colunas; j++) {
+
+      if (gameBoard[i][j] === null) {
+        continue;
       }
 
       const nome_casa = "casa_" + i.toString() + "_" + j.toString();
-
-      let cx = "";
-      let cy = "";
+      
+      let cx = 0;
+      let cy = 0;
 
       if (i < 5 && j < 5) {
         switch (i) {
@@ -66,36 +68,25 @@ export const MontarTabuleiro = () => {
         }
       }
 
-      if (isTargetCircle(i, j)) {
-        gameTable.push(<circle className="point" id="target" cx="900" cy="450" r="28" stroke="lime" stroke-width="4" />);
+      if (gameBoard[i][j].tipo === 'D') {
+        pecas.push(<circle onClick={handleClick} className="soldier" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
-
-      if (j < 3 && !isPecaMonster(i, j)) {
-        gameTable.push(<circle onClick={handleClick} class="soldier" id={nome_casa} cx={cx} cy={cy} r="20" />);
+      else if (gameBoard[i][j].tipo === 'J') {
+        pecas.push(<circle onClick={handleClick} className="monster" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
-
-      if (j >= 3 && !isPecaMonster(i, j)) {
-        gameTable.push(<circle onClick={handleClick} class="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
+      else if (gameBoard[i][j] === 'T') {
+        pecas.push(<circle className="point" id="target" cx="900" cy="450" r="28" stroke="lime" strokeWidth={4} />);
+        pecas.push(<circle onClick={handleClick} className="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
-
-      if (isPecaMonster(i, j)) {
-        gameTable.push(<circle onClick={handleClick} class="monster" id={nome_casa} cx={cx} cy={cy} r="20" />);
+      else {
+        pecas.push(<circle onClick={handleClick} className="point" id={nome_casa} cx={cx} cy={cy} r="20" />);
       }
-
     }
   }
 
-  return gameTable;
+  return pecas;
 }
 
-const handleClick = (ev) => {
+const handleClick = (ev: any) => {
   console.log(ev.target.id)
-}
-
-const isPecaMonster = (i, j) => {
-  return (i === 2 && j === 2);
-}
-
-const isTargetCircle = (i, j) => {
-  return (i === 2 && j === 5);
 }
