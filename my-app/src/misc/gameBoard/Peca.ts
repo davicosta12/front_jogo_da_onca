@@ -3,7 +3,7 @@ import { Posicao } from "./Posicao";
 import { Tabuleiro } from "./Tabuleiro";
 
 export class Peca {
-  public posicao: Posicao | null; 
+  public posicao: Posicao | null;
   public cor: Cor;
   public qtdeMovimentos: number;
   public tab: Tabuleiro;
@@ -13,5 +13,10 @@ export class Peca {
     this.cor = _cor;
     this.tab = _tab;
     this.qtdeMovimentos = 0;
+
+  }
+
+  public incrementarQteMovimentos(): void {
+    this.qtdeMovimentos++;
   }
 }

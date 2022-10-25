@@ -34,6 +34,16 @@ export class Tabuleiro {
     p.posicao = pos;
   }
 
+  public retirarPeca(pos: Posicao): Peca | null {
+    if (this.pecaPos(pos) == null) {
+      return null;
+    }
+    const aux = this.pecaPos(pos);
+    aux.posicao = null;
+    this.pecas[pos.linha][pos.coluna] = null as any;
+    return aux;
+  }
+
   public posicaoValida(pos: Posicao): boolean {
     if (pos.linha < 0 || pos.linha >= this.linhas || pos.coluna < 0 || pos.coluna >= this.colunas) {
       return false;

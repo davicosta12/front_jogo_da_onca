@@ -1,17 +1,14 @@
-import { Cor } from "../gameBoard/Cor";
-import { Peca } from "../gameBoard/Peca";
-import { Tabuleiro } from "../gameBoard/Tabuleiro";
+import { Cor } from "../GameBoard/Cor";
+import { Peca } from "../GameBoard/Peca";
+import { Tabuleiro } from "../GameBoard/Tabuleiro";
 
 export class Jaguar extends Peca {
 
-  tipo: string;
-
   constructor(_tab: Tabuleiro, _cor: Cor) {
     super(_tab, _cor);
-    this.tipo = "J";
   }
 
-  public ToString(): string {
+  public renderString(): string {
     return `J`;
   }
 }
