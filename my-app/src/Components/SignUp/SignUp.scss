@@ -8,6 +8,14 @@
     }
 
     .signUp-content {
-        margin: 3em;     
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 3em;
+    }
+
+    .signUp-form-container {
+       
     }
 }
