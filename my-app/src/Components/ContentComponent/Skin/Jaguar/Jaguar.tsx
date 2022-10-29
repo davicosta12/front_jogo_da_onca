@@ -109,50 +109,27 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
-  const createTableCell = (item: any) => {
-    const itemsCell: any[] = [];
-
-    for (const prop in item) {
-      itemsCell.push(item[prop]);
-    }
-
+  const createActions = (skin: GetJaguarSkinDto) => {
     return (
-      itemsCell.map(item =>
-        <Table.Cell>
-          {item}
-        </Table.Cell>)
+      <>
+        <Popup
+          content='Editar'
+          trigger={
+            <Button icon onClick={() => handleEdit(skin)}>
+              <Icon name='edit' />
+            </Button>
+          }
+        />
+        <Popup
+          content='Remover'
+          trigger={
+            <Button color="red" icon onClick={() => handleDelete(skin)}>
+              <Icon name='trash' />
+            </Button>
+          }
+        />
+      </>
     );
-
-  }
-
-  const createTableRow = (data: GetJaguarSkinDto[]) => {
-
-    return (
-      data.map(d =>
-        <Table.Row key={d.idSkinOnca}>
-          {createTableCell(d)}
-
-          <Table.Cell collapsing>
-            <Popup
-              content='Editar'
-              trigger={
-                <Button icon onClick={() => handleEdit(d)}>
-                  <Icon name='edit' />
-                </Button>
-              }
-            />
-            <Popup
-              content='Remover'
-              trigger={
-                <Button color="red" icon onClick={() => handleDelete(d)}>
-                  <Icon name='trash' />
-                </Button>
-              }
-            />
-          </Table.Cell>
-
-        </Table.Row >)
-    )
   }
 
   return (
@@ -184,7 +161,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
         <div className='dog-table mt-3'>
           <SemanticTable
             data={state.jaguarSkins}
-            tableRows={createTableRow(state.jaguarSkins)}
+            tableActions={createActions}
             headers={headers}
             actions
           />

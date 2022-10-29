@@ -108,52 +108,27 @@ const Users: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
-  const createTableCell = (item: any) => {
-    const itemsCell: any[] = [];
-
-    for (const prop in item) {
-      if (!["senha"].includes(prop)) {
-        itemsCell.push(item[prop]);
-      }
-    }
-
+  const createActions = (user: GetUserDto) => {
     return (
-      itemsCell.map(item =>
-        <Table.Cell>
-          {item}
-        </Table.Cell>
-      ));
-
-  }
-
-  const createTableRow = (data: any[]) => {
-
-    return (
-      data.map(d =>
-        <Table.Row key={d.id}>
-          {createTableCell(d)}
-
-          <Table.Cell collapsing>
-            <Popup
-              content='Editar'
-              trigger={
-                <Button icon onClick={() => handleEdit(d)}>
-                  <Icon name='edit' />
-                </Button>
-              }
-            />
-            <Popup
-              content='Remover'
-              trigger={
-                <Button color="red" icon onClick={() => handleDelete(d)}>
-                  <Icon name='trash' />
-                </Button>
-              }
-            />
-          </Table.Cell>
-
-        </Table.Row >)
-    )
+      <>
+        <Popup
+          content='Editar'
+          trigger={
+            <Button icon onClick={() => handleEdit(user)}>
+              <Icon name='edit' />
+            </Button>
+          }
+        />
+        <Popup
+          content='Remover'
+          trigger={
+            <Button color="red" icon onClick={() => handleDelete(user)}>
+              <Icon name='trash' />
+            </Button>
+          }
+        />
+      </>
+    );
   }
 
   return (
@@ -181,7 +156,8 @@ const Users: FunctionComponent<Props> = (props) => {
         <div className='user-table mt-3'>
           <SemanticTable
             data={state.users}
-            tableRows={createTableRow(state.users)}
+            tableActions={createActions}
+            desactiveColumns={["senha"]}
             headers={headers}
             actions
           />

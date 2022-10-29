@@ -110,50 +110,28 @@ const Board: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
-  const createTableCell = (item: any) => {
-    const itemsCell: any[] = [];
 
-    for (const prop in item) {
-      itemsCell.push(item[prop]);
-    }
-
+  const createActions = (board: GetBoardDto) => {
     return (
-      itemsCell.map(item =>
-        <Table.Cell>
-          {item}
-        </Table.Cell>)
+      <>
+        <Popup
+          content='Editar'
+          trigger={
+            <Button icon onClick={() => handleEdit(board)}>
+              <Icon name='edit' />
+            </Button>
+          }
+        />
+        <Popup
+          content='Remover'
+          trigger={
+            <Button color="red" icon onClick={() => handleDelete(board)}>
+              <Icon name='trash' />
+            </Button>
+          }
+        />
+      </>
     );
-
-  }
-
-  const createTableRow = (data: GetBoardDto[]) => {
-console.log(data)
-    return (
-      data.map(d =>
-        <Table.Row>
-          {createTableCell(d)}
-
-          <Table.Cell collapsing>
-            <Popup
-              content='Editar'
-              trigger={
-                <Button icon onClick={() => handleEdit(d)}>
-                  <Icon name='edit' />
-                </Button>
-              }
-            />
-            <Popup
-              content='Remover'
-              trigger={
-                <Button color="red" icon onClick={() => handleDelete(d)}>
-                  <Icon name='trash' />
-                </Button>
-              }
-            />
-          </Table.Cell>
-
-        </Table.Row >)
-    )
   }
 
   return (
@@ -186,7 +164,7 @@ console.log(data)
         <div className='board-table mt-3'>
           <SemanticTable
             data={state.boards}
-            tableRows={createTableRow(state.boards)}
+            tableActions={createActions}
             headers={headers}
             actions
           />

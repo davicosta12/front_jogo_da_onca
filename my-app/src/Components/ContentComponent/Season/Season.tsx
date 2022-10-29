@@ -109,53 +109,27 @@ const Season: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
-  const createTableCell = (item: any) => {
-    const itemsCell: any[] = [];
-
-    for (const prop in item) {
-      if (!["skinCao", "skinOnca", "tabuleiro"].includes(prop)) {
-        itemsCell.push(item[prop]);
-      }
-    }
-
+  const createActions = (season: GetSeasonDto) => {
     return (
-      itemsCell.map(item =>
-        <Table.Cell>
-          {item}
-        </Table.Cell>)
+      <>
+        <Popup
+          content='Editar'
+          trigger={
+            <Button icon onClick={() => handleEdit(season)}>
+              <Icon name='edit' />
+            </Button>
+          }
+        />
+        <Popup
+          content='Remover'
+          trigger={
+            <Button color="red" icon onClick={() => handleDelete(season)}>
+              <Icon name='trash' />
+            </Button>
+          }
+        />
+      </>
     );
-
-  }
-
-  const createTableRow = (data: any[]) => {
-
-    console.log(data)
-    return (
-      data.map(d =>
-        <Table.Row>
-          {createTableCell(d)}
-
-          <Table.Cell collapsing>
-            <Popup
-              content='Editar'
-              trigger={
-                <Button icon onClick={() => handleEdit(d)}>
-                  <Icon name='edit' />
-                </Button>
-              }
-            />
-            <Popup
-              content='Remover'
-              trigger={
-                <Button color="red" icon onClick={() => handleDelete(d)}>
-                  <Icon name='trash' />
-                </Button>
-              }
-            />
-          </Table.Cell>
-
-        </Table.Row >)
-    )
   }
 
   return (
@@ -188,8 +162,9 @@ const Season: FunctionComponent<Props> = (props) => {
         <div className='season-table mt-3'>
           <SemanticTable
             data={state.seasons}
-            tableRows={createTableRow(state.seasons)}
+            tableActions={createActions}
             headers={headers}
+            desactiveColumns={["tabuleiro", "skinCao", "skinOnca"]}
             actions
           />
         </div>
