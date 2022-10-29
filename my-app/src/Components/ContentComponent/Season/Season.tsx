@@ -65,7 +65,7 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleUpdateSeason = async (values: GetSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      await seasonService.updateSeason(values, +season.id);
+      await seasonService.updateSeason(values, +season.idSeason);
       getSeasons();
       setOpenModal(false);
     }
@@ -80,7 +80,7 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleDeleteSeason = async () => {
     setIsLoading(true);
     try {
-      await seasonService.deleteSeason(+season.id);
+      await seasonService.deleteSeason(+season.idSeason);
       getSeasons();
       setOpenDeleteModal(false);
     }
@@ -113,7 +113,9 @@ const Season: FunctionComponent<Props> = (props) => {
     const itemsCell: any[] = [];
 
     for (const prop in item) {
-      itemsCell.push(item[prop]);
+      if (!["skinCao", "skinOnca", "tabuleiro"].includes(prop)) {
+        itemsCell.push(item[prop]);
+      }
     }
 
     return (
@@ -127,6 +129,7 @@ const Season: FunctionComponent<Props> = (props) => {
 
   const createTableRow = (data: any[]) => {
 
+    console.log(data)
     return (
       data.map(d =>
         <Table.Row>

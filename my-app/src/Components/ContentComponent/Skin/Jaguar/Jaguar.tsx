@@ -65,7 +65,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
   const handleUpdateSkin = async (values: GetJaguarSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await skinService.updateJaguarSkin(values, +jaguarSkin.id);
+      await skinService.updateJaguarSkin(values, +jaguarSkin.idSkinOnca);
       getSkins();
       setOpenModal(false);
     }
@@ -80,7 +80,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
   const handleDeleteSkin = async () => {
     setIsLoading(true);
     try {
-      await skinService.deleteJaguarSkin(+jaguarSkin.id);
+      await skinService.deleteJaguarSkin(+jaguarSkin.idSkinOnca);
       getSkins();
       setOpenDeleteModal(false);
     }
@@ -125,11 +125,11 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
 
   }
 
-  const createTableRow = (data: any[]) => {
+  const createTableRow = (data: GetJaguarSkinDto[]) => {
 
     return (
       data.map(d =>
-        <Table.Row>
+        <Table.Row key={d.idSkinOnca}>
           {createTableCell(d)}
 
           <Table.Cell collapsing>
@@ -214,4 +214,4 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
 
 export default JaguarSkin;
 
-const headers = ["ID", "Nome", "Url da Imagem"];
+const headers = ["ID", "Nome", "Imagem", "Temporada Associada"];

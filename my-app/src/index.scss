@@ -289,3 +289,7 @@ code {
   box-shadow: 0px 10px 15px #00000029;
   border-radius: 16px;
 }
+
+.disabled, .disabled>label {
+  opacity: .75 !important;
+}

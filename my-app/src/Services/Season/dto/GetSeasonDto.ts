@@ -1,8 +1,9 @@
 export default interface GetSeasonDto {
-    id: number,
-    name_season: string,
+    idSeason: number,
+    nameSeason: string,
     inicio: string,
     fim: string,
-    tabuleiro_id: number,
-    skin_id: number
+    tabuleiro: number,
+    skinCao: number,
+    skinOnca: number
 }

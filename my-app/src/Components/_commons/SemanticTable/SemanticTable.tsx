@@ -30,7 +30,7 @@ const SemanticTable: FunctionComponent<Props> = (props) => {
       <Table.Footer>
 
         <Table.Row>
-          <Table.HeaderCell colSpan={headers.length + 1}>
+          <Table.HeaderCell colSpan={headers.length + 2}>
             <Pagination
               boundaryRange={0}
               defaultActivePage={1}

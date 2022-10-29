@@ -1,3 +1,8 @@
 .configs-Component {
     //background-image: url(../../assets/fundoVerde.png) !important;
+    
+    .black.tie.icon:before {
+        background: 0 0 !important;
+        color: white !important;
+    }
 }

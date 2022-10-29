@@ -1,10 +1,14 @@
 import { FunctionComponent, useEffect } from 'react';
 import $ from 'jquery';
+
+
+import './JaguarBoard.scss';
+
 import { Partida } from '../../misc/GameBoard/Partida';
 import { Tela } from '../../misc/GameBoard/Tela';
-import './JaguarBoard.scss';
 import { Peca } from '../../misc/GameBoard/Peca';
 import { Posicao } from '../../misc/GameBoard/Posicao';
+
 
 interface Props {
 }
@@ -16,11 +20,9 @@ const JaguarBoard: FunctionComponent<Props> = (props) => {
 
   let partida = new Partida();
 
-  useEffect(() => {
-
-  }, []);
-
   const printTabuleiro = () => {
+
+    debugger
 
     const tabuleiro = Tela.CriarTabuleiro(partida);
     const pecas = [];

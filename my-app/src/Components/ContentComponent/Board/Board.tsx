@@ -66,7 +66,7 @@ const Board: FunctionComponent<Props> = (props) => {
   const handleUpdateBoard = async (values: GetBoardDto) => {
     setIsLoadingForm(true);
     try {
-      await boardService.updateBoard(values, +board.id);
+      await boardService.updateBoard(values, +board.idTabuleiro);
       getBoards();
       setOpenModal(false);
     }
@@ -81,7 +81,7 @@ const Board: FunctionComponent<Props> = (props) => {
   const handleDeleteBoard = async () => {
     setIsLoading(true);
     try {
-      await boardService.deleteBoard(+board.id);
+      await boardService.deleteBoard(+board.idTabuleiro);
       getBoards();
       setOpenDeleteModal(false);
     }
@@ -126,8 +126,8 @@ const Board: FunctionComponent<Props> = (props) => {
 
   }
 
-  const createTableRow = (data: any[]) => {
-
+  const createTableRow = (data: GetBoardDto[]) => {
+console.log(data)
     return (
       data.map(d =>
         <Table.Row>
@@ -216,4 +216,4 @@ const Board: FunctionComponent<Props> = (props) => {
 
 export default Board;
 
-const headers = ["ID", "Nome", "Url da Imagem"];
+const headers = ["ID", "Imagem", "Nome", "Temporada Associada"];

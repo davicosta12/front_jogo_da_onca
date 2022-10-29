@@ -1,5 +1,6 @@
 import { Partida } from "./Partida";
 
+
 export class Tela {
 
   public static CriarTabuleiro(_partida: Partida): any[][] {

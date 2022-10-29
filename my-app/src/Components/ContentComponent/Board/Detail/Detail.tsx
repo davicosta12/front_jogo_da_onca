@@ -13,9 +13,8 @@ interface Props {
 }
 
 const INITIAL_FORM_VALUES = {
-  id: 0,
-  name_tabuleiro: '',
-  img_tabuleiro: ''
+  nameTabuleiro: '',
+  imgTabuleiro: ''
 } as GetBoardDto;
 
 const BoardDetail: FunctionComponent<Props> = (props) => {
@@ -32,11 +31,12 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
   } = props;
 
   useEffect(() => {
-    if (board?.id) {
+    if (board?.idTabuleiro) {
       setFormValues({
-        id: board.id,
-        name_tabuleiro: board.name_tabuleiro,
-        img_tabuleiro: board.img_tabuleiro
+        idTabuleiro: board.idTabuleiro,
+        nameTabuleiro: board.nameTabuleiro,
+        imgTabuleiro: board.imgTabuleiro,
+        season: board.season
       });
     } else {
       setFormValues(INITIAL_FORM_VALUES);
@@ -64,33 +64,27 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
         <Modal.Description>
           <Form>
             <Form.Group widths='equal'>
-              {/* {!createMode ?
-                <Form.Input
-                  fluid
-                  name="id"
-                  label='Id'
-                  value={formValues.id}
-                  onChange={handleChange}
-                  placeholder='Id'
-                />
-                : null} */}
               <Form.Input
                 fluid
-                name="name_tabuleiro"
+                name="nameTabuleiro"
                 label='Nome'
-                value={formValues.name_tabuleiro}
+                value={formValues.nameTabuleiro}
                 onChange={handleChange}
                 placeholder='Nome'
+                error={!formValues.nameTabuleiro}
+                required
               />
               <Form.Dropdown
                 fluid
-                name="img_tabuleiro"
-                label='Url da imagem'
-                value={formValues.img_tabuleiro}
+                name="imgTabuleiro"
+                label='Imagem do Tabuleiro'
+                value={formValues.imgTabuleiro}
                 options={friendOptions}
                 selection
                 onChange={handleChange}
-                placeholder='Url da imagem'
+                placeholder='Imagem do Tabuleiro'
+                error={!formValues.imgTabuleiro}
+                required
               />
             </Form.Group>
           </Form>
@@ -106,7 +100,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.name_tabuleiro}
+          disabled={!formValues.nameTabuleiro}
           positive
         />
       </Modal.Actions>

@@ -66,7 +66,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
   const handleUpdateSkin = async (values: GetDogSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await skinService.updateDogSkin(values, +dogSkin.id);
+      await skinService.updateDogSkin(values, +dogSkin.idSkinCao);
       getSkins();
       setOpenModal(false);
     }
@@ -81,7 +81,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
   const handleDeleteSkin = async () => {
     setIsLoading(true);
     try {
-      await skinService.deleteDogSkin(+dogSkin.id);
+      await skinService.deleteDogSkin(+dogSkin.idSkinCao);
       getSkins();
       setOpenDeleteModal(false);
     }
@@ -215,4 +215,4 @@ const DogSkin: FunctionComponent<Props> = (props) => {
 
 export default DogSkin;
 
-const headers = ["ID", "Nome", "Url da Imagem"];
+const headers = ["ID", "Nome", "Url da Imagem", "Temporada Associada"];

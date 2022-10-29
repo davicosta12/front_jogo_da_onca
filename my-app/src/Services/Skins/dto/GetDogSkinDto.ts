@@ -1,5 +1,6 @@
 export default interface GetDogSkinDto {
-    id: string,
-    nameSkin: string,
-    imgSkin: string
+    idSkinCao: number,
+    nameSkinCao: string,
+    imgSkinCao: string,
+    season: any
 }

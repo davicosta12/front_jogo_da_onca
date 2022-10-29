@@ -1,9 +1,11 @@
+import { useContext, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Navigate
 } from "react-router-dom";
+import { ThemeContext } from "./App";
 import Board from "./Components/ContentComponent/Board/Board";
 import ContentComponent from "./Components/ContentComponent/ContentComponent";
 import Season from "./Components/ContentComponent/Season/Season";
@@ -14,6 +16,7 @@ import Home from "./Components/Home/Home";
 import JaguarBoard from "./Components/JaguarBoard/JaguarBoard";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
+import GetGlobalParamsHelper from "./helpers/GetGlobalParamsHelper";
 import { Tabuleiro } from "./misc/GameBoard/Tabuleiro";
 
 import { isAuthenticated } from "./Services/AuthService/Auth";
@@ -63,11 +66,11 @@ const NavigationRoutes = () => (
       }>
       </Route>
 
-      <Route path="/config/user" element={
+      {/* <Route path="/config/user" element={
         <PrivateContentComponent redirectTo='/'>
           <Users />
         </PrivateContentComponent>}>
-      </Route>
+      </Route> */}
 
       <Route path="/config/season" element={
         <PrivateContentComponent redirectTo='/'>

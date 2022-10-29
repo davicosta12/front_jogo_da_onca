@@ -2,6 +2,7 @@ import { Cor } from "./Cor";
 import { Posicao } from "./Posicao";
 import { Tabuleiro } from "./Tabuleiro";
 
+
 export class Peca {
   public posicao: Posicao | null;
   public cor: Cor;

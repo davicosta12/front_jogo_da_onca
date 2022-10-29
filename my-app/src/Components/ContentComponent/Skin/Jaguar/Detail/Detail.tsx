@@ -1,13 +1,13 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
-import GetSkinDto from '../../../../../Services/Skins/dto/GetDogSkinDto';
+import GetJaguarSkinDto from '../../../../../Services/Skins/dto/GetJaguarSkinDto';
 
 interface Props {
-  skin: GetSkinDto;
+  skin: GetJaguarSkinDto;
   openModal: boolean;
   createMode: boolean;
-  onCreate: (values: GetSkinDto) => void;
-  onUpdate: (values: GetSkinDto) => void;
+  onCreate: (values: GetJaguarSkinDto) => void;
+  onUpdate: (values: GetJaguarSkinDto) => void;
   loading?: boolean;
   setOpenModal: any;
 }
@@ -15,10 +15,9 @@ interface Props {
 const SkinDetail: FunctionComponent<Props> = (props) => {
 
   const [formValues, setFormValues] = useState({
-    id: '',
-    imgSkin: '',
-    nameSkin: ''
-  } as GetSkinDto);
+    imgSkinOnca: '',
+    nameSkinOnca: ''
+  } as GetJaguarSkinDto);
 
   const {
     skin,
@@ -30,22 +29,22 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
   } = props;
 
   useEffect(() => {
-    if (skin?.id) {
+    if (skin?.idSkinOnca) {
       setFormValues({
-        id: skin.id,
-        imgSkin: skin.imgSkin,
-        nameSkin: skin.nameSkin
+        idSkinOnca: skin.idSkinOnca,
+        season: skin.season,
+        imgSkinOnca: skin.imgSkinOnca,
+        nameSkinOnca: skin.nameSkinOnca
       });
     } else {
       setFormValues({
-        id: '',
-        imgSkin: '',
-        nameSkin: ''
-      } as GetSkinDto);
+        imgSkinOnca: '',
+        nameSkinOnca: ''
+      } as GetJaguarSkinDto);
     }
   }, [skin, openModal]);
 
-  const handleSubmit = (values: GetSkinDto) => {
+  const handleSubmit = (values: GetJaguarSkinDto) => {
     createMode
       ? onCreate(values)
       : onUpdate(values);
@@ -61,40 +60,45 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       onOpen={() => setOpenModal(true)}
       open={openModal}
     >
-      <Modal.Header>{createMode ? "Adicionar Skin" : "Editar Skin"}</Modal.Header>
+      <Modal.Header>{createMode ? "Adicionar Skin da Onça" : "Editar Skin da Onça"}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form>
             <Form.Group widths='equal'>
-              {/* {!createMode ?
-                <Form.Input
-                  fluid
-                  name="id"
-                  label='Id'
-                  value={formValues.id}
-                  onChange={handleChange}
-                  placeholder='Id'
-                />
-                : null} */}
               <Form.Input
                 fluid
-                name="nameSkin"
+                name="nameSkinOnca"
                 label='Nome'
-                value={formValues.nameSkin}
+                value={formValues.nameSkinOnca}
                 onChange={handleChange}
                 placeholder='Nome'
+                error={!formValues.nameSkinOnca}
+                required
               />
               <Form.Dropdown
                 fluid
-                name="imgSkin"
-                label='Url da imagem'
-                value={formValues.imgSkin}
+                name="imgSkinOnca"
+                label='Skin Onça'
+                value={formValues.imgSkinOnca}
                 options={friendOptions}
                 selection
                 onChange={handleChange}
-                placeholder='Url da imagem'
+                placeholder='Skin Onça'
+                error={!formValues.imgSkinOnca}
+                required
               />
             </Form.Group>
+            {/* <Form.Group widths='equal'>
+              <Form.Input
+                fluid
+                name="season"
+                label='Temporada Associada'
+                value={formValues.season}
+                onChange={handleChange}
+                placeholder='Temporada Associada'
+                disabled
+              />
+            </Form.Group> */}
           </Form>
         </Modal.Description>
       </Modal.Content>
@@ -108,7 +112,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nameSkin}
+          disabled={!formValues.nameSkinOnca || !formValues.imgSkinOnca}
           positive
         />
       </Modal.Actions>
