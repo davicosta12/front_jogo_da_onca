@@ -55,8 +55,8 @@ const NavigationRoutes = () => (
 
       <Route path="/jaguarboard" element={
         <PrivateRoute redirectTo='/'>
-          <JaguarBoard /> 
-          {/* <GameBoard /> */}
+          {/* <JaguarBoard />  */}
+          <GameBoard />
         </PrivateRoute>
       }>
       </Route>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, Fragment } from "react"
-import p5 from 'p5'
+import p5 from 'p5';
 import Jogo from '../../misc/utils/Jogo';
 // import skinTabuleiro from '../assets/fundo.png';
 // import skinOnca from '../assets/onca.png'
@@ -58,7 +58,7 @@ function mudarMsgTurno(mudouTurnoPeca = true) {
   let msg, corFonte
   if (meu_turno) {
     msg = 'Sua vez'
-    //corFonte = 'blue'
+    corFonte = 'blue'
     console.log('mudouTurnoPeca ', mudouTurnoPeca)
     if (mudouTurnoPeca) {
       POSSIBLE_MOVES_POINTS = []
@@ -78,8 +78,6 @@ function mudarMsgTurno(mudouTurnoPeca = true) {
 }
 
 const GameBoard = (props) => {
-
-  debugger
 
   function ehMeuTurno(turnoPeca) {
     return (ehCachorro && turnoPeca == 1) || (!ehCachorro && turnoPeca == 0)
@@ -102,11 +100,11 @@ const GameBoard = (props) => {
       calculaTamanhoElementos()
       calculaPosicaoPontos()
       p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-      p.background(fundo_img)
+      //p.background(fundo_img)
       if (props.preview) {
-        //document.getElementById("timerContainer").style.display = "none"
-        //document.getElementById("span").style.display = "none"
-        //document.getElementById("msgTurno").style.display = "none"       
+        document.getElementById("timerContainer").style.display = "none"
+        document.getElementById("span").style.display = "none"
+        document.getElementById("msgTurno").style.display = "none"
       }
     }
 
@@ -115,7 +113,7 @@ const GameBoard = (props) => {
         p.strokeWeight(3)
         p.stroke(props.corTematica)
         p.fill('rgba(0,0,0,0)')
-        p.background(fundo_img)
+        //p.background(fundo_img)
         desenharQuadrados()
         desenharDiagonais()
         desenharPecas()
@@ -294,7 +292,7 @@ const GameBoard = (props) => {
     }
   }
 
-  const containerRef = useRef()
+  const containerRef = useRef();
 
   useEffect(() => {
     const p5Instance = new p5(sketch, containerRef.current)
