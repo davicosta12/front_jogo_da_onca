@@ -1,12 +1,12 @@
 import { useEffect, useRef, Fragment } from "react"
 import p5 from 'p5';
 import Jogo from '../../misc/utils/Jogo';
-// import skinTabuleiro from '../assets/fundo.png';
-// import skinOnca from '../assets/onca.png'
-// import skinCachorro from '../assets/dog.png'
-// import pantherChew from '../assets/panther-chew.mp3';
-// import timerBell from '../assets/bell.wav';
-// import pieceMove from '../assets/peca-efeito.mp3';
+import skinTabuleiro from '../../assets/fundo.png';
+import skinOnca from '../../assets/onca.png'
+import skinCachorro from '../../assets/dog.png'
+import pantherChew from '../../assets/panther-chew.mp3';
+import timerBell from '../../assets/bell.wav';
+import pieceMove from '../../assets/peca-efeito.mp3';
 
 const LINHAS = 5
 const COLUNAS = 5
@@ -29,16 +29,16 @@ let timer = 20
 let interval = null
 let BOARD_STATE = Jogo.getTabuleiroInicial()
 
-// var oncaEating = new Audio(pantherChew) //efeito sonoro onça comendo
-// var timerSound = new Audio(timerBell) //efeito sonoro turno
-// var pecaMov = new Audio(pieceMove) //efeito sonoro peca movendo
+var oncaEating = new Audio(pantherChew) //efeito sonoro onça comendo
+var timerSound = new Audio(timerBell) //efeito sonoro turno
+var pecaMov = new Audio(pieceMove) //efeito sonoro peca movendo
 
 function mudarPlacar() {
   document.getElementById('placar').innerText = placar
 
 }
 function inicializaTimer() {
-  //timerSound.play()
+  timerSound.play()
   clearInterval(interval)
   timer = 20
   document.getElementById('timer').innerText = timer
@@ -86,9 +86,9 @@ const GameBoard = (props) => {
   const sketch = (p) => {
 
     p.preload = () => {
-      // fundo_img = p.loadImage(props.skinTabuleiro ? props.skinTabuleiro : skinTabuleiro)
-      // dog_img = p.loadImage(props.skinCachorro ? props.skinCachorro : skinCachorro)
-      // onca_img = p.loadImage(props.skinOnca ? props.skinOnca : skinOnca)
+      fundo_img = p.loadImage(props.skinTabuleiro ? props.skinTabuleiro : skinTabuleiro)
+      dog_img = p.loadImage(props.skinCachorro ? props.skinCachorro : skinCachorro)
+      onca_img = p.loadImage(props.skinOnca ? props.skinOnca : skinOnca)
       ehCachorro = props.ehCachorro
       meu_turno = ehMeuTurno(props.turnoPeca)
     }
@@ -100,7 +100,7 @@ const GameBoard = (props) => {
       calculaTamanhoElementos()
       calculaPosicaoPontos()
       p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-      //p.background(fundo_img)
+      p.background(fundo_img)
       if (props.preview) {
         document.getElementById("timerContainer").style.display = "none"
         document.getElementById("span").style.display = "none"
@@ -113,7 +113,7 @@ const GameBoard = (props) => {
         p.strokeWeight(3)
         p.stroke(props.corTematica)
         p.fill('rgba(0,0,0,0)')
-        //p.background(fundo_img)
+        p.background(fundo_img)
         desenharQuadrados()
         desenharDiagonais()
         desenharPecas()
@@ -302,8 +302,8 @@ const GameBoard = (props) => {
       const meuTurnoAnterior = meu_turno
       BOARD_STATE = data.novoTabuleiro
       houveCaptura = data.houveCaptura
-      // if (!data.timer && !data.emitirSomOnca) pecaMov.play()
-      // if (data.emitirSomOnca) oncaEating.play()
+      if (!data.timer && !data.emitirSomOnca) pecaMov.play()
+      if (data.emitirSomOnca) oncaEating.play()
       meu_turno = ehMeuTurno(data.turnoPeca)
       placar = data.placar
       mudarPlacar()
@@ -337,9 +337,9 @@ const GameBoard = (props) => {
 export default GameBoard;
 
 GameBoard.defaultProps = {
-  // skinTabuleiro,
-  // skinOnca,
-  // skinCachorro,
+  skinTabuleiro,
+  skinOnca,
+  skinCachorro,
   ehCachorro: true,
   socket: null,
   vetorTabuleiro: null,
