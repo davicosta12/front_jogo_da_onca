@@ -1,4 +1,4 @@
-import { ActionTypes } from "../Components/reducer/reducer";
+import { ActionTypes } from "../reducer/reducer";
 import BoardService from "../Services/Board/BoardService";
 import SeasonService from "../Services/Season/SeasonService";
 import SkinService from "../Services/Skins/SkinService";

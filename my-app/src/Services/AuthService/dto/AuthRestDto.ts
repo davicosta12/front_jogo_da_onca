@@ -1,6 +1,6 @@
 export default class AuthRequestDto {
   constructor(
-    public nomeAdmin: string,
+    public nome: string,
     public senha: string,
   ) { }
 }

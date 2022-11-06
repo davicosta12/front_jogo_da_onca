@@ -5,7 +5,7 @@ import { ThemeContext } from '../../../App';
 import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
 import SeasonService from '../../../Services/Season/SeasonService';
-import { ActionTypes } from '../../reducer/reducer';
+import { ActionTypes } from '../../../reducer/reducer';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import SeasonDetail from './Detail/Detail';

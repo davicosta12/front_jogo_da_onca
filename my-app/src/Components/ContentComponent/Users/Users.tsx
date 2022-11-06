@@ -5,7 +5,7 @@ import { ThemeContext } from '../../../App';
 import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetUserDto from '../../../Services/Users/dto/GetUserDto';
 import UserService from '../../../Services/Users/UserService';
-import { ActionTypes } from '../../reducer/reducer';
+import { ActionTypes } from '../../../reducer/reducer';
 import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import UserDetail from './Detail/Detail';

@@ -11,7 +11,7 @@ export default class HttpService {
   }
 
   protected config: AxiosRequestConfig = {
-    baseURL: `http://${API_BASE_URL}`,
+    baseURL: `https://${API_BASE_URL}`,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

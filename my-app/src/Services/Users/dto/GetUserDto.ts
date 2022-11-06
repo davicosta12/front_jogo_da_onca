@@ -4,6 +4,7 @@ export default interface GetUserDto {
   e_mail: string,
   senha: string,
   icone: string,
+  isAdmin: boolean,
   nro_win: number,
   nro_lose: number,
 }

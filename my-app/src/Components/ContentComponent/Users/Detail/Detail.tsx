@@ -42,6 +42,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
         nome: user.nome,
         e_mail: user.e_mail,
         icone: user.icone,
+        isAdmin: user.isAdmin,
         nro_lose: user.nro_lose,
         nro_win: user.nro_win,
         senha: user.senha

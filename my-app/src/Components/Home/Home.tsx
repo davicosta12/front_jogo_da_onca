@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Menu, Button } from 'semantic-ui-react';
+import { logout } from '../../Services/AuthService/Auth';
 import "./Home.scss";
 
 interface Props {
@@ -16,6 +17,12 @@ const Home: FunctionComponent<Props> = (props) => {
     navigate("/");
   }
 
+  const handleLogout = (ev: any, { name }: any) => {
+    setActiveItem(name);
+    logout();
+    navigate("/")
+  }
+
   const handleGamePlay = () => {
     navigate("/jaguarboard");
     window.location.reload();
@@ -29,7 +36,7 @@ const Home: FunctionComponent<Props> = (props) => {
             <Menu.Item
               name='sair'
               active={activeItem === 'sair'}
-              onClick={handleActiveItem}
+              onClick={handleLogout}
             />
           </Menu.Menu>
         </Menu>

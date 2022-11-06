@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
 import { ThemeContext } from '../../App';
 import GetGlobalParamsHelper from '../../helpers/GetGlobalParamsHelper';
+import AuthService, { logout } from '../../Services/AuthService/Auth';
 import './ContentComponent.scss';
 
 interface Props {
@@ -26,6 +27,11 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
     setVisible(false);
   }
 
+  const handleLogout = () => {
+    logout();
+    navigate("/")
+  }
+
   return (
     <div className='configs-Component'>
       <Sidebar.Pushable as={Segment}>
@@ -39,7 +45,7 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
 
           <Menu.Item
             position='right'
-            onClick={() => navigate("/")}
+            onClick={handleLogout}
           >
             <Icon name='user close' />
           </Menu.Item>

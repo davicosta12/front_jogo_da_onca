@@ -1,8 +1,8 @@
-import GetBoardDto from "../../Services/Board/dto/GetBoardDto";
-import GetSeasonDto from "../../Services/Season/dto/GetSeasonDto";
-import GetDogSkinDto from "../../Services/Skins/dto/GetDogSkinDto";
-import GetJaguarSkinDto from "../../Services/Skins/dto/GetJaguarSkinDto";
-import GetUserDto from "../../Services/Users/dto/GetUserDto";
+import GetBoardDto from "../Services/Board/dto/GetBoardDto";
+import GetSeasonDto from "../Services/Season/dto/GetSeasonDto";
+import GetDogSkinDto from "../Services/Skins/dto/GetDogSkinDto";
+import GetJaguarSkinDto from "../Services/Skins/dto/GetJaguarSkinDto";
+import GetUserDto from "../Services/Users/dto/GetUserDto";
 
 export enum ActionTypes {
   ADD_DOG_SKIN = 'ADD_DOG_SKIN ',
@@ -35,7 +35,7 @@ export const initialState = {
 
 export const reducer = (state: InitialState, action: ActionReducer) => {
   switch (action.type) {
-
+    
     case ActionTypes.ADD_DOG_SKIN:
       return {
         ...state,
@@ -70,6 +70,3 @@ export const reducer = (state: InitialState, action: ActionReducer) => {
       return state;
   }
 };
-
-
-

@@ -1,7 +1,7 @@
 import NavigationRoutes from './routes';
 import { ToastContainer } from 'react-toastify';
 import { useReducer, createContext, Dispatch } from 'react';
-import { ActionReducer, InitialState, initialState, reducer } from './Components/reducer/reducer';
+import { ActionReducer, InitialState, initialState, reducer } from './reducer/reducer';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'moment/locale/pt-br';

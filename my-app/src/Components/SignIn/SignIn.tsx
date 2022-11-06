@@ -1,10 +1,14 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useContext, useState } from 'react';
 import {
   useNavigate,
   Link
 } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { Form, Button, Input } from 'semantic-ui-react';
-import AuthService from '../../Services/AuthService/Auth';
+import { ThemeContext } from '../../App';
+import { toastError, toastOptions } from '../../misc/utils/utils/utils';
+import AuthService, { isAdmin } from '../../Services/AuthService/Auth';
+import { ActionTypes } from '../../reducer/reducer';
 import './SignIn.scss';
 
 interface Props {
@@ -15,13 +19,19 @@ const SignIn: FunctionComponent<Props> = (props) => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const authService = new AuthService();
+  const { state, dispatch } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleSignIn = async (ev: any) => {
     ev.preventDefault();
-    //await authService.getToken(userName, password);
-    authService.saveToken("Token");
-    navigate("/home");
+    try {
+      const user = await authService.getToken(userName, password);
+      localStorage.setItem("ACTIVE_USER", JSON.stringify(user));
+      !user.isAdmin ? navigate("/home") : navigate("/config/season");
+    }
+    catch (err: any) {
+      toast.error(toastError(err), toastOptions(toast));
+    }
   };
 
   return (

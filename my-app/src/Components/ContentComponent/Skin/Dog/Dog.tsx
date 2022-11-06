@@ -5,7 +5,7 @@ import { ThemeContext } from '../../../../App';
 import { toastError, toastOptions } from '../../../../misc/utils/utils/utils';
 import GetDogSkinDto from '../../../../Services/Skins/dto/GetDogSkinDto';
 import SkinService from '../../../../Services/Skins/SkinService';
-import { ActionTypes } from '../../../reducer/reducer';
+import { ActionTypes } from '../../../../reducer/reducer';
 import DeleteModal from '../../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../../_commons/SemanticTable/SemanticTable';
 import SkinDetail from './Detail/Detail';

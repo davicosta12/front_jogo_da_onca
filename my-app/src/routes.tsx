@@ -1,11 +1,9 @@
-import { useContext, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Navigate
 } from "react-router-dom";
-import { ThemeContext } from "./App";
 import Board from "./Components/ContentComponent/Board/Board";
 import ContentComponent from "./Components/ContentComponent/ContentComponent";
 import Season from "./Components/ContentComponent/Season/Season";
@@ -14,15 +12,16 @@ import Users from "./Components/ContentComponent/Users/Users";
 import GameBoard from "./Components/GameBoard2/Gameboard";
 import Home from "./Components/Home/Home";
 import JaguarBoard from "./Components/JaguarBoard/JaguarBoard";
+import { ActionTypes } from "./reducer/reducer";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
-import GetGlobalParamsHelper from "./helpers/GetGlobalParamsHelper";
 import { Tabuleiro } from "./misc/GameBoard/Tabuleiro";
 
-import { isAuthenticated } from "./Services/AuthService/Auth";
+import {  isAdmin, isAuthenticated, userExist } from "./Services/AuthService/Auth";
 
 const PrivateRoute = ({ children, redirectTo }: { children: any, redirectTo: any }) => {
-  return isAuthenticated() ?
+
+  return isAuthenticated() && userExist() && !isAdmin() ?
     <>
       {children}
     </>
@@ -30,71 +29,79 @@ const PrivateRoute = ({ children, redirectTo }: { children: any, redirectTo: any
 }
 
 const PrivateContentComponent = ({ children, ...rest }: any) => {
-  return isAuthenticated() ?
+
+  return isAuthenticated() && userExist() && isAdmin() ?
     <>
       <ContentComponent screenRender={children} />
     </>
     : <Navigate to={rest.redirectTo} />
 }
 
-const NavigationRoutes = () => (
-  <BrowserRouter>
+const NavigationRoutes = () => {
 
-    <Routes>
+  const verifyWhatPathChoice = () => {
+    return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';
+  }
 
-      <Route path="/" element={<SignIn />} />
+  return (
+    <BrowserRouter>
 
-      <Route path="/home" element={
-        <PrivateRoute redirectTo='/'>
-          <Home />
-        </PrivateRoute>
-      }>
-      </Route>
+      <Routes>
 
-      <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<SignIn />} />
 
-      <Route path="/jaguarboard" element={
-        <PrivateRoute redirectTo='/'>
-          {/* <JaguarBoard />  */}
-          <GameBoard />
-        </PrivateRoute>
-      }>
-      </Route>
+        <Route path="/home" element={
+          <PrivateRoute redirectTo={verifyWhatPathChoice()}>
+            <Home />
+          </PrivateRoute>
+        }>
+        </Route>
 
-      <Route path="/config" element={
-        <PrivateContentComponent redirectTo='/' />
-      }>
-      </Route>
+        <Route path="/signup" element={<SignUp />} />
 
-      {/* <Route path="/config/user" element={
-        <PrivateContentComponent redirectTo='/'>
-          <Users />
-        </PrivateContentComponent>}>
-      </Route> */}
+        <Route path="/jaguarboard" element={
+          <PrivateRoute redirectTo={verifyWhatPathChoice()}>
+            {/* <JaguarBoard />  */}
+            <GameBoard />
+          </PrivateRoute>
+        }>
+        </Route>
 
-      <Route path="/config/season" element={
-        <PrivateContentComponent redirectTo='/'>
-          <Season />
-        </PrivateContentComponent>}>
-      </Route>
+        <Route path="/config" element={
+          <PrivateContentComponent redirectTo={verifyWhatPathChoice()} />
+        }>
+        </Route>
 
-      <Route path="/config/board" element={
-        <PrivateContentComponent redirectTo='/'>
-          <Board />
-        </PrivateContentComponent>}>
-      </Route>
+        <Route path="/config/user" element={
+          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+            <Users />
+          </PrivateContentComponent>}>
+        </Route>
 
-      <Route path="/config/skin" element={
-        <PrivateContentComponent redirectTo='/'>
-          <Skin />
-        </PrivateContentComponent>}>
-      </Route>
+        <Route path="/config/season" element={
+          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+            <Season />
+          </PrivateContentComponent>}>
+        </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/config/board" element={
+          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+            <Board />
+          </PrivateContentComponent>}>
+        </Route>
 
-    </Routes>
+        <Route path="/config/skin" element={
+          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+            <Skin />
+          </PrivateContentComponent>}>
+        </Route>
 
-  </BrowserRouter>
-);
+        <Route path="*" element={<Navigate to={verifyWhatPathChoice()} replace />} />
+
+      </Routes>
+
+    </BrowserRouter>
+  );
+}
 
 export default NavigationRoutes;
