@@ -17,7 +17,10 @@ import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
 import { Tabuleiro } from "./misc/GameBoard/Tabuleiro";
 
-import {  isAdmin, isAuthenticated, userExist } from "./Services/AuthService/Auth";
+import { isAdmin, isAuthenticated, userExist } from "./Services/AuthService/Auth";
+import { useContext, useEffect } from "react";
+import { ThemeContext } from "./App";
+import AuthHelper from "./helpers/AuthHelper";
 
 const PrivateRoute = ({ children, redirectTo }: { children: any, redirectTo: any }) => {
 
@@ -38,6 +41,12 @@ const PrivateContentComponent = ({ children, ...rest }: any) => {
 }
 
 const NavigationRoutes = () => {
+
+  const { state, dispatch } = useContext(ThemeContext);
+
+  useEffect(() => {
+    AuthHelper.restoreAuthFromCache(dispatch);
+  }, []);
 
   const verifyWhatPathChoice = () => {
     return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';

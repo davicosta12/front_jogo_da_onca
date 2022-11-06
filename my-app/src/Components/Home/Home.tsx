@@ -1,6 +1,7 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Menu, Button } from 'semantic-ui-react';
+import { ThemeContext } from '../../App';
 import { logout } from '../../Services/AuthService/Auth';
 import "./Home.scss";
 
@@ -10,6 +11,7 @@ interface Props {
 const Home: FunctionComponent<Props> = (props) => {
 
   const [activeItem, setActiveItem] = useState('home');
+  const { state, dispatch } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleActiveItem = (ev: any, { name }: any) => {
@@ -55,10 +57,10 @@ const Home: FunctionComponent<Props> = (props) => {
             <Grid.Column mobile={16} tablet={8} computer={8} className="flex justify-content-center">
               <div className='home-user-info flex justify-content-center align-items-center'>
                 <div className='user-info flex align-items-center'>
-                  <div>
-                    <p>Nome</p>
-                    <p>Vitórias</p>
-                    <p>Derrotas</p>
+                  <div className='w-full'>
+                    <div className='flex justify-content-between flex align-items-center'><p>Nome</p><div>{state.activeUser?.nome}</div></div>
+                    <div className='flex justify-content-between flex align-items-center'><p>Vitórias</p><div>{state.activeUser?.nro_win}</div></div>
+                    <div className='flex justify-content-between flex align-items-center'><p>Derrotas</p><div>{state.activeUser?.nro_lose}</div></div>
                   </div>
                 </div>
               </div>

@@ -4,3 +4,9 @@ export default class AuthRequestDto {
     public senha: string,
   ) { }
 }
+
+export interface RegisterUserDto {
+  nome: string,
+  senha: string,
+  e_mail: string
+}

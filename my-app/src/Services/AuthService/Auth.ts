@@ -2,7 +2,8 @@ import { AxiosResponse } from "axios";
 import { ACTIVE_USER, TOKEN_KEY } from "../../environment";
 import GetUserDto from "../Users/dto/GetUserDto";
 import HttpService from "./Base";
-import AuthRequestDto from "./dto/AuthRestDto";
+import AuthRequestDto, { RegisterUserDto } from "./dto/AuthRestDto";
+import AuthResponseDto from "./dto/AuthResponseDto";
 
 export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
 export const userExist = () => localStorage.getItem(ACTIVE_USER) !== null;
@@ -40,13 +41,21 @@ export const isAdmin = () => {
 
 export default class AuthService extends HttpService {
 
-  getToken(name: string, password: string): Promise<GetUserDto> {
+  getToken(name: string, password: string): Promise<AuthResponseDto> {
     return new Promise((resolve, reject) => {
       this.getApi().post(`/Authenticate/login`, new AuthRequestDto(name, password))
         .then(res => {
           saveToken(res.data.token);
-          resolve(res.data.usuario);
+          resolve(res.data);
         })
+        .catch((err: AxiosResponse<any>) => reject(err))
+    })
+  }
+
+  registerUser(payload: RegisterUserDto): Promise<AuthResponseDto> {
+    return new Promise((resolve, reject) => {
+      this.getApi().post(`/Authenticate/cadastrar`, payload)
+        .then(res => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     })
   }

@@ -5,6 +5,7 @@ import GetJaguarSkinDto from "../Services/Skins/dto/GetJaguarSkinDto";
 import GetUserDto from "../Services/Users/dto/GetUserDto";
 
 export enum ActionTypes {
+  SET_ACTIVE_USER = 'SET_ACTIVE_USER',
   ADD_DOG_SKIN = 'ADD_DOG_SKIN ',
   ADD_JAGUAR_SKIN = 'ADD_JAGUAR_SKIN ',
   ADD_BOARD = 'ADD_BOARD',
@@ -18,6 +19,7 @@ export interface ActionReducer {
 }
 
 export interface InitialState {
+  activeUser: GetUserDto,
   dogSkins: GetDogSkinDto[],
   jaguarSkins: GetJaguarSkinDto[],
   boards: GetBoardDto[],
@@ -26,6 +28,7 @@ export interface InitialState {
 }
 
 export const initialState = {
+  activeUser: {} as GetUserDto,
   dogSkins: [],
   jaguarSkins: [],
   boards: [],
@@ -35,7 +38,13 @@ export const initialState = {
 
 export const reducer = (state: InitialState, action: ActionReducer) => {
   switch (action.type) {
-    
+
+    case ActionTypes.SET_ACTIVE_USER:
+      return {
+        ...state,
+        activeUser: { ...action.payload }
+      } as InitialState;
+
     case ActionTypes.ADD_DOG_SKIN:
       return {
         ...state,

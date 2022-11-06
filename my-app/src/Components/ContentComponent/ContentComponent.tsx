@@ -1,9 +1,7 @@
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
-import { ThemeContext } from '../../App';
-import GetGlobalParamsHelper from '../../helpers/GetGlobalParamsHelper';
-import AuthService, { logout } from '../../Services/AuthService/Auth';
+import { logout } from '../../Services/AuthService/Auth';
 import './ContentComponent.scss';
 
 interface Props {
@@ -15,11 +13,6 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
   const [activeItem, setActiveItem] = useState('jaguar');
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-  const { dispatch } = useContext(ThemeContext);
-
-  useEffect(() => {
-    GetGlobalParamsHelper(dispatch);
-  }, []);
 
   const handleActiveMenuItem = (path: string) => {
     navigate(`/config/${path}`);
