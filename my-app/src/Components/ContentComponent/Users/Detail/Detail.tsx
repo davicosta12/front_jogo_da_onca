@@ -115,7 +115,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
             <Form.Checkbox
               name='isAdmin'
               checked={formValues.isAdmin}
-              label='o usuário a ser cadastrado será um admin ?'
+              label='Admin?'
               onChange={handleChecked}
             />
           </Form>
