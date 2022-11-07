@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
 import { logout } from '../../Services/AuthService/Auth';
@@ -54,14 +54,14 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
           visible={visible}
           width='thin'
         >
-          {/* <Menu.Item
+          <Menu.Item
             as='a'
             name='user'
             active={activeItem === 'user'}
             onClick={() => handleActiveMenuItem('user')}>
             <Icon name='user circle' />
             Usuário
-          </Menu.Item> */}
+          </Menu.Item>
           <Menu.Item
             as='a'
             name='season'

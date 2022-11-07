@@ -70,7 +70,6 @@ const NavigationRoutes = () => {
 
         <Route path="/jaguarboard" element={
           <PrivateRoute redirectTo={verifyWhatPathChoice()}>
-            {/* <JaguarBoard />  */}
             <GameBoard />
           </PrivateRoute>
         }>

@@ -19,6 +19,7 @@ const INITIAL_FORM_VALUES = {
   nome: '',
   nro_lose: 0,
   nro_win: 0,
+  isAdmin: false,
   senha: ''
 } as GetUserDto;
 
@@ -62,6 +63,10 @@ const UserDetail: FunctionComponent<Props> = (props) => {
     setFormValues({ ...formValues, [name]: value });
   }
 
+  const handleChecked = (ev: any, { name, checked }: any) => {
+    setFormValues({ ...formValues, [name]: checked });
+  }
+
   return (
     <Modal
       onClose={() => setOpenModal(false)}
@@ -85,6 +90,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 name='senha'
                 value={formValues.senha}
                 onChange={handleChange}
+                type='password'
                 placeholder='Senha'
               />
             </Form.Group>
@@ -100,25 +106,18 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 name='icone'
                 value={formValues.icone}
                 onChange={handleChange}
-                label='Ícones'
+                label='Ícone'
                 options={friendOptions}
                 selection
-                placeholder='Ícones'
+                placeholder='Ícone'
               />
             </Form.Group>
-            {/* <Form.Group widths='equal'>
-              <Form.Input
-                 label='Número de Vitórias'
-                value={nroWin}
-                onChange={(ev: any) => setNroWin(ev.value)}
-                placeholder='Número de Vitórias'
-              />
-              <Form.Input  label='Número de Derrotas'
-                value={nroLose}
-                onChange={(ev: any) => setNroLose(ev.value)}
-                placeholder='Número de Derrotas'
-              />
-            </Form.Group> */}
+            <Form.Checkbox
+              name='isAdmin'
+              checked={formValues.isAdmin}
+              label='o usuário a ser cadastrado será um admin ?'
+              onChange={handleChecked}
+            />
           </Form>
         </Modal.Description>
       </Modal.Content>

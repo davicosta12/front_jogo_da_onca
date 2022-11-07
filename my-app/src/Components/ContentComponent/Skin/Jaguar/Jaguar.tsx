@@ -65,7 +65,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
   const handleUpdateSkin = async (values: GetJaguarSkinDto) => {
     setIsLoadingForm(true);
     try {
-      await skinService.updateJaguarSkin(values, +jaguarSkin.idSkinOnca);
+      await skinService.updateJaguarSkin(values, +jaguarSkin.id);
       getSkins();
       setOpenModal(false);
     }
@@ -80,7 +80,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
   const handleDeleteSkin = async () => {
     setIsLoading(true);
     try {
-      await skinService.deleteJaguarSkin(+jaguarSkin.idSkinOnca);
+      await skinService.deleteJaguarSkin(+jaguarSkin.id);
       getSkins();
       setOpenDeleteModal(false);
     }

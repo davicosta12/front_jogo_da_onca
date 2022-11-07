@@ -10,6 +10,8 @@ import DeleteModal from '../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 import SeasonDetail from './Detail/Detail';
 import './Season.scss';
+import PostSeasonDto from '../../../Services/Season/dto/PostSeasonDto';
+import PutSeasonDto from '../../../Services/Season/dto/PutSeasonDto';
 
 interface Props {
 }
@@ -47,7 +49,7 @@ const Season: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleCreateSeason = async (values: GetSeasonDto) => {
+  const handleCreateSeason = async (values: PostSeasonDto) => {
     setIsLoadingForm(true);
     try {
       await seasonService.createSeason(values);
@@ -62,10 +64,10 @@ const Season: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateSeason = async (values: GetSeasonDto) => {
+  const handleUpdateSeason = async (values: PutSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      await seasonService.updateSeason(values, +season.idSeason);
+      await seasonService.updateSeason(values, +season.id);
       getSeasons();
       setOpenModal(false);
     }
@@ -80,7 +82,7 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleDeleteSeason = async () => {
     setIsLoading(true);
     try {
-      await seasonService.deleteSeason(+season.idSeason);
+      await seasonService.deleteSeason(+season.id);
       getSeasons();
       setOpenDeleteModal(false);
     }
@@ -164,7 +166,6 @@ const Season: FunctionComponent<Props> = (props) => {
             data={state.seasons}
             tableActions={createActions}
             headers={headers}
-            desactiveColumns={["tabuleiro", "skinCao", "skinOnca"]}
             actions
           />
         </div>
@@ -193,4 +194,4 @@ const Season: FunctionComponent<Props> = (props) => {
 
 export default Season;
 
-const headers = ["ID", "Nome", "Data Inicial", "Data Final"];
+const headers = ["ID", "Nome", "Data Inicial", "Data Final", "Tabuleiro", "Skin Onça", "Skin Cão"];

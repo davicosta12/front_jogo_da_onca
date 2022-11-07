@@ -15,7 +15,7 @@ class AuthHelper {
           type: ActionTypes.SET_ACTIVE_USER,
           payload: { ...authResponse.usuario }
         });
-        //await GetGlobalParamsHelper(dispatch);
+        await GetGlobalParamsHelper(dispatch);
         return resolve(null);
       }
       catch (err) {
@@ -32,7 +32,7 @@ class AuthHelper {
           type: ActionTypes.SET_ACTIVE_USER,
           payload: { ...JSON.parse(activeUser || '') }
         });
-        //await GetGlobalParamsHelper(dispatch);
+        await GetGlobalParamsHelper(dispatch);
         return resolve(null);
       }
       catch (err) {

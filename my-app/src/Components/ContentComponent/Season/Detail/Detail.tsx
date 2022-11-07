@@ -3,26 +3,27 @@ import { Button, Form, Modal } from 'semantic-ui-react';
 import { DateInput } from "semantic-ui-calendar-react";
 import GetSeasonDto from '../../../../Services/Season/dto/GetSeasonDto';
 import { ThemeContext } from '../../../../App';
+import PostSeasonDto from '../../../../Services/Season/dto/PostSeasonDto';
+import PutSeasonDto from '../../../../Services/Season/dto/PutSeasonDto';
 
 interface Props {
   season: GetSeasonDto;
   openModal: boolean;
   createMode: boolean;
-  onCreate: (values: GetSeasonDto) => void;
-  onUpdate: (values: GetSeasonDto) => void;
+  onCreate: (values: PostSeasonDto) => void;
+  onUpdate: (values: PutSeasonDto) => void;
   loading?: boolean;
   setOpenModal: any;
 }
 
 const INITIAL_FORM_VALUES = {
-  tabuleiro: 0,
-  skinCao: 0,
-  skinOnca: 0,
+  nome_season: '',
   inicio: '',
   fim: '',
-  idSeason: 0,
-  nameSeason: ''
-} as GetSeasonDto;
+  tabuleiro_id: 0,
+  skinDog_id: 0,
+  skinJaguar_id: 0
+} as PostSeasonDto;
 
 const SeasonDetail: FunctionComponent<Props> = (props) => {
 
@@ -39,22 +40,21 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
   } = props;
 
   useEffect(() => {
-    if (season?.idSeason) {
+    if (season?.id) {
       setFormValues({
-        tabuleiro: season.tabuleiro,
-        skinCao: season.skinCao,
-        skinOnca: season.skinOnca,
+        nome_season: season.nome_season,
         inicio: season.inicio,
         fim: season.fim,
-        idSeason: season.idSeason,
-        nameSeason: season.nameSeason
+        tabuleiro_id: season.tabuleiro?.id || 0,
+        skinDog_id: season.skinDog?.id || 0,
+        skinJaguar_id: season.skinJaguar?.id || 0
       });
     } else {
       setFormValues(INITIAL_FORM_VALUES);
     }
   }, [season, openModal]);
 
-  const handleSubmit = (values: GetSeasonDto) => {
+  const handleSubmit = (values: any) => {
     createMode
       ? onCreate(values)
       : onUpdate(values);
@@ -76,13 +76,13 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
           <Form>
             <Form.Input
               fluid
-              name="nameSeason"
+              name="nome_season"
               label='Nome'
-              value={formValues.nameSeason}
+              value={formValues.nome_season}
               onChange={handleChange}
               placeholder='Nome'
               required
-              error={!formValues.nameSeason}
+              error={!formValues.nome_season}
             />
             <Form.Group widths='equal'>
               <DateInput
@@ -91,7 +91,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 placeholder="Data Inicial"
                 value={formValues.inicio}
                 iconPosition="left"
-                dateFormat='DD/MM/YYYY'
+                dateFormat='YYYY-MM-DD'
                 closable
                 localization='pt-br'
                 onChange={handleChange}
@@ -104,7 +104,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 placeholder="Data Final"
                 value={formValues.fim}
                 iconPosition="left"
-                dateFormat='DD/MM/YYYY'
+                dateFormat='YYYY-MM-DD'
                 closable
                 localization='pt-br'
                 onChange={handleChange}
@@ -115,13 +115,13 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
             <Form.Group widths='equal'>
               <Form.Dropdown
                 fluid
-                name="skinOnca"
+                name="skinJaguar_id"
                 label='SKIN da Onça'
-                value={formValues.skinOnca}
+                value={formValues.skinJaguar_id}
                 options={state.jaguarSkins.map(j => Object.assign({}, {
-                  key: j.idSkinOnca,
-                  text: j.nameSkinOnca,
-                  value: j.idSkinOnca,
+                  key: j.id,
+                  text: j.name_skin,
+                  value: j.id,
                   image: { avatar: true, src: 'https://conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_1x1.jpg' },
                 }))}
                 selection
@@ -129,17 +129,17 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 placeholder='SKIN da Onça'
                 disabled={!createMode}
                 required
-                error={!formValues.skinOnca && createMode}
+                error={!formValues.skinJaguar_id && createMode}
               />
               <Form.Dropdown
                 fluid
-                name="skinCao"
+                name="skinDog_id"
                 label='SKIN do Cachorro'
-                value={formValues.skinCao}
+                value={formValues.skinDog_id}
                 options={state.dogSkins.map(d => Object.assign({}, {
-                  key: d.idSkinCao,
-                  text: d.nameSkinCao,
-                  value: d.idSkinCao,
+                  key: d.id,
+                  text: d.name_skin,
+                  value: d.id,
                   image: { avatar: true, src: 'https://conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_1x1.jpg' },
                 }))}
                 selection
@@ -147,17 +147,17 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 placeholder='SKIN do Cachorro'
                 disabled={!createMode}
                 required
-                error={!formValues.skinCao && createMode}
+                error={!formValues.skinDog_id && createMode}
               />
               <Form.Dropdown
                 fluid
-                name="tabuleiro"
+                name="tabuleiro_id"
                 label='Tabuleiro'
-                value={formValues.tabuleiro}
+                value={formValues.tabuleiro_id}
                 options={state.boards.map(b => Object.assign({}, {
-                  key: b.idTabuleiro,
-                  text: b.nameTabuleiro,
-                  value: b.idTabuleiro,
+                  key: b.id,
+                  text: b.name_tabuleiro,
+                  value: b.id,
                   image: { avatar: true, src: 'https:conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_1x1.jpg' },
                 }))}
                 selection
@@ -165,7 +165,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 placeholder='Tabuleiro'
                 disabled={!createMode}
                 required
-                error={!formValues.tabuleiro && createMode}
+                error={!formValues.tabuleiro_id && createMode}
               />
             </Form.Group>
           </Form>
@@ -181,7 +181,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nameSeason || !formValues.inicio || !formValues.fim || !formValues.skinOnca || !formValues.skinCao || !formValues.tabuleiro}
+          disabled={!formValues.nome_season || !formValues.inicio || !formValues.fim || !formValues.skinJaguar_id || !formValues.skinDog_id || !formValues.tabuleiro_id}
           positive
         />
       </Modal.Actions>

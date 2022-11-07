@@ -15,8 +15,9 @@ interface Props {
 const SkinDetail: FunctionComponent<Props> = (props) => {
 
   const [formValues, setFormValues] = useState({
-    imgSkinOnca: '',
-    nameSkinOnca: ''
+    id: 0,
+    img_skin: '',
+    name_skin: ''
   } as GetJaguarSkinDto);
 
   const {
@@ -29,17 +30,16 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
   } = props;
 
   useEffect(() => {
-    if (skin?.idSkinOnca) {
+    if (skin?.id) {
       setFormValues({
-        idSkinOnca: skin.idSkinOnca,
-        season: skin.season,
-        imgSkinOnca: skin.imgSkinOnca,
-        nameSkinOnca: skin.nameSkinOnca
+        id: skin.id,
+        img_skin: skin.img_skin,
+        name_skin: skin.name_skin
       });
     } else {
       setFormValues({
-        imgSkinOnca: '',
-        nameSkinOnca: ''
+        img_skin: '',
+        name_skin: ''
       } as GetJaguarSkinDto);
     }
   }, [skin, openModal]);
@@ -67,38 +67,27 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
             <Form.Group widths='equal'>
               <Form.Input
                 fluid
-                name="nameSkinOnca"
+                name="name_skin"
                 label='Nome'
-                value={formValues.nameSkinOnca}
+                value={formValues.name_skin}
                 onChange={handleChange}
                 placeholder='Nome'
-                error={!formValues.nameSkinOnca}
+                error={!formValues.name_skin}
                 required
               />
               <Form.Dropdown
                 fluid
-                name="imgSkinOnca"
+                name="img_skin"
                 label='Skin Onça'
-                value={formValues.imgSkinOnca}
+                value={formValues.img_skin}
                 options={friendOptions}
                 selection
                 onChange={handleChange}
                 placeholder='Skin Onça'
-                error={!formValues.imgSkinOnca}
+                error={!formValues.img_skin}
                 required
               />
             </Form.Group>
-            {/* <Form.Group widths='equal'>
-              <Form.Input
-                fluid
-                name="season"
-                label='Temporada Associada'
-                value={formValues.season}
-                onChange={handleChange}
-                placeholder='Temporada Associada'
-                disabled
-              />
-            </Form.Group> */}
           </Form>
         </Modal.Description>
       </Modal.Content>
@@ -112,7 +101,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nameSkinOnca || !formValues.imgSkinOnca}
+          disabled={!formValues.name_skin || !formValues.img_skin}
           positive
         />
       </Modal.Actions>

@@ -1,6 +1,5 @@
 export default interface GetJaguarSkinDto {
-    idSkinOnca: string,
-    nameSkinOnca: string,
-    imgSkinOnca: string,
-    season: any
+    id: number,
+    name_skin: string,
+    img_skin: string
 }

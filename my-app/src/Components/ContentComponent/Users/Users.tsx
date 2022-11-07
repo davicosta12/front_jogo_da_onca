@@ -77,7 +77,7 @@ const Users: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleDeleteUser = async (user: GetUserDto) => {
+  const handleDeleteUser = async () => {
     setIsLoading(true);
     try {
       await userService.deleteUser(+user.id);
@@ -94,17 +94,18 @@ const Users: FunctionComponent<Props> = (props) => {
 
   const handleAdd = () => {
     setOpenModal(true);
-    setUser({} as any);
+    setUser({} as GetUserDto);
     setCreateMode(true);
   }
 
-  const handleEdit = (user: any) => {
+  const handleEdit = (user: GetUserDto) => {
     setOpenModal(true);
     setUser(user);
     setCreateMode(false);
   }
 
-  const handleDelete = (user: any) => {
+  const handleDelete = (user: GetUserDto) => {
+    setUser(user);
     setOpenDeleteModal(true);
   }
 
@@ -144,7 +145,7 @@ const Users: FunctionComponent<Props> = (props) => {
         <div className='user-title'>Usuário</div>
 
         <div className='linhaBox user-section mt-3 flex justify-content-end'>
-          <Button className='p-button-primary' icon>
+          <Button className='p-button-primary' icon onClick={() => getUsers()}>
             <Icon name='refresh' />
           </Button>
           <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
@@ -155,7 +156,7 @@ const Users: FunctionComponent<Props> = (props) => {
 
         <div className='user-table mt-3'>
           <SemanticTable
-            data={state.users}
+            data={state.users.map(u => Object.assign({}, { ...u, isAdmin: u.isAdmin ? "Sim" : "Não" }))}
             tableActions={createActions}
             desactiveColumns={["senha"]}
             headers={headers}
@@ -178,6 +179,7 @@ const Users: FunctionComponent<Props> = (props) => {
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
           subtitle='Deseja realmente excluir o usuário?'
+          onDelete={handleDeleteUser}
         />
       </div>
     </>
@@ -186,4 +188,4 @@ const Users: FunctionComponent<Props> = (props) => {
 
 export default Users;
 
-const headers = ["Id", "Nome", "Email", "Ícones", "N° de Vitórias", "N° de Derrotas"];
+const headers = ["Id", "Nome", "Email", "Ícone", "Admin", "N° de Vitórias", "N° de Derrotas"];

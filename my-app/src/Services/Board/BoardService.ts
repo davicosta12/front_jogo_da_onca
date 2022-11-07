@@ -1,12 +1,13 @@
 import { AxiosResponse } from "axios";
 import HttpService from "../AuthService/Base";
 import GetBoardDto from "./dto/GetBoardDto";
+import PostBoardDto from "./dto/PostBoardDto";
 
 export default class BoardService extends HttpService {
 
   getBoards(): Promise<GetBoardDto[]> {
     return new Promise((resolve, reject) => {
-      this.getApi().get(`/tabuleiro/buscar`)
+      this.getApi().get(`/Tabuleiro`)
         .then((res: any) => resolve(res.data || []))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -14,31 +15,31 @@ export default class BoardService extends HttpService {
 
   getBoardById(id: number): Promise<GetBoardDto> {
     return new Promise((resolve, reject) => {
-      this.getApi().get(`/tabuleiro//buscar/${id}`)
+      this.getApi().get(`/Tabuleiro/${id}`)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
   }
 
-  getBoardByName(name: string): Promise<GetBoardDto> {
+  // getBoardByName(name: string): Promise<GetBoardDto> {
+  //   return new Promise((resolve, reject) => {
+  //     this.getApi().get(`/tabuleiro/buscar/${name}`)
+  //       .then((res: any) => resolve(res.data))
+  //       .catch((err: AxiosResponse<any>) => reject(err))
+  //   });
+  // }
+
+  createBoard(board: PostBoardDto): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().get(`/tabuleiro/buscar/${name}`)
+      this.getApi().post(`/Tabuleiro`, board)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
   }
 
-  createBoard(board: GetBoardDto): Promise<any> {
+  updateBoard(board: PostBoardDto, id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().post(`/tabuleiro/cadastrar`, board)
-        .then((res: any) => resolve(res.data))
-        .catch((err: AxiosResponse<any>) => reject(err))
-    });
-  }
-
-  updateBoard(board: GetBoardDto, id: number): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.getApi().put(`/tabuleiro/atualizar/${id}`, board)
+      this.getApi().put(`/Tabuleiro/${id}`, board)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -46,7 +47,7 @@ export default class BoardService extends HttpService {
 
   deleteBoard(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().delete(`/tabuleiro/deletar/${id}`)
+      this.getApi().delete(`/Tabuleiro/${id}`)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });

@@ -1,3 +1,4 @@
+
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
 import GetDogSkinDto from '../../../../../Services/Skins/dto/GetDogSkinDto';
@@ -15,8 +16,9 @@ interface Props {
 const SkinDetail: FunctionComponent<Props> = (props) => {
 
   const [formValues, setFormValues] = useState({
-    imgSkinCao: '',
-    nameSkinCao: ''
+    id: 0,
+    img_skin: '',
+    name_skin: ''
   } as GetDogSkinDto);
 
   const {
@@ -29,17 +31,16 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
   } = props;
 
   useEffect(() => {
-    if (skin?.idSkinCao) {
+    if (skin?.id) {
       setFormValues({
-        idSkinCao: skin.idSkinCao,
-        season: skin.season,
-        imgSkinCao: skin.imgSkinCao,
-        nameSkinCao: skin.nameSkinCao
+        id: skin.id,
+        img_skin: skin.img_skin,
+        name_skin: skin.name_skin
       });
     } else {
       setFormValues({
-        imgSkinCao: '',
-        nameSkinCao: ''
+        img_skin: '',
+        name_skin: ''
       } as GetDogSkinDto);
     }
   }, [skin, openModal]);
@@ -67,37 +68,27 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
             <Form.Group widths='equal'>
               <Form.Input
                 fluid
-                name="nameSkinCao"
+                name="name_skin"
                 label='Nome'
-                value={formValues.nameSkinCao}
+                value={formValues.name_skin}
                 onChange={handleChange}
                 placeholder='Nome'
-                error={!formValues.nameSkinCao}
+                error={!formValues.name_skin}
                 required
               />
               <Form.Dropdown
                 fluid
-                name="imgSkinCao"
-                label='Skin Cao'
-                value={formValues.imgSkinCao}
+                name="img_skin"
+                label='Skin Cachorro'
+                value={formValues.img_skin}
                 options={friendOptions}
                 selection
                 onChange={handleChange}
-                placeholder='Skin Cao'
-                error={!formValues.imgSkinCao}
+                placeholder='Skin Cachorro'
+                error={!formValues.img_skin}
                 required
               />
             </Form.Group>
-            {/* <Form.Group widths='equal'>
-              <Form.Input
-                fluid
-                name="season"
-                label='Temporada Associada'
-                value={formValues.season}
-                onChange={handleChange}
-                placeholder='Temporada Associada'
-              />
-            </Form.Group> */}
           </Form>
         </Modal.Description>
       </Modal.Content>
@@ -111,7 +102,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nameSkinCao || !formValues.imgSkinCao}
+          disabled={!formValues.name_skin || !formValues.img_skin}
           positive
         />
       </Modal.Actions>

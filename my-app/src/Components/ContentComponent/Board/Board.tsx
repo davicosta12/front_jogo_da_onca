@@ -11,6 +11,7 @@ import SemanticTable from '../../_commons/SemanticTable/SemanticTable';
 
 import './Board.scss';
 import BoardDetail from './Detail/Detail';
+import PostBoardDto from '../../../Services/Board/dto/PostBoardDto';
 
 interface Props {
 }
@@ -48,7 +49,7 @@ const Board: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleCreateBoard = async (values: GetBoardDto) => {
+  const handleCreateBoard = async (values: PostBoardDto) => {
     setIsLoadingForm(true);
     try {
       await boardService.createBoard(values);
@@ -63,10 +64,10 @@ const Board: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateBoard = async (values: GetBoardDto) => {
+  const handleUpdateBoard = async (values: PostBoardDto) => {
     setIsLoadingForm(true);
     try {
-      await boardService.updateBoard(values, +board.idTabuleiro);
+      await boardService.updateBoard(values, +board.id);
       getBoards();
       setOpenModal(false);
     }
@@ -81,7 +82,7 @@ const Board: FunctionComponent<Props> = (props) => {
   const handleDeleteBoard = async () => {
     setIsLoading(true);
     try {
-      await boardService.deleteBoard(+board.idTabuleiro);
+      await boardService.deleteBoard(+board.id);
       getBoards();
       setOpenDeleteModal(false);
     }

@@ -1,6 +1,5 @@
-export default interface PutUserDto {
-    id: number,
-    nome: string,
-    e_mail: string,
-    icone: string,
-  }
+import PostUserDto from "./PostUserDto";
+
+export default interface PutUserDto extends PostUserDto {
+
+}

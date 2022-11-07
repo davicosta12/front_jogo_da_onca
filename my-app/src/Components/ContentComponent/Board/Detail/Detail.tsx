@@ -13,8 +13,9 @@ interface Props {
 }
 
 const INITIAL_FORM_VALUES = {
-  nameTabuleiro: '',
-  imgTabuleiro: ''
+  id: 0,
+  name_tabuleiro: '',
+  img_tabuleiro: ''
 } as GetBoardDto;
 
 const BoardDetail: FunctionComponent<Props> = (props) => {
@@ -31,12 +32,11 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
   } = props;
 
   useEffect(() => {
-    if (board?.idTabuleiro) {
+    if (board?.id) {
       setFormValues({
-        idTabuleiro: board.idTabuleiro,
-        nameTabuleiro: board.nameTabuleiro,
-        imgTabuleiro: board.imgTabuleiro,
-        season: board.season
+        id: board.id,
+        name_tabuleiro: board.name_tabuleiro,
+        img_tabuleiro: board.img_tabuleiro
       });
     } else {
       setFormValues(INITIAL_FORM_VALUES);
@@ -66,24 +66,24 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
             <Form.Group widths='equal'>
               <Form.Input
                 fluid
-                name="nameTabuleiro"
+                name="name_tabuleiro"
                 label='Nome'
-                value={formValues.nameTabuleiro}
+                value={formValues.name_tabuleiro}
                 onChange={handleChange}
                 placeholder='Nome'
-                error={!formValues.nameTabuleiro}
+                error={!formValues.name_tabuleiro}
                 required
               />
               <Form.Dropdown
                 fluid
-                name="imgTabuleiro"
+                name="img_tabuleiro"
                 label='Imagem do Tabuleiro'
-                value={formValues.imgTabuleiro}
+                value={formValues.img_tabuleiro}
                 options={friendOptions}
                 selection
                 onChange={handleChange}
                 placeholder='Imagem do Tabuleiro'
-                error={!formValues.imgTabuleiro}
+                error={!formValues.img_tabuleiro}
                 required
               />
             </Form.Group>
@@ -100,7 +100,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nameTabuleiro}
+          disabled={!formValues.name_tabuleiro}
           positive
         />
       </Modal.Actions>
