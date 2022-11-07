@@ -109,28 +109,23 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
-  const createActions = (skin: GetJaguarSkinDto) => {
-    return (
-      <>
-        <Popup
-          content='Editar'
-          trigger={
-            <Button icon onClick={() => handleEdit(skin)}>
-              <Icon name='edit' />
-            </Button>
-          }
-        />
-        <Popup
-          content='Remover'
-          trigger={
-            <Button color="red" icon onClick={() => handleDelete(skin)}>
-              <Icon name='trash' />
-            </Button>
-          }
-        />
-      </>
-    );
-  }
+  const editAction = (skin: GetJaguarSkinDto) => <Popup
+    content='Editar'
+    trigger={
+      <Button icon onClick={() => handleEdit(skin)}>
+        <Icon name='edit' />
+      </Button>
+    }
+  />
+
+  const removeAction = (skin: GetJaguarSkinDto) => <Popup
+    content='Remover'
+    trigger={
+      <Button color="red" icon onClick={() => handleDelete(skin)}>
+        <Icon name='trash' />
+      </Button>
+    }
+  />
 
   return (
     <>
@@ -160,10 +155,17 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
 
         <div className='dog-table mt-3'>
           <SemanticTable
-            data={state.jaguarSkins}
-            tableActions={createActions}
-            headers={headers}
-            actions
+            data={state.jaguarSkins.map(j => ({
+              ...j,
+              values: [
+                { label: j.id, ...defProps },
+                { label: j.name_skin, collapse: true },
+                { label: j.img_skin },
+                { label: editAction(j), ...defProps },
+                { label: removeAction(j), ...defProps }
+              ]
+            }))}
+            headers={tableHeaders}
           />
         </div>
 
@@ -191,4 +193,12 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
 
 export default JaguarSkin;
 
-const headers = ["ID", "Nome", "Imagem", "Temporada Associada"];
+const defProps = { collapse: true, align: 'center' };
+
+const tableHeaders = [
+  { id: 'id', label: 'ID' },
+  { id: 'name_skin', label: 'Nome' },
+  { id: 'img_skin', label: 'Imagem' },
+  { id: null, label: null },
+  { id: null, label: null },
+];

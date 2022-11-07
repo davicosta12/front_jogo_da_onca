@@ -3,18 +3,15 @@ import { Pagination, Table } from 'semantic-ui-react';
 import "./SemanticTable.scss";
 
 interface Props {
-  data: any,
-  headers: string[],
-  tableActions: any,
-  desactiveColumns?: string[],
-  actions?: boolean
+  data: any[],
+  headers: any[]
 }
 
 const MAX_PER_PAGE = 5;
 
 const SemanticTable: FunctionComponent<Props> = (props) => {
 
-  const { data, tableActions, desactiveColumns, actions, headers } = props;
+  const { data, headers } = props;
 
   const [activePage, setActivePage] = useState(1);
 
@@ -25,57 +22,44 @@ const SemanticTable: FunctionComponent<Props> = (props) => {
 
   const handlePaginationChange = (e: any, { activePage }: any) => setActivePage(activePage);
 
-  const createTableCell = (item: any) => {
-    const itemsCell: any[] = [];
-
-    for (const prop in item) {
-
-      if (desactiveColumns?.length) {
-
-        if (!desactiveColumns.includes(prop)) {
-          itemsCell.push(item[prop]);
-        }
-
-      }
-
-      else {
-        itemsCell.push(item[prop]);
-      }
-
-    }
-
-    return (
-      itemsCell.map(item =>
-        <Table.Cell>
-          {item}
-        </Table.Cell>)
-    );
-
-  }
-
-  const createTableRow = () => {
-
-    return (
-      currentItens.map((d: any) =>
-        <Table.Row>
-          {createTableCell(d)}
-          {actions ? <Table.Cell collapsing>{tableActions(d)}</Table.Cell> : null}
-        </Table.Row >)
-    )
-  }
-
   return (
     <Table className='semanticTable' celled>
 
       <Table.Header>
         <Table.Row>
-          {headers.map(h => <Table.HeaderCell>{h}</Table.HeaderCell>)}
-          {actions ? <Table.HeaderCell></Table.HeaderCell> : null}
+          {headers && headers
+            .filter(header => !header.hasOwnProperty("visible") || header.visible)
+            .map((header, i) =>
+              <Table.HeaderCell key={i}
+                textAlign={header.align || 'center'}
+              >
+                {header.label}
+              </Table.HeaderCell>
+            )}
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-        {createTableRow()}
+        {currentItens && currentItens.map((item, ind) => {
+          return <Table.Row key={ind}
+            className={item.isPositive ? 'is-positive' : ''}
+            negative={item.isNegative}
+            positive={item.positive}
+          >
+            {item.values
+              .filter((row: any) => !row.hasOwnProperty("visible") || row.visible)
+              .map((row: any, i: number) =>
+                <Table.Cell
+                  className={`${row.pre ? 'pre' : ''} ${row.ellipsis ? 'ellipsis' : ''}`}
+                  key={i}
+                  collapsing={row.collapse}
+                  textAlign={row.align}
+                >
+                  {row.label}
+                </Table.Cell>
+              )}
+          </Table.Row>
+        })}
       </Table.Body>
 
       <Table.Footer>
@@ -104,5 +88,5 @@ const SemanticTable: FunctionComponent<Props> = (props) => {
 export default SemanticTable
 
 SemanticTable.defaultProps = {
-  actions: false,
+
 }

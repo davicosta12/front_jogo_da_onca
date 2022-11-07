@@ -111,29 +111,23 @@ const Board: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
+  const editAction = (board: GetBoardDto) => <Popup
+    content='Editar'
+    trigger={
+      <Button icon onClick={() => handleEdit(board)}>
+        <Icon name='edit' />
+      </Button>
+    }
+  />
 
-  const createActions = (board: GetBoardDto) => {
-    return (
-      <>
-        <Popup
-          content='Editar'
-          trigger={
-            <Button icon onClick={() => handleEdit(board)}>
-              <Icon name='edit' />
-            </Button>
-          }
-        />
-        <Popup
-          content='Remover'
-          trigger={
-            <Button color="red" icon onClick={() => handleDelete(board)}>
-              <Icon name='trash' />
-            </Button>
-          }
-        />
-      </>
-    );
-  }
+  const removeAction = (board: GetBoardDto) => <Popup
+    content='Remover'
+    trigger={
+      <Button color="red" icon onClick={() => handleDelete(board)}>
+        <Icon name='trash' />
+      </Button>
+    }
+  />
 
   return (
     <>
@@ -164,10 +158,17 @@ const Board: FunctionComponent<Props> = (props) => {
 
         <div className='board-table mt-3'>
           <SemanticTable
-            data={state.boards}
-            tableActions={createActions}
-            headers={headers}
-            actions
+            data={state.boards.map(b => ({
+              ...b,
+              values: [
+                { label: b.id, ...defProps },
+                { label: b.name_tabuleiro, collapse: true },
+                { label: b.img_tabuleiro },
+                { label: editAction(b), ...defProps },
+                { label: removeAction(b), ...defProps }
+              ]
+            }))}
+            headers={tableHeaders}
           />
         </div>
 
@@ -195,4 +196,12 @@ const Board: FunctionComponent<Props> = (props) => {
 
 export default Board;
 
-const headers = ["ID", "Imagem", "Nome", "Temporada Associada"];
+const defProps = { collapse: true, align: 'center' };
+
+const tableHeaders = [
+  { id: 'id', label: 'ID' },
+  { id: 'name_tabuleiro', label: 'Nome' },
+  { id: 'img_tabuleiro', label: 'Imagem' },
+  { id: null, label: null },
+  { id: null, label: null },
+];

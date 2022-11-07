@@ -132,6 +132,24 @@ const Users: FunctionComponent<Props> = (props) => {
     );
   }
 
+  const editAction = (user: GetUserDto) => <Popup
+    content='Editar'
+    trigger={
+      <Button icon onClick={() => handleEdit(user)}>
+        <Icon name='edit' />
+      </Button>
+    }
+  />
+
+  const removeAction = (user: GetUserDto) => <Popup
+    content='Remover'
+    trigger={
+      <Button color="red" icon onClick={() => handleDelete(user)}>
+        <Icon name='trash' />
+      </Button>
+    }
+  />
+
   return (
     <>
       {isLoading && <Segment className='segment-loader'>
@@ -156,11 +174,22 @@ const Users: FunctionComponent<Props> = (props) => {
 
         <div className='user-table mt-3'>
           <SemanticTable
-            data={state.users.map(u => Object.assign({}, { ...u, isAdmin: u.isAdmin ? "Sim" : "Não" }))}
-            tableActions={createActions}
-            desactiveColumns={["senha"]}
-            headers={headers}
-            actions
+            data={state.users.map(u => ({
+              ...u,
+              values: [
+                { label: u.id, ...defProps },
+                { label: u.nome, collapse: true },
+                { label: u.e_mail, collapse: true },
+                { label: u.senha, visible: false },
+                { label: u.icone, ...defProps  },
+                { label: u.isAdmin ? "Sim" : "Não", ...defProps  },
+                { label: u.nro_win, ...defProps },
+                { label: u.nro_lose, ...defProps },
+                { label: editAction(u), ...defProps },
+                { label: removeAction(u), ...defProps }
+              ]
+            }))}
+            headers={tableHeaders}
           />
         </div>
 
@@ -188,4 +217,17 @@ const Users: FunctionComponent<Props> = (props) => {
 
 export default Users;
 
-const headers = ["Id", "Nome", "Email", "Ícone", "Admin", "N° de Vitórias", "N° de Derrotas"];
+const defProps = { collapse: true, align: 'center' };
+
+const tableHeaders = [
+  { id: 'id', label: 'ID' },
+  { id: 'nome', label: 'Nome' },
+  { id: 'e_mail', label: 'Email' },
+  { id: 'senha', label: 'Senha', visible: false },
+  { id: 'icone', label: 'Ícone' },
+  { id: 'isAdmin', label: 'Admin' },
+  { id: 'nro_win', label: 'N° de Vitórias' },
+  { id: 'nro_lose', label: 'N° de Derrotas' },
+  { id: null, label: null },
+  { id: null, label: null },
+];

@@ -111,28 +111,23 @@ const Season: FunctionComponent<Props> = (props) => {
     setOpenDeleteModal(true);
   }
 
-  const createActions = (season: GetSeasonDto) => {
-    return (
-      <>
-        <Popup
-          content='Editar'
-          trigger={
-            <Button icon onClick={() => handleEdit(season)}>
-              <Icon name='edit' />
-            </Button>
-          }
-        />
-        <Popup
-          content='Remover'
-          trigger={
-            <Button color="red" icon onClick={() => handleDelete(season)}>
-              <Icon name='trash' />
-            </Button>
-          }
-        />
-      </>
-    );
-  }
+  const editAction = (season: GetSeasonDto) => <Popup
+    content='Editar'
+    trigger={
+      <Button icon onClick={() => handleEdit(season)}>
+        <Icon name='edit' />
+      </Button>
+    }
+  />
+
+  const removeAction = (season: GetSeasonDto) => <Popup
+    content='Remover'
+    trigger={
+      <Button color="red" icon onClick={() => handleDelete(season)}>
+        <Icon name='trash' />
+      </Button>
+    }
+  />
 
   return (
     <>
@@ -163,10 +158,21 @@ const Season: FunctionComponent<Props> = (props) => {
 
         <div className='season-table mt-3'>
           <SemanticTable
-            data={state.seasons}
-            tableActions={createActions}
-            headers={headers}
-            actions
+            data={state.seasons.map(s => ({
+              ...s,
+              values: [
+                { label: s.id, ...defProps },
+                { label: s.nome_season, collapse: true },
+                { label: s.inicio },
+                { label: s.fim },
+                { label: s.tabuleiro?.name_tabuleiro },
+                { label: s.skinDog?.name_skin },
+                { label: s.skinJaguar?.name_skin },
+                { label: editAction(s), ...defProps },
+                { label: removeAction(s), ...defProps }
+              ]
+            }))}
+            headers={tableHeaders}
           />
         </div>
 
@@ -194,4 +200,16 @@ const Season: FunctionComponent<Props> = (props) => {
 
 export default Season;
 
-const headers = ["ID", "Nome", "Data Inicial", "Data Final", "Tabuleiro", "Skin Onça", "Skin Cão"];
+const defProps = { collapse: true, align: 'center' };
+
+const tableHeaders = [
+  { id: 'id', label: 'ID' },
+  { id: 'nome_season', label: 'Nome' },
+  { id: 'inicio', label: 'Data Inicial' },
+  { id: 'fim', label: 'Data Final' },
+  { id: 'tabuleiro', label: 'Tabuleiro' },
+  { id: 'skinJaguar', label: 'Skin Onça' },
+  { id: 'skinDog', label: 'Skin Cachorro' },
+  { id: null, label: null },
+  { id: null, label: null },
+];
