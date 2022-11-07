@@ -164,6 +164,7 @@ const Board: FunctionComponent<Props> = (props) => {
                 { label: b.id, ...defProps },
                 { label: b.name_tabuleiro, collapse: true },
                 { label: b.img_tabuleiro },
+                { label: state.seasons.filter(s => s.tabuleiro?.id === b.id)[0]?.nome_season || '' },
                 { label: editAction(b), ...defProps },
                 { label: removeAction(b), ...defProps }
               ]
@@ -202,6 +203,7 @@ const tableHeaders = [
   { id: 'id', label: 'ID' },
   { id: 'name_tabuleiro', label: 'Nome' },
   { id: 'img_tabuleiro', label: 'Imagem' },
+  { id: 'temporada_associada', label: 'Temporada Associada' },
   { id: null, label: null },
   { id: null, label: null },
 ];

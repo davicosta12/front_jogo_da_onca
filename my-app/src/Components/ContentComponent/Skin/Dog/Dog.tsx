@@ -162,6 +162,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
                 { label: d.id, ...defProps },
                 { label: d.name_skin, collapse: true },
                 { label: d.img_skin },
+                { label: state.seasons.filter(s => s.skinDog?.id === d.id)[0]?.nome_season || '' },
                 { label: editAction(d), ...defProps },
                 { label: removeAction(d), ...defProps }
               ]
@@ -200,6 +201,7 @@ const tableHeaders = [
   { id: 'id', label: 'ID' },
   { id: 'name_skin', label: 'Nome' },
   { id: 'img_skin', label: 'Imagem' },
+  { id: 'temporada_associada', label: 'Temporada Associada' },
   { id: null, label: null },
   { id: null, label: null },
 ];
