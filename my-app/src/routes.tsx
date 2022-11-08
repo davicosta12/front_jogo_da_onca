@@ -19,35 +19,35 @@ import { useContext, useEffect } from "react";
 import { ThemeContext } from "./App";
 import AuthHelper from "./helpers/AuthHelper";
 
-const PrivateRoute = ({ children, redirectTo }: { children: any, redirectTo: any }) => {
+const verifyWhatPathChoice = () => {
+  return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';
+}
+
+const PrivateRoute = ({ children, ...options }: any) => {
 
   return isAuthenticated() && userExist() && !isAdmin() ?
     <>
       {children}
     </>
-    : <Navigate to={redirectTo} />
+    : <Navigate to={verifyWhatPathChoice()} />
 }
 
-const PrivateContentComponent = ({ children, ...rest }: any) => {
+const PrivateContentComponent = ({ children, ...options }: any) => {
 
   return isAuthenticated() && userExist() && isAdmin() ?
     <>
       <ContentComponent screenRender={children} />
     </>
-    : <Navigate to={rest.redirectTo} />
+    : <Navigate to={verifyWhatPathChoice()} />
 }
 
 const NavigationRoutes = () => {
 
-  const { state, dispatch } = useContext(ThemeContext);
+  const { dispatch } = useContext(ThemeContext);
 
   useEffect(() => {
     AuthHelper.restoreAuthFromCache(dispatch);
   }, []);
-
-  const verifyWhatPathChoice = () => {
-    return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';
-  }
 
   return (
     <BrowserRouter>
@@ -57,7 +57,7 @@ const NavigationRoutes = () => {
         <Route path="/" element={<SignIn />} />
 
         <Route path="/home" element={
-          <PrivateRoute redirectTo={verifyWhatPathChoice()}>
+          <PrivateRoute>
             <Home />
           </PrivateRoute>
         }>
@@ -66,37 +66,37 @@ const NavigationRoutes = () => {
         <Route path="/signup" element={<SignUp />} />
 
         <Route path="/jaguarboard" element={
-          <PrivateRoute redirectTo={verifyWhatPathChoice()}>
+          <PrivateRoute>
             <GameBoard />
           </PrivateRoute>
         }>
         </Route>
 
         <Route path="/config" element={
-          <PrivateContentComponent redirectTo={verifyWhatPathChoice()} />
+          <PrivateContentComponent />
         }>
         </Route>
 
         <Route path="/config/user" element={
-          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+          <PrivateContentComponent>
             <Users />
           </PrivateContentComponent>}>
         </Route>
 
         <Route path="/config/season" element={
-          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+          <PrivateContentComponent>
             <Season />
           </PrivateContentComponent>}>
         </Route>
 
         <Route path="/config/board" element={
-          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+          <PrivateContentComponent>
             <Board />
           </PrivateContentComponent>}>
         </Route>
 
         <Route path="/config/skin" element={
-          <PrivateContentComponent redirectTo={verifyWhatPathChoice()}>
+          <PrivateContentComponent>
             <Skin />
           </PrivateContentComponent>}>
         </Route>
