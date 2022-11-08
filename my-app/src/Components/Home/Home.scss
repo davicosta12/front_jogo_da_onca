@@ -16,7 +16,9 @@
   }
 
   .home-navbar {
-    background: #556b2f;
+    //background: #556b2f;
+    border-bottom: 2px solid #3e4e21;
+    background-image: url("../../assets/fundoVerde2md.png");
     padding: 10px 35px;
 
     .ui.secondary.menu a {
@@ -53,8 +55,8 @@
 
     .home-user-info {
       .user-info {
-        width: 386px;
-        height: 174px;
+        width: 25rem;
+        height: 15rem;
         background: rgba(#2e2e2e, 0.8);
         border: 2px solid #ffffff;
         border-radius: 16px;

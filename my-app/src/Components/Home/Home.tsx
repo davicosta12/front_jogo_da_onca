@@ -163,7 +163,7 @@ const Home: FunctionComponent<Props> = (props) => {
                 </div>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row columns={1} className="justify-content-center">
+            <Grid.Row columns={1} className="justify-content-center mt-2">
               <Grid.Column mobile={16} tablet={8} computer={8}>
                 <h1 className='text-center'>Selecione a peça de tabuleiro que deseja jogar</h1>
                 <h2 className='text-center'>{`Peça Escolhida: ${playerChoiced}`}</h2>
