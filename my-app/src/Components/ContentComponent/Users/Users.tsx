@@ -53,6 +53,7 @@ const Users: FunctionComponent<Props> = (props) => {
       await userService.createUser(values);
       getUsers();
       setOpenModal(false);
+      toast.success("Usuário criado com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -68,6 +69,7 @@ const Users: FunctionComponent<Props> = (props) => {
       await userService.updateUser(values, +user.id);
       getUsers();
       setOpenModal(false);
+      toast.success("Usuário atualizado com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -83,6 +85,7 @@ const Users: FunctionComponent<Props> = (props) => {
       await userService.deleteUser(+user.id);
       getUsers();
       setOpenDeleteModal(false);
+      toast.success("Usuário removido com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -107,29 +110,6 @@ const Users: FunctionComponent<Props> = (props) => {
   const handleDelete = (user: GetUserDto) => {
     setUser(user);
     setOpenDeleteModal(true);
-  }
-
-  const createActions = (user: GetUserDto) => {
-    return (
-      <>
-        <Popup
-          content='Editar'
-          trigger={
-            <Button icon onClick={() => handleEdit(user)}>
-              <Icon name='edit' />
-            </Button>
-          }
-        />
-        <Popup
-          content='Remover'
-          trigger={
-            <Button color="red" icon onClick={() => handleDelete(user)}>
-              <Icon name='trash' />
-            </Button>
-          }
-        />
-      </>
-    );
   }
 
   const editAction = (user: GetUserDto) => <Popup
@@ -181,8 +161,8 @@ const Users: FunctionComponent<Props> = (props) => {
                 { label: u.nome, collapse: true },
                 { label: u.e_mail, collapse: true },
                 { label: u.senha, visible: false },
-                { label: u.icone, ...defProps  },
-                { label: u.isAdmin ? "Sim" : "Não", ...defProps  },
+                { label: u.icone, ...defProps },
+                { label: u.isAdmin ? "Sim" : "Não", ...defProps },
                 { label: u.nro_win, ...defProps },
                 { label: u.nro_lose, ...defProps },
                 { label: editAction(u), ...defProps },

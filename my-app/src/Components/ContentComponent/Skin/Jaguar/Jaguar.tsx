@@ -53,6 +53,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
       await skinService.createJaguarSkin(values);
       getSkins();
       setOpenModal(false);
+      toast.success("Skin criada com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -68,6 +69,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
       await skinService.updateJaguarSkin(values, +jaguarSkin.id);
       getSkins();
       setOpenModal(false);
+      toast.success("Skin atualizada com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -83,6 +85,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
       await skinService.deleteJaguarSkin(+jaguarSkin.id);
       getSkins();
       setOpenDeleteModal(false);
+      toast.success("Skin removida com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));

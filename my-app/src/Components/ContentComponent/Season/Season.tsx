@@ -55,6 +55,7 @@ const Season: FunctionComponent<Props> = (props) => {
       await seasonService.createSeason(values);
       getSeasons();
       setOpenModal(false);
+      toast.success("Temporada criada com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -70,6 +71,7 @@ const Season: FunctionComponent<Props> = (props) => {
       await seasonService.updateSeason(values, +season.id);
       getSeasons();
       setOpenModal(false);
+      toast.success("Temporada atualizada com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -85,6 +87,7 @@ const Season: FunctionComponent<Props> = (props) => {
       await seasonService.deleteSeason(+season.id);
       getSeasons();
       setOpenDeleteModal(false);
+      toast.success("Temporada removida com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));

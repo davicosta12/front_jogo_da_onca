@@ -54,6 +54,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
       await skinService.createDogSkin(values);
       getSkins();
       setOpenModal(false);
+      toast.success("Skin criada com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -69,6 +70,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
       await skinService.updateDogSkin(values, +dogSkin.id);
       getSkins();
       setOpenModal(false);
+      toast.success("Skin atualizada com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -84,6 +86,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
       await skinService.deleteDogSkin(+dogSkin.id);
       getSkins();
       setOpenDeleteModal(false);
+      toast.success("Skin removida com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));

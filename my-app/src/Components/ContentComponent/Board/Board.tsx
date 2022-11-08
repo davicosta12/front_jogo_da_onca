@@ -55,6 +55,7 @@ const Board: FunctionComponent<Props> = (props) => {
       await boardService.createBoard(values);
       getBoards();
       setOpenModal(false);
+      toast.success("Tabuleiro criado com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -70,6 +71,7 @@ const Board: FunctionComponent<Props> = (props) => {
       await boardService.updateBoard(values, +board.id);
       getBoards();
       setOpenModal(false);
+      toast.success("Tabuleiro atualizado com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -85,6 +87,7 @@ const Board: FunctionComponent<Props> = (props) => {
       await boardService.deleteBoard(+board.id);
       getBoards();
       setOpenDeleteModal(false);
+      toast.success("Tabuleiro removido com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));

@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
-import { skinJaguarImagesOptions } from '../../../../../misc/utils/utils/utils';
+import { skinJaguarImagesOptions } from '../../../../../misc/utils/utils/options';
 import GetJaguarSkinDto from '../../../../../Services/Skins/dto/GetJaguarSkinDto';
 
 interface Props {

@@ -1,7 +1,7 @@
 
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
-import { skinDogImagesOptions } from '../../../../../misc/utils/utils/utils';
+import { skinDogImagesOptions } from '../../../../../misc/utils/utils/options';
 import GetDogSkinDto from '../../../../../Services/Skins/dto/GetDogSkinDto';
 
 interface Props {

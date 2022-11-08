@@ -1,10 +1,9 @@
 import { FunctionComponent, useState } from 'react';
 import {
-  useNavigate,
-  Link
+  useNavigate
 } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { Form, Button, Input, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Form, Button, Input, Segment, Dimmer, Loader, Label } from 'semantic-ui-react';
 import { toastError, toastOptions } from '../../misc/utils/utils/utils';
 import AuthService from '../../Services/AuthService/Auth';
 import { RegisterUserDto } from '../../Services/AuthService/dto/AuthRestDto';
@@ -56,7 +55,7 @@ const SignUp: FunctionComponent<Props> = (props) => {
   }
 
   const handleConfirmPassword = () => {
-    return !(password == confirmPassword) || !validatePassword;
+    return !(password === confirmPassword) || !validatePassword;
   }
 
   const validateRegisterUser = () => {
@@ -85,6 +84,11 @@ const SignUp: FunctionComponent<Props> = (props) => {
           <div className='signUp-form-container'>
             <Form>
               <Form.Field>
+                {!validateUserName
+                  ? <Label basic color='red' pointing='below'>
+                    Nome deve ter pelo menos 6 caracteres.
+                  </Label>
+                  : null}
                 <Input
                   placeholder='Nome'
                   size='large'
@@ -92,10 +96,14 @@ const SignUp: FunctionComponent<Props> = (props) => {
                   onChange={e => setUserName(e.target.value)}
                   error={!validateUserName}
                 />
-                {!validateUserName ? <label className='input-message-label'>Nome deve ter pelo menos 6 caracteres.</label> : null}
               </Form.Field>
 
               <Form.Field>
+                {!validateEmail
+                  ? <Label basic color='red' pointing='below'>
+                    Email incorreto.
+                  </Label>
+                  : null}
                 <Input
                   placeholder="Email"
                   size='large'
@@ -103,10 +111,14 @@ const SignUp: FunctionComponent<Props> = (props) => {
                   onChange={e => setEmail(e.target.value)}
                   error={!validateEmail}
                 />
-                {!validateEmail ? <label className='input-message-label'>Email incorreto.</label> : null}
               </Form.Field>
 
               <Form.Field>
+                {!validatePassword
+                  ? <Label basic color='red' pointing='below'>
+                    A senha deve ter pelo menos 8 caracteres.
+                  </Label>
+                  : null}
                 <Input
                   placeholder="Senha"
                   size='large'
@@ -115,10 +127,14 @@ const SignUp: FunctionComponent<Props> = (props) => {
                   type="password"
                   error={!validatePassword}
                 />
-                {!validatePassword ? <label className='input-message-label'>A senha deve ter pelo menos 8 caracteres.</label> : null}
               </Form.Field>
 
               <Form.Field>
+                {handleConfirmPassword()
+                  ? <Label basic color='red' pointing='below'>
+                    As senhas não conferem.
+                  </Label>
+                  : null}
                 <Input
                   placeholder="Confirmar senha"
                   size='large'
@@ -127,7 +143,6 @@ const SignUp: FunctionComponent<Props> = (props) => {
                   type="password"
                   error={handleConfirmPassword()}
                 />
-                {handleConfirmPassword() ? <label className='input-message-label'>As senhas não conferem.</label> : null}
               </Form.Field>
             </Form>
 

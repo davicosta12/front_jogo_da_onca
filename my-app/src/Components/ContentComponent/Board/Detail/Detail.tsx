@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
-import { boardImagesOptions } from '../../../../misc/utils/utils/utils';
+import { boardImagesOptions } from '../../../../misc/utils/utils/options';
 import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
 
 interface Props {

@@ -34,6 +34,15 @@ export const getActiveUser = () => {
   }
 }
 
+export const setUserCache = (user: GetUserDto) => {
+  try {
+    localStorage.setItem(ACTIVE_USER, JSON.stringify(user));
+  }
+  catch (err: any) {
+    console.log(err);
+  }
+};
+
 export const isAdmin = () => {
   const user = getActiveUser();
   return user?.id ? user.isAdmin : false;

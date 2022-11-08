@@ -38,6 +38,14 @@ export default class UserService extends HttpService {
     });
   }
 
+  changeUserIcon(iconPath: string, id: number): Promise<GetUserDto> {
+    return new Promise((resolve, reject) => {
+      this.getApi().patch(`/Usuario/MudarIcone/${id}`, iconPath)
+        .then((res: any) => resolve(res.data))
+        .catch((err: AxiosResponse<any>) => reject(err))
+    });
+  }
+
   deleteUser(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getApi().delete(`/Usuario/${id}`)

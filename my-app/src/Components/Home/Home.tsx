@@ -3,24 +3,30 @@ import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Grid, Menu, Button, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import ImageGallery from 'react-image-gallery';
 import { ThemeContext } from '../../App';
 import { toastError, toastOptions } from '../../misc/utils/utils/utils';
-import { logout } from '../../Services/AuthService/Auth';
+import { logout, setUserCache } from '../../Services/AuthService/Auth';
 import GetSeasonDto from '../../Services/Season/dto/GetSeasonDto';
 import SeasonService from '../../Services/Season/SeasonService';
 import "./Home.scss";
+import UserService from '../../Services/Users/UserService';
+import { ActionTypes } from '../../reducer/reducer';
 
 interface Props {
 }
 
 const Home: FunctionComponent<Props> = (props) => {
 
+  const [thumbnailPosition, setThumbnailPosition] = useState(0);
   const [activeSeason, setActiveSeason] = useState({} as GetSeasonDto);
   const [activeItem, setActiveItem] = useState('home');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingChangeIcon, setIsLoadingChangeIcon] = useState(false);
   const { state, dispatch } = useContext(ThemeContext);
   const navigate = useNavigate();
   const seasonService = new SeasonService();
+  const userService = new UserService();
 
   useEffect(() => {
     getSeasonByRangeDate();
@@ -40,10 +46,10 @@ const Home: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleActiveItem = (ev: any, { name }: any) => {
-    setActiveItem(name);
-    navigate("/");
-  }
+  // const handleActiveItem = (ev: any, { name }: any) => {
+  //   setActiveItem(name);
+  //   navigate("/");
+  // }
 
   const handleLogout = (ev: any, { name }: any) => {
     setActiveItem(name);
@@ -51,9 +57,37 @@ const Home: FunctionComponent<Props> = (props) => {
     navigate("/")
   }
 
+  const handleChangeUserIcon = async () => {
+    setIsLoadingChangeIcon(true);
+    try {
+      const getUrlImgByIndex = userIconsThumbnail?.[thumbnailPosition || 0]?.original || '';
+
+      if (getUrlImgByIndex) {
+        const user = await userService.changeUserIcon(getUrlImgByIndex, state.activeUser.id);
+        dispatch({
+          type: ActionTypes.SET_ACTIVE_USER,
+          payload: user
+        });
+        setUserCache(user);
+        toast.success("O seu ícone foi alterado com sucesso.", toastOptions(toast));
+      }
+
+    }
+    catch (err: any) {
+      toast.error(toastError(err), toastOptions(toast));
+    }
+    finally {
+      setIsLoadingChangeIcon(false);
+    }
+  }
+
   const handleGamePlay = () => {
     navigate("/jaguarboard", { state: activeSeason });
     window.location.reload();
+  }
+
+  const onSlide = (index: number) => {
+    setThumbnailPosition(index);
   }
 
   return (
@@ -82,7 +116,29 @@ const Home: FunctionComponent<Props> = (props) => {
                 <div className='home-user-icons flex align-items-center justify-content-center h-full'>
                   <div className='flex-column justify-content-center align-items-center'>
                     <h1>Alterar ícone</h1>
-                    <img className='img-onca-base' height={200} width={200}></img>
+                    <ImageGallery
+                      showBullets
+                      infinite={false}
+                      showThumbnails={false}
+                      showNav={false}
+                      showFullscreenButton={false}
+                      showPlayButton={false}
+                      items={userIconsThumbnail}
+                      slideDuration={450}
+                      slideInterval={2000}
+                      slideOnThumbnailOver={false}
+                      thumbnailPosition='bottom'
+                      onSlide={onSlide}
+                    />
+                    <div>
+                      <Button
+                        className='mt-1 mb-1'
+                        loading={isLoadingChangeIcon}
+                        disabled={isLoading || isLoadingChangeIcon}
+                        onClick={handleChangeUserIcon}
+                      >Alterar
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Grid.Column>
@@ -113,3 +169,24 @@ const Home: FunctionComponent<Props> = (props) => {
 };
 
 export default Home;
+
+const userIconsThumbnail = [
+  {
+    original: require('../../assets/logoOnca.jpeg'),
+    thumbnail: require('../../assets/logoOnca.jpeg'),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  {
+    original: 'https://picsum.photos/id/1015/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1015/1000/600/',
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  {
+    original: 'https://picsum.photos/id/1019/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1019/1000/600/',
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+];

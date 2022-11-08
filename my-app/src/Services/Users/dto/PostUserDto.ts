@@ -3,5 +3,5 @@ export default interface PostUserDto {
     e_mail: string,
     senha: string,
     isAdmin: boolean,
-    icone: string,
+    icone?: string,
   }

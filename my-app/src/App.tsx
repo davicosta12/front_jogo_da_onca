@@ -5,6 +5,7 @@ import { ActionReducer, InitialState, initialState, reducer } from './reducer/re
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'moment/locale/pt-br';
+import "react-image-gallery/styles/scss/image-gallery.scss";
 
 export const ThemeContext = createContext({} as { state: InitialState; dispatch: Dispatch<ActionReducer>; });
 

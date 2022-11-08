@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
-import { userIconsOptions } from '../../../../misc/utils/utils/utils';
+import { userIconsOptions } from '../../../../misc/utils/utils/options';
 import GetUserDto from '../../../../Services/Users/dto/GetUserDto';
 
 interface Props {
@@ -52,12 +52,22 @@ const UserDetail: FunctionComponent<Props> = (props) => {
     } else {
       setFormValues(INITIAL_FORM_VALUES);
     }
-  }, [user]);
+  }, [user, openModal]);
 
   const handleSubmit = (values: GetUserDto) => {
+
+    let payload = {} as any;
+    if (formValues.isAdmin) {
+      delete values.icone
+      payload = { ...values };
+    }
+    else {
+      payload = { ...values };
+    }
+
     createMode
-      ? onCreate(values)
-      : onUpdate(values);
+      ? onCreate(payload)
+      : onUpdate(payload);
   }
 
   const handleChange = (ev: any, { name, value }: any) => {
@@ -85,6 +95,8 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 value={formValues.nome}
                 onChange={handleChange}
                 placeholder='Nome'
+                error={!formValues.nome}
+                required
               />
               <Form.Input
                 label='Senha'
@@ -93,6 +105,8 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 onChange={handleChange}
                 type='password'
                 placeholder='Senha'
+                error={!formValues.senha}
+                required
               />
             </Form.Group>
             <Form.Group widths='equal'>
@@ -103,7 +117,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 onChange={handleChange}
                 placeholder='Email'
               />
-              <Form.Dropdown
+              {!formValues.isAdmin && <Form.Dropdown
                 name='icone'
                 value={formValues.icone}
                 onChange={handleChange}
@@ -111,7 +125,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 options={userIconsOptions}
                 selection
                 placeholder='Ícone'
-              />
+              />}
             </Form.Group>
             <Form.Checkbox
               name='isAdmin'
