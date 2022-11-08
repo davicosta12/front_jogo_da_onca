@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Image, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../../App';
 import { toastError, toastOptions } from '../../../../misc/utils/utils/utils';
 import GetDogSkinDto from '../../../../Services/Skins/dto/GetDogSkinDto';
@@ -9,7 +9,6 @@ import { ActionTypes } from '../../../../reducer/reducer';
 import DeleteModal from '../../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../../_commons/SemanticTable/SemanticTable';
 import SkinDetail from './Detail/Detail';
-
 
 interface Props {
 }
@@ -164,7 +163,7 @@ const DogSkin: FunctionComponent<Props> = (props) => {
               values: [
                 { label: d.id, ...defProps },
                 { label: d.name_skin, collapse: true },
-                { label: d.img_skin },
+                { label: <Image src={d.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
                 { label: state.seasons.filter(s => s.skinDog?.id === d.id)[0]?.nome_season || '' },
                 { label: editAction(d), ...defProps },
                 { label: removeAction(d), ...defProps }

@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Image, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
 import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetUserDto from '../../../Services/Users/dto/GetUserDto';
@@ -161,7 +161,7 @@ const Users: FunctionComponent<Props> = (props) => {
                 { label: u.nome, collapse: true },
                 { label: u.e_mail, collapse: true },
                 { label: u.senha, visible: false },
-                { label: u.icone, ...defProps },
+                { label: <Image src={u.icone || require('../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
                 { label: u.isAdmin ? "Sim" : "Não", ...defProps },
                 { label: u.nro_win, ...defProps },
                 { label: u.nro_lose, ...defProps },

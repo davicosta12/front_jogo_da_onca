@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Image, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
 import { formatDateTime, toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
@@ -168,7 +168,12 @@ const Season: FunctionComponent<Props> = (props) => {
                 { label: s.nome_season, collapse: true },
                 { label: formatDateTime(s.inicio) },
                 { label: formatDateTime(s.fim) },
-                { label: s.tabuleiro?.name_tabuleiro },
+                {
+                  label: <div>
+                    <Image src={s.tabuleiro?.img_tabuleiro || require('../../../assets/defaultImage.png')} avatar />
+                    <span>{s.tabuleiro?.name_tabuleiro}</span>
+                  </div>, collapse: true
+                },
                 { label: s.skinDog?.name_skin },
                 { label: s.skinJaguar?.name_skin },
                 { label: editAction(s), ...defProps },

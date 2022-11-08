@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Image, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../../App';
 import { toastError, toastOptions } from '../../../../misc/utils/utils/utils';
 import GetJaguarSkinDto from '../../../../Services/Skins/dto/GetJaguarSkinDto';
@@ -163,7 +163,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
               values: [
                 { label: j.id, ...defProps },
                 { label: j.name_skin, collapse: true },
-                { label: j.img_skin },
+                { label: <Image src={j.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
                 { label: state.seasons.filter(s => s.skinJaguar?.id === j.id)[0]?.nome_season || '' },
                 { label: editAction(j), ...defProps },
                 { label: removeAction(j), ...defProps }
