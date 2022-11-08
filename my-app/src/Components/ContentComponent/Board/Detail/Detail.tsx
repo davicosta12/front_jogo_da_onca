@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
+import { boardImagesOptions } from '../../../../misc/utils/utils/utils';
 import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
 
 interface Props {
@@ -79,7 +80,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
                 name="img_tabuleiro"
                 label='Imagem do Tabuleiro'
                 value={formValues.img_tabuleiro}
-                options={friendOptions}
+                options={boardImagesOptions}
                 selection
                 onChange={handleChange}
                 placeholder='Imagem do Tabuleiro'
@@ -109,42 +110,3 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
 }
 
 export default BoardDetail
-
-const friendOptions = [
-  {
-    key: 'Jenny Hess',
-    text: 'Jenny Hess',
-    value: 'Jenny Hess',
-    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
-  },
-  {
-    key: 'Elliot Fu',
-    text: 'Elliot Fu',
-    value: 'Elliot Fu',
-    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
-  },
-  {
-    key: 'Stevie Feliciano',
-    text: 'Stevie Feliciano',
-    value: 'Stevie Feliciano',
-    image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
-  },
-  {
-    key: 'Christian',
-    text: 'Christian',
-    value: 'Christian',
-    image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
-  },
-  {
-    key: 'Matt',
-    text: 'Matt',
-    value: 'Matt',
-    image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
-  },
-  {
-    key: 'Justen Kitsune',
-    text: 'Justen Kitsune',
-    value: 'Justen Kitsune',
-    image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
-  },
-]

@@ -122,7 +122,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                   key: j.id,
                   text: j.name_skin,
                   value: j.id,
-                  image: { avatar: true, src: 'https://conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_1x1.jpg' },
+                  image: { avatar: true, src: j.img_skin},
                 }))}
                 selection
                 onChange={handleChange}
@@ -140,7 +140,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                   key: d.id,
                   text: d.name_skin,
                   value: d.id,
-                  image: { avatar: true, src: 'https://conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_1x1.jpg' },
+                  image: { avatar: true, src: d.img_skin },
                 }))}
                 selection
                 onChange={handleChange}
@@ -158,7 +158,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                   key: b.id,
                   text: b.name_tabuleiro,
                   value: b.id,
-                  image: { avatar: true, src: 'https:conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_1x1.jpg' },
+                  image: { avatar: true, src: b.img_tabuleiro},
                 }))}
                 selection
                 onChange={handleChange}

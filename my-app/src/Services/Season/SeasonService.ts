@@ -30,6 +30,14 @@ export default class SeasonService extends HttpService {
   //   });
   // }
 
+  getSeasonByRangeDate(inicio: string, fim: string): Promise<GetSeasonDto> {
+    return new Promise((resolve, reject) => {
+      this.getApi().get(`/Season/RangeDate?inicio=${inicio}&fim=${fim}`)
+        .then((res: any) => resolve(res.data))
+        .catch((err: AxiosResponse<any>) => reject(err))
+    });
+  }
+
   createSeason(season: PostSeasonDto): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getApi().post(`/Season`, season)

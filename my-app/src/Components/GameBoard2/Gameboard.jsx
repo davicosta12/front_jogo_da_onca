@@ -1,4 +1,6 @@
+/* eslint-disable default-case */
 import { useEffect, useRef, Fragment } from "react"
+import { useLocation } from 'react-router-dom';
 import p5 from 'p5';
 import Jogo from '../../misc/utils/Jogo';
 import skinTabuleiro from '../../assets/fundo.png';
@@ -78,6 +80,10 @@ function mudarMsgTurno(mudouTurnoPeca = true) {
 }
 
 const GameBoard = (props) => {
+
+  const location = useLocation();
+
+  console.log(location.state);
 
   function ehMeuTurno(turnoPeca) {
     return (ehCachorro && turnoPeca == 1) || (!ehCachorro && turnoPeca == 0)

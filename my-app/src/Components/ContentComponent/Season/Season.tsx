@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
-import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
+import { formatDateTime, toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
 import SeasonService from '../../../Services/Season/SeasonService';
 import { ActionTypes } from '../../../reducer/reducer';
@@ -163,8 +163,8 @@ const Season: FunctionComponent<Props> = (props) => {
               values: [
                 { label: s.id, ...defProps },
                 { label: s.nome_season, collapse: true },
-                { label: s.inicio },
-                { label: s.fim },
+                { label: formatDateTime(s.inicio) },
+                { label: formatDateTime(s.fim) },
                 { label: s.tabuleiro?.name_tabuleiro },
                 { label: s.skinDog?.name_skin },
                 { label: s.skinJaguar?.name_skin },

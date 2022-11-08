@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
+import { userIconsOptions } from '../../../../misc/utils/utils/utils';
 import GetUserDto from '../../../../Services/Users/dto/GetUserDto';
 
 interface Props {
@@ -107,7 +108,7 @@ const UserDetail: FunctionComponent<Props> = (props) => {
                 value={formValues.icone}
                 onChange={handleChange}
                 label='Ícone'
-                options={friendOptions}
+                options={userIconsOptions}
                 selection
                 placeholder='Ícone'
               />
@@ -140,42 +141,3 @@ const UserDetail: FunctionComponent<Props> = (props) => {
 }
 
 export default UserDetail
-
-const friendOptions = [
-  {
-    key: 'Jenny Hess',
-    text: 'Jenny Hess',
-    value: 'Jenny Hess',
-    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
-  },
-  {
-    key: 'Elliot Fu',
-    text: 'Elliot Fu',
-    value: 'Elliot Fu',
-    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
-  },
-  {
-    key: 'Stevie Feliciano',
-    text: 'Stevie Feliciano',
-    value: 'Stevie Feliciano',
-    image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
-  },
-  {
-    key: 'Christian',
-    text: 'Christian',
-    value: 'Christian',
-    image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
-  },
-  {
-    key: 'Matt',
-    text: 'Matt',
-    value: 'Matt',
-    image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
-  },
-  {
-    key: 'Justen Kitsune',
-    text: 'Justen Kitsune',
-    value: 'Justen Kitsune',
-    image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
-  },
-]
