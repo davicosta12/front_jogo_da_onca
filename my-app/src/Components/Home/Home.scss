@@ -1,4 +1,20 @@
 .home-container {
+  h1 {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  h2 {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
   .home-navbar {
     background: #556b2f;
     padding: 10px 35px;
@@ -21,13 +37,6 @@
     padding: 20px;
 
     .home-user-icons {
-      h1 {
-        font-style: normal;
-        font-weight: 800;
-        font-size: 30px;
-        color: rgba(255, 255, 255, 0.7);
-      }
-
       .img-onca-base {
         > img {
           border-radius: 50%;
@@ -46,7 +55,7 @@
       .user-info {
         width: 386px;
         height: 174px;
-        background: rgba(#2E2E2E, .8);
+        background: rgba(#2e2e2e, 0.8);
         border: 2px solid #ffffff;
         border-radius: 16px;
         padding: 0 10px;
@@ -83,5 +92,33 @@
         color: rgba(0, 0, 0, 0.7);
       }
     }
+  }
+
+  .peca-onca {
+    cursor: pointer;
+    width: 80px;
+    transition: width 0.8s;
+
+    img {
+      width: 100% !important;
+    }
+  }
+
+  .peca-onca:hover {
+    width: 100px;
+  }
+
+  .peca-dog {
+    cursor: pointer;
+    width: 80px;
+    transition: width 0.8s;
+
+    img {
+      width: 100% !important;
+    }
+  }
+
+  .peca-dog:hover {
+    width: 100px;
   }
 }

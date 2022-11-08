@@ -2,7 +2,7 @@ import moment from 'moment';
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Grid, Menu, Button, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Grid, Menu, Button, Segment, Dimmer, Loader, Image, GridRow } from 'semantic-ui-react';
 import ImageGallery from 'react-image-gallery';
 import { ThemeContext } from '../../App';
 import { toastError, toastOptions } from '../../misc/utils/utils/utils';
@@ -17,9 +17,10 @@ interface Props {
 }
 
 const Home: FunctionComponent<Props> = (props) => {
-
-  const [thumbnailPosition, setThumbnailPosition] = useState(0);
   const [activeSeason, setActiveSeason] = useState({} as GetSeasonDto);
+  const [playerChoiced, setPlayerChoiced] = useState("");
+  const [thumbnailPosition, setThumbnailPosition] = useState(0);
+  const [startIndexPosition, setStartIndexPosition] = useState(0);
   const [activeItem, setActiveItem] = useState('home');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingChangeIcon, setIsLoadingChangeIcon] = useState(false);
@@ -31,6 +32,13 @@ const Home: FunctionComponent<Props> = (props) => {
   useEffect(() => {
     getSeasonByRangeDate();
   }, []);
+
+  useEffect(() => {
+    const _thumbnailPosition = userIconsThumbnail?.map(u => u.original).indexOf(state.activeUser?.icone) || 0;
+    if (_thumbnailPosition >= 0) {
+      setStartIndexPosition(_thumbnailPosition);
+    }
+  }, [state.activeUser]);
 
   const getSeasonByRangeDate = async () => {
     setIsLoading(true);
@@ -118,7 +126,7 @@ const Home: FunctionComponent<Props> = (props) => {
                     <h1>Alterar ícone</h1>
                     <ImageGallery
                       showBullets
-                      infinite={false}
+                      infinite
                       showThumbnails={false}
                       showNav={false}
                       showFullscreenButton={false}
@@ -129,6 +137,7 @@ const Home: FunctionComponent<Props> = (props) => {
                       slideOnThumbnailOver={false}
                       thumbnailPosition='bottom'
                       onSlide={onSlide}
+                      startIndex={startIndexPosition}
                     />
                     <div>
                       <Button
@@ -154,13 +163,33 @@ const Home: FunctionComponent<Props> = (props) => {
                 </div>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row columns={1}>
-              <Grid.Column mobile={16} tablet={16} computer={16}>
-                <div className='home-user-action flex justify-content-center align-items-center mt-2'>
-                  <Button className='home-action-btn' onClick={handleGamePlay}>Jogar</Button>
+            <Grid.Row columns={1} className="justify-content-center">
+              <Grid.Column mobile={16} tablet={8} computer={8}>
+                <h1 className='text-center'>Selecione a peça de tabuleiro que deseja jogar</h1>
+                <h2 className='text-center'>{`Peça Escolhida: ${playerChoiced}`}</h2>
+                <div className='flex justify-content-center align-items-center'>
+                  <div className='peca-onca flex justify-content-center align-items-center' onClick={() => setPlayerChoiced("Onça")}>
+                    <Image src={require('../../assets/oncaBase.png')} size='tiny' circular />
+                  </div>
+                  <div className='peca-dog flex justify-content-center align-items-center ml-1' onClick={() => setPlayerChoiced("Cachorro")}>
+                    <Image src={require('../../assets/cachorroBase.png')} size='tiny' circular />
+                  </div>
                 </div>
               </Grid.Column>
             </Grid.Row>
+            <GridRow className="justify-content-center">
+              <Grid.Column mobile={16} tablet={8} computer={8}>
+                <div className='home-user-action flex justify-content-center align-items-center'>
+                  <Button
+                    className='home-action-btn'
+                    disabled={!playerChoiced || isLoading || isLoadingChangeIcon}
+                    onClick={handleGamePlay}
+                  >
+                    Jogar
+                  </Button>
+                </div>
+              </Grid.Column>
+            </GridRow>
           </Grid>
         </div>
       </div>
