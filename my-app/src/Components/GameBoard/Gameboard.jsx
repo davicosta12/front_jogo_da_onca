@@ -2,7 +2,7 @@
 import { useEffect, useRef, Fragment } from "react"
 import { useLocation } from 'react-router-dom';
 import p5 from 'p5';
-import Jogo from '../../misc/utils/Jogo';
+import Jogo from '../../misc/gameFunctionalities/Jogo';
 import skinTabuleiro from '../../assets/fundo.png';
 import skinOnca from '../../assets/onca.png'
 import skinCachorro from '../../assets/dog.png'

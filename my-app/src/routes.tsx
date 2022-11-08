@@ -9,13 +9,10 @@ import ContentComponent from "./Components/ContentComponent/ContentComponent";
 import Season from "./Components/ContentComponent/Season/Season";
 import Skin from "./Components/ContentComponent/Skin/Skin";
 import Users from "./Components/ContentComponent/Users/Users";
-import GameBoard from "./Components/GameBoard2/Gameboard";
+import GameBoard from "./Components/GameBoard/Gameboard";
 import Home from "./Components/Home/Home";
-import JaguarBoard from "./Components/JaguarBoard/JaguarBoard";
-import { ActionTypes } from "./reducer/reducer";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
-import { Tabuleiro } from "./misc/GameBoard/Tabuleiro";
 
 import { isAdmin, isAuthenticated, userExist } from "./Services/AuthService/Auth";
 import { useContext, useEffect } from "react";
