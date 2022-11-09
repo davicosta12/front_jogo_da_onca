@@ -9,6 +9,7 @@ import { ActionTypes } from '../../../../reducer/reducer';
 import DeleteModal from '../../../_commons/DeleteModal/DeleteModal';
 import SemanticTable from '../../../_commons/SemanticTable/SemanticTable';
 import SkinDetail from './Detail/Detail';
+import PostJaguarSkinDto from '../../../../Services/Skins/dto/PostJaguarSkinDto';
 
 
 interface Props {
@@ -47,7 +48,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleCreateSkin = async (values: GetJaguarSkinDto) => {
+  const handleCreateSkin = async (values: PostJaguarSkinDto) => {
     setIsLoadingForm(true);
     try {
       await skinService.createJaguarSkin(values);
@@ -63,7 +64,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleUpdateSkin = async (values: GetJaguarSkinDto) => {
+  const handleUpdateSkin = async (values: PostJaguarSkinDto) => {
     setIsLoadingForm(true);
     try {
       await skinService.updateJaguarSkin(values, +jaguarSkin.id);
@@ -164,7 +165,7 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
                 { label: j.id, ...defProps },
                 { label: j.name_skin, collapse: true },
                 { label: <Image src={j.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
-                { label: state.seasons.filter(s => s.skinJaguar?.id === j.id)[0]?.nome_season || '' },
+                { label: j.season?.nome_season },
                 { label: editAction(j), ...defProps },
                 { label: removeAction(j), ...defProps }
               ]

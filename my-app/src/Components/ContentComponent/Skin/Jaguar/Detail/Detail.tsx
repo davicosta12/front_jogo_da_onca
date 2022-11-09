@@ -1,25 +1,29 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
+import { ThemeContext } from '../../../../../App';
 import { skinJaguarImagesOptions } from '../../../../../misc/utils/utils/options';
 import GetJaguarSkinDto from '../../../../../Services/Skins/dto/GetJaguarSkinDto';
+import PostJaguarSkinDto from '../../../../../Services/Skins/dto/PostJaguarSkinDto';
 
 interface Props {
   skin: GetJaguarSkinDto;
   openModal: boolean;
   createMode: boolean;
-  onCreate: (values: GetJaguarSkinDto) => void;
-  onUpdate: (values: GetJaguarSkinDto) => void;
+  onCreate: (values: PostJaguarSkinDto) => void;
+  onUpdate: (values: PostJaguarSkinDto) => void;
   loading?: boolean;
   setOpenModal: any;
 }
 
 const SkinDetail: FunctionComponent<Props> = (props) => {
 
+  const { state, dispatch } = useContext(ThemeContext);
+
   const [formValues, setFormValues] = useState({
-    id: 0,
+    idSeason: 0,
     img_skin: '',
     name_skin: ''
-  } as GetJaguarSkinDto);
+  } as PostJaguarSkinDto);
 
   const {
     skin,
@@ -33,19 +37,20 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
   useEffect(() => {
     if (skin?.id) {
       setFormValues({
-        id: skin.id,
+        idSeason: skin.season.id,
         img_skin: skin.img_skin,
         name_skin: skin.name_skin
       });
     } else {
       setFormValues({
+        idSeason: 0,
         img_skin: '',
         name_skin: ''
-      } as GetJaguarSkinDto);
+      } as PostJaguarSkinDto);
     }
   }, [skin, openModal]);
 
-  const handleSubmit = (values: GetJaguarSkinDto) => {
+  const handleSubmit = (values: PostJaguarSkinDto) => {
     createMode
       ? onCreate(values)
       : onUpdate(values);
@@ -65,6 +70,23 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       <Modal.Content>
         <Modal.Description>
           <Form>
+            <Form.Dropdown
+              fluid
+              name="idSeason"
+              label='Temporada'
+              value={formValues.idSeason}
+              options={state.seasons.map(b => Object.assign({}, {
+                key: b.id,
+                text: b.nome_season,
+                value: b.id,
+              }))}
+              selection
+              onChange={handleChange}
+              placeholder='Temporada'
+              disabled={!createMode}
+              required
+              error={!formValues.idSeason}
+            />
             <Form.Group widths='equal'>
               <Form.Input
                 fluid

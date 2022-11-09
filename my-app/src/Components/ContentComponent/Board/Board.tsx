@@ -167,7 +167,7 @@ const Board: FunctionComponent<Props> = (props) => {
                 { label: b.id, ...defProps },
                 { label: b.name_tabuleiro, collapse: true },
                 { label: b.img_tabuleiro },
-                { label: state.seasons.filter(s => s.tabuleiro?.id === b.id)[0]?.nome_season || '' },
+                { label: b.season?.nome_season},
                 { label: editAction(b), ...defProps },
                 { label: removeAction(b), ...defProps }
               ]

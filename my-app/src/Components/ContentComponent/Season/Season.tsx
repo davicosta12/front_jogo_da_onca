@@ -168,14 +168,6 @@ const Season: FunctionComponent<Props> = (props) => {
                 { label: s.nome_season, collapse: true },
                 { label: formatDateTime(s.inicio) },
                 { label: formatDateTime(s.fim) },
-                {
-                  label: <div>
-                    <Image src={s.tabuleiro?.img_tabuleiro || require('../../../assets/defaultImage.png')} avatar />
-                    <span>{s.tabuleiro?.name_tabuleiro}</span>
-                  </div>, collapse: true
-                },
-                { label: s.skinDog?.name_skin },
-                { label: s.skinJaguar?.name_skin },
                 { label: editAction(s), ...defProps },
                 { label: removeAction(s), ...defProps }
               ]
@@ -215,9 +207,6 @@ const tableHeaders = [
   { id: 'nome_season', label: 'Nome' },
   { id: 'inicio', label: 'Data Inicial' },
   { id: 'fim', label: 'Data Final' },
-  { id: 'tabuleiro', label: 'Tabuleiro' },
-  { id: 'skinJaguar', label: 'Skin Onça' },
-  { id: 'skinDog', label: 'Skin Cachorro' },
   { id: null, label: null },
   { id: null, label: null },
 ];

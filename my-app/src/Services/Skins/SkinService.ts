@@ -3,6 +3,8 @@ import HttpService from "../AuthService/Base";
 import GetDogSkinDto from "./dto/GetDogSkinDto";
 import GetSkinDto from "./dto/GetDogSkinDto";
 import GetJaguarSkinDto from "./dto/GetJaguarSkinDto";
+import PostDogSkinDto from "./dto/PostDogSkinDto";
+import PostJaguarSkinDto from "./dto/PostJaguarSkinDto";
 
 export default class SkinService extends HttpService {
 
@@ -30,7 +32,7 @@ export default class SkinService extends HttpService {
   //   });
   // }
 
-  createDogSkin(skin: GetDogSkinDto): Promise<any> {
+  createDogSkin(skin: PostDogSkinDto): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getApi().post(`/SkinDog`, skin)
         .then((res: any) => resolve(res.data))
@@ -38,9 +40,9 @@ export default class SkinService extends HttpService {
     });
   }
 
-  updateDogSkin(user: GetSkinDto, id: number): Promise<any> {
+  updateDogSkin(skin: PostDogSkinDto, id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().put(`/SkinDog/${id}`, user)
+      this.getApi().put(`/SkinDog/${id}`, skin)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });
@@ -78,7 +80,7 @@ export default class SkinService extends HttpService {
   //   });
   // }
 
-  createJaguarSkin(skin: GetJaguarSkinDto): Promise<any> {
+  createJaguarSkin(skin: PostJaguarSkinDto): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getApi().post(`/SkinJaguar`, skin)
         .then((res: any) => resolve(res.data))
@@ -86,9 +88,9 @@ export default class SkinService extends HttpService {
     });
   }
 
-  updateJaguarSkin(user: GetJaguarSkinDto, id: number): Promise<any> {
+  updateJaguarSkin(skin: PostJaguarSkinDto, id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getApi().put(`/SkinJaguar/${id}`, user)
+      this.getApi().put(`/SkinJaguar/${id}`, skin)
         .then((res: any) => resolve(res.data))
         .catch((err: AxiosResponse<any>) => reject(err))
     });

@@ -5,6 +5,8 @@ import GetSeasonDto from '../../../../Services/Season/dto/GetSeasonDto';
 import { ThemeContext } from '../../../../App';
 import PostSeasonDto from '../../../../Services/Season/dto/PostSeasonDto';
 import PutSeasonDto from '../../../../Services/Season/dto/PutSeasonDto';
+import ListData from '../../../_commons/ListBox/ListBox';
+import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
 
 interface Props {
   season: GetSeasonDto;
@@ -20,14 +22,15 @@ const INITIAL_FORM_VALUES = {
   nome_season: '',
   inicio: '',
   fim: '',
-  tabuleiro_id: 0,
-  skinDog_id: 0,
-  skinJaguar_id: 0
+  tabuleiros: [],
+  skinsDog: [],
+  skinsJaguar: []
 } as PostSeasonDto;
 
 const SeasonDetail: FunctionComponent<Props> = (props) => {
 
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
+  const [boardArray, setBoardArray] = useState<GetBoardDto[]>([]);
   const { state, dispatch } = useContext(ThemeContext);
 
   const {
@@ -45,9 +48,9 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
         nome_season: season.nome_season,
         inicio: season.inicio,
         fim: season.fim,
-        tabuleiro_id: season.tabuleiro?.id || 0,
-        skinDog_id: season.skinDog?.id || 0,
-        skinJaguar_id: season.skinJaguar?.id || 0
+        tabuleiros: season.tabuleiros?.length ? season.tabuleiros : [],
+        skinsDog: season.skinsDog?.length ? season.skinsDog : [],
+        skinsJaguar: season.skinsJaguar?.length ? season.skinsJaguar : []
       });
     } else {
       setFormValues(INITIAL_FORM_VALUES);
@@ -113,7 +116,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
               />
             </Form.Group>
             <Form.Group widths='equal'>
-              <Form.Dropdown
+              {/* <Form.Dropdown
                 fluid
                 name="skinJaguar_id"
                 label='SKIN da Onça'
@@ -122,7 +125,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                   key: j.id,
                   text: j.name_skin,
                   value: j.id,
-                  image: { avatar: true, src: j.img_skin},
+                  image: { avatar: true, src: j.img_skin },
                 }))}
                 selection
                 onChange={handleChange}
@@ -148,8 +151,8 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 disabled={!createMode}
                 required
                 error={!formValues.skinDog_id && createMode}
-              />
-              <Form.Dropdown
+              /> */}
+              {/* <Form.Dropdown
                 fluid
                 name="tabuleiro_id"
                 label='Tabuleiro'
@@ -167,7 +170,15 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 required
                 error={!formValues.tabuleiro_id && createMode}
               />
+            </Form.Group> */}
             </Form.Group>
+            <Form.Field>
+              <label>Adicionar Tabuleiros</label>
+              <ListData
+                dataList={boardArray}
+                setDataList={setBoardArray}
+              />
+            </Form.Field>
           </Form>
         </Modal.Description>
       </Modal.Content>
@@ -181,7 +192,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nome_season || !formValues.inicio || !formValues.fim || !formValues.skinJaguar_id || !formValues.skinDog_id || !formValues.tabuleiro_id}
+          disabled={!formValues.nome_season || !formValues.inicio || !formValues.fim || !formValues.tabuleiros?.length}
           positive
         />
       </Modal.Actions>

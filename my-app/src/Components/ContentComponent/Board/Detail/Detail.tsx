@@ -1,27 +1,32 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
+import { ThemeContext } from '../../../../App';
 import { boardImagesOptions } from '../../../../misc/utils/utils/options';
 import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
+import PostBoardDto from '../../../../Services/Board/dto/PostBoardDto';
 
 interface Props {
   board: GetBoardDto;
   openModal: boolean;
   createMode: boolean;
-  onCreate: (values: GetBoardDto) => void;
-  onUpdate: (values: GetBoardDto) => void;
+  onCreate?: (values: PostBoardDto) => void;
+  onUpdate?: (values: PostBoardDto) => void;
+  disabledAction?: boolean;
+  editText?: string;
   loading?: boolean;
   setOpenModal: any;
 }
 
 const INITIAL_FORM_VALUES = {
-  id: 0,
+  idSeason: 0,
   name_tabuleiro: '',
   img_tabuleiro: ''
-} as GetBoardDto;
+} as PostBoardDto;
 
 const BoardDetail: FunctionComponent<Props> = (props) => {
 
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
+  const { state, dispatch } = useContext(ThemeContext);
 
   const {
     board,
@@ -35,19 +40,19 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
   useEffect(() => {
     if (board?.id) {
       setFormValues({
-        id: board.id,
+        idSeason: board.season?.id,
         name_tabuleiro: board.name_tabuleiro,
-        img_tabuleiro: board.img_tabuleiro
+        img_tabuleiro: board.img_tabuleiro,
       });
     } else {
       setFormValues(INITIAL_FORM_VALUES);
     }
   }, [board, openModal]);
 
-  const handleSubmit = (values: GetBoardDto) => {
+  const handleSubmit = (values: PostBoardDto) => {
     createMode
-      ? onCreate(values)
-      : onUpdate(values);
+      ? onCreate?.(values)
+      : onUpdate?.(values);
   }
 
   const handleChange = (ev: any, { name, value }: any) => {
@@ -60,10 +65,27 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
       onOpen={() => setOpenModal(true)}
       open={openModal}
     >
-      <Modal.Header>{createMode ? "Adicionar Tabuleiro" : "Editar Tabuleiro"}</Modal.Header>
+      <Modal.Header>{createMode ? "Adicionar Tabuleiro" : props.editText}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form>
+            <Form.Dropdown
+              fluid
+              name="idSeason"
+              label='Temporada'
+              value={formValues.idSeason}
+              options={state.seasons.map(b => Object.assign({}, {
+                key: b.id,
+                text: b.nome_season,
+                value: b.id,
+              }))}
+              selection
+              onChange={handleChange}
+              placeholder='Temporada'
+              disabled={!createMode}
+              required
+              error={!formValues.idSeason}
+            />
             <Form.Group widths='equal'>
               <Form.Input
                 fluid
@@ -95,7 +117,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
         <Button color='black' onClick={() => setOpenModal(false)}>
           Cancelar
         </Button>
-        <Button
+        {!props.disabledAction && <Button
           content="Salvar"
           labelPosition='right'
           icon='checkmark'
@@ -103,10 +125,15 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
           loading={props.loading}
           disabled={!formValues.name_tabuleiro}
           positive
-        />
+        />}
       </Modal.Actions>
     </Modal>
   )
 }
 
 export default BoardDetail
+
+BoardDetail.defaultProps = {
+  disabledAction: false,
+  editText: "Editar Tabuleiro"
+}
