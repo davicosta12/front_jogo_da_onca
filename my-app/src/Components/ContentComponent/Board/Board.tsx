@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Dimmer, Icon, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Image, Loader, Popup, Segment, Table } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
 import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import BoardService from '../../../Services/Board/BoardService';
@@ -166,7 +166,7 @@ const Board: FunctionComponent<Props> = (props) => {
               values: [
                 { label: b.id, ...defProps },
                 { label: b.name_tabuleiro, collapse: true },
-                { label: b.img_tabuleiro },
+                { label: <Image src={b.img_tabuleiro || require('../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
                 { label: b.season?.nome_season},
                 { label: editAction(b), ...defProps },
                 { label: removeAction(b), ...defProps }

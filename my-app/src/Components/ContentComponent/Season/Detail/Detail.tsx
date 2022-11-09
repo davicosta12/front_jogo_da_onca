@@ -1,14 +1,15 @@
-import { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
 import { DateInput } from "semantic-ui-calendar-react";
 import GetSeasonDto from '../../../../Services/Season/dto/GetSeasonDto';
-import { ThemeContext } from '../../../../App';
 import PostSeasonDto from '../../../../Services/Season/dto/PostSeasonDto';
 import PutSeasonDto from '../../../../Services/Season/dto/PutSeasonDto';
 import ListData from '../../../_commons/ListBox/ListBox';
 import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
 
 interface Props {
+  boardArray: GetBoardDto[],
+  setBoardArray: any,
   season: GetSeasonDto;
   openModal: boolean;
   createMode: boolean;
@@ -30,10 +31,10 @@ const INITIAL_FORM_VALUES = {
 const SeasonDetail: FunctionComponent<Props> = (props) => {
 
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
-  const [boardArray, setBoardArray] = useState<GetBoardDto[]>([]);
-  const { state, dispatch } = useContext(ThemeContext);
 
   const {
+    boardArray,
+    setBoardArray,
     season,
     openModal,
     createMode,
@@ -52,8 +53,11 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
         skinsDog: season.skinsDog?.length ? season.skinsDog : [],
         skinsJaguar: season.skinsJaguar?.length ? season.skinsJaguar : []
       });
+
+      season.tabuleiros?.length ? setBoardArray(season.tabuleiros) : setBoardArray([]);
     } else {
       setFormValues(INITIAL_FORM_VALUES);
+      setBoardArray([]);
     }
   }, [season, openModal]);
 
@@ -152,25 +156,6 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 required
                 error={!formValues.skinDog_id && createMode}
               /> */}
-              {/* <Form.Dropdown
-                fluid
-                name="tabuleiro_id"
-                label='Tabuleiro'
-                value={formValues.tabuleiro_id}
-                options={state.boards.map(b => Object.assign({}, {
-                  key: b.id,
-                  text: b.name_tabuleiro,
-                  value: b.id,
-                  image: { avatar: true, src: b.img_tabuleiro},
-                }))}
-                selection
-                onChange={handleChange}
-                placeholder='Tabuleiro'
-                disabled={!createMode}
-                required
-                error={!formValues.tabuleiro_id && createMode}
-              />
-            </Form.Group> */}
             </Form.Group>
             <Form.Field>
               <label>Adicionar Tabuleiros</label>
@@ -192,7 +177,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nome_season || !formValues.inicio || !formValues.fim || !formValues.tabuleiros?.length}
+          disabled={!formValues.nome_season || !formValues.inicio || !formValues.fim}
           positive
         />
       </Modal.Actions>

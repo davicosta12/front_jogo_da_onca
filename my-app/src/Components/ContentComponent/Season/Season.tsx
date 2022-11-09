@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Dimmer, Icon, Image, Loader, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Icon, Loader, Popup, Segment } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
 import { formatDateTime, toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
@@ -12,12 +12,14 @@ import SeasonDetail from './Detail/Detail';
 import './Season.scss';
 import PostSeasonDto from '../../../Services/Season/dto/PostSeasonDto';
 import PutSeasonDto from '../../../Services/Season/dto/PutSeasonDto';
+import GetBoardDto from '../../../Services/Board/dto/GetBoardDto';
 
 interface Props {
 }
 
 const Season: FunctionComponent<Props> = (props) => {
 
+  const [boardArray, setBoardArray] = useState<GetBoardDto[]>([]);
   const [season, setSeason] = useState({} as GetSeasonDto);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -52,7 +54,8 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleCreateSeason = async (values: PostSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      await seasonService.createSeason(values);
+      const payload: PostSeasonDto = { ...values, tabuleiros: boardArray, skinsJaguar: [], skinsDog: [] }
+      await seasonService.createSeason(payload);
       getSeasons();
       setOpenModal(false);
       toast.success("Temporada criada com sucesso.", toastOptions(toast));
@@ -68,7 +71,8 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleUpdateSeason = async (values: PutSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      await seasonService.updateSeason(values, +season.id);
+      const payload: PutSeasonDto = { ...values, tabuleiros: boardArray, skinsJaguar: [], skinsDog: [] }
+      await seasonService.updateSeason(payload, +season.id);
       getSeasons();
       setOpenModal(false);
       toast.success("Temporada atualizada com sucesso.", toastOptions(toast));
@@ -177,6 +181,8 @@ const Season: FunctionComponent<Props> = (props) => {
         </div>
 
         <SeasonDetail
+          boardArray={boardArray}
+          setBoardArray={setBoardArray}
           season={season}
           openModal={openModal}
           createMode={createMode}

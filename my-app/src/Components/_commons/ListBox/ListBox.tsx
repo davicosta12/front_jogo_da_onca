@@ -18,9 +18,11 @@ const ListData: FunctionComponent<Props> = (props) => {
   const { state, dispatch } = useContext(ThemeContext);
 
   const handleAddArrayItem = (item: any) => {
-    const addItems = [...props.dataList, { ...item }];
-    const uniqItems = _.uniqBy(addItems, "id");
-    props.setDataList(uniqItems);
+    if (item && props.dataList) {
+      const addItems = [...props.dataList, { ...item }];
+      const uniqItems = _.uniqBy(addItems, "name_tabuleiro");
+      props.setDataList(uniqItems);
+    }
   }
 
   const handleRemoveArrayItem = (rowIndex: number) => {
@@ -146,8 +148,8 @@ const ListData: FunctionComponent<Props> = (props) => {
                 {editAction(data)}
                 {removeAction(i)}
               </List.Content>
-              <Image avatar src={data.img_tabuleiro} />
-              <List.Content>{data.name_tabuleiro}</List.Content>
+              <Image avatar src={data?.img_tabuleiro} />
+              <List.Content>{data?.name_tabuleiro}</List.Content>
             </List.Item>
           )}
       </List>
