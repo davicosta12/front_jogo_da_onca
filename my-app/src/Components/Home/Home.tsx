@@ -43,7 +43,7 @@ const Home: FunctionComponent<Props> = (props) => {
   const getSeasonByRangeDate = async () => {
     setIsLoading(true);
     try {
-      const season = await seasonService.getSeasonByRangeDate(moment().format("YYYY-MM-DD"), moment().format("YYYY-MM-DD"));
+      const season = await seasonService.getSeasonByRangeDate(moment().format("YYYY-MM-DD"));
       setActiveSeason({ ...season });
     }
     catch (err: any) {

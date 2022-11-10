@@ -74,7 +74,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       <Modal.Content>
         <Modal.Description>
           <Form>
-            <Form.Dropdown
+            {!props.isArray && <Form.Dropdown
               fluid
               name="idSeason"
               label='Temporada'
@@ -90,7 +90,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
               disabled={!createMode}
               required
               error={!formValues.idSeason}
-            />
+            />}
             <Form.Group widths='equal'>
               <Form.Input
                 fluid

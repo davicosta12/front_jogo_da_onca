@@ -12,7 +12,6 @@ import SeasonDetail from './Detail/Detail';
 import './Season.scss';
 import PostSeasonDto from '../../../Services/Season/dto/PostSeasonDto';
 import PutSeasonDto from '../../../Services/Season/dto/PutSeasonDto';
-import GetBoardDto from '../../../Services/Board/dto/GetBoardDto';
 import GetJaguarSkinDto from '../../../Services/Skins/dto/GetJaguarSkinDto';
 import GetDogSkinDto from '../../../Services/Skins/dto/GetDogSkinDto';
 
@@ -21,7 +20,6 @@ interface Props {
 
 const Season: FunctionComponent<Props> = (props) => {
 
-  const [boardArray, setBoardArray] = useState<GetBoardDto[]>([]);
   const [skinsDogArray, setSkinsDogArray] = useState<GetDogSkinDto[]>([]);
   const [skinsJaguarArray, setSkinsJaguarArray] = useState<GetJaguarSkinDto[]>([]);
   const [season, setSeason] = useState({} as GetSeasonDto);
@@ -58,7 +56,7 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleCreateSeason = async (values: PostSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      const payload: PostSeasonDto = { ...values, tabuleiros: boardArray, skinsJaguar: skinsJaguarArray, skinsDog: skinsDogArray }
+      const payload: PostSeasonDto = { ...values, skinsJaguar: skinsJaguarArray, skinsDog: skinsDogArray }
       await seasonService.createSeason(payload);
       getSeasons();
       setOpenModal(false);
@@ -75,7 +73,7 @@ const Season: FunctionComponent<Props> = (props) => {
   const handleUpdateSeason = async (values: PutSeasonDto) => {
     setIsLoadingForm(true);
     try {
-      const payload: PutSeasonDto = { ...values, tabuleiros: boardArray, skinsJaguar: skinsJaguarArray, skinsDog: skinsDogArray }
+      const payload: PutSeasonDto = { ...values, skinsJaguar: skinsJaguarArray, skinsDog: skinsDogArray }
       await seasonService.updateSeason(payload, +season.id);
       getSeasons();
       setOpenModal(false);
@@ -185,8 +183,6 @@ const Season: FunctionComponent<Props> = (props) => {
         </div>
 
         <SeasonDetail
-          boardArray={boardArray}
-          setBoardArray={setBoardArray}
           skinsDogArray={skinsDogArray}
           setSkinsDogArray={setSkinsDogArray}
           skinsJaguarArray={skinsJaguarArray}

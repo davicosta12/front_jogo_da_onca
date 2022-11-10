@@ -1,7 +1,6 @@
 import { FunctionComponent, useState } from 'react'
 import { Button, Icon, Image, List, Popup } from 'semantic-ui-react'
 import _ from 'lodash';
-import BoardDetail from '../../ContentComponent/Board/Detail/Detail';
 import SkinDetailDog from '../../ContentComponent/Skin/Dog/Detail/Detail';
 import SkinDetailJaguar from '../../ContentComponent/Skin/Jaguar/Detail/Detail';
 
@@ -69,52 +68,10 @@ const ListData: FunctionComponent<Props> = (props) => {
     }
   />
 
-  const choiceListByType = () => {
-
-    switch (typeList.toLowerCase()) {
-      case 'board': return <>
-        {
-          dataList.map((data: any, i: number) =>
-            <List.Item key={i}>
-              <List.Content floated='right'>
-                {editAction(data)}
-                {removeAction(i)}
-              </List.Content>
-              <Image avatar src={data?.img_tabuleiro} />
-              <List.Content>{data?.name_tabuleiro}</List.Content>
-            </List.Item>)
-        }
-      </>;
-      default: return <>
-        {
-          dataList.map((data: any, i: number) =>
-            <List.Item key={i}>
-              <List.Content floated='right'>
-                {editAction(data)}
-                {removeAction(i)}
-              </List.Content>
-              <Image avatar src={data?.img_skin} />
-              <List.Content>{data?.name_skin}</List.Content>
-            </List.Item>)
-        }
-      </>;
-    }
-  }
-
   const choiceFormByType = () => {
 
     switch (typeList.toLowerCase()) {
-      case 'board': return <BoardDetail
-        board={data}
-        openModal={openDetail}
-        createMode={createMode}
-        onCreate={handleCreate}
-        editText='Detalhes do Tabuleiro'
-        isArray
-        disabledAction={!createMode}
-        setOpenModal={setOpenDetail}
-      />;
-      case 'skinDog': return <SkinDetailDog
+      case 'skindog': return <SkinDetailDog
         skin={data}
         openModal={openDetail}
         createMode={createMode}
@@ -124,7 +81,7 @@ const ListData: FunctionComponent<Props> = (props) => {
         disabledAction={!createMode}
         setOpenModal={setOpenDetail}
       />;
-      case 'skinJaguar': return <SkinDetailJaguar
+      case 'skinjaguar': return <SkinDetailJaguar
         skin={data}
         openModal={openDetail}
         createMode={createMode}
@@ -152,7 +109,16 @@ const ListData: FunctionComponent<Props> = (props) => {
       </div>
 
       <List divided verticalAlign='middle'>
-        {choiceListByType()}
+        {dataList.map((data: any, i: number) =>
+          <List.Item key={i}>
+            <List.Content floated='right'>
+              {/* {editAction(data)} */}
+              {removeAction(i)}
+            </List.Content>
+            <Image avatar src={data?.img_skin} />
+            <List.Content>{data?.name_skin}</List.Content>
+          </List.Item>)
+        }
       </List>
 
       {choiceFormByType()}

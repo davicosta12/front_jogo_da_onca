@@ -8,10 +8,9 @@ import ListData from '../../../_commons/ListBox/ListBox';
 import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
 import GetDogSkinDto from '../../../../Services/Skins/dto/GetDogSkinDto';
 import GetJaguarSkinDto from '../../../../Services/Skins/dto/GetJaguarSkinDto';
+import { boardImagesOptions } from '../../../../misc/utils/utils/options';
 
 interface Props {
-  boardArray: GetBoardDto[],
-  setBoardArray: any,
   skinsDogArray: GetDogSkinDto[],
   setSkinsDogArray: any,
   skinsJaguarArray: GetJaguarSkinDto[],
@@ -29,7 +28,7 @@ const INITIAL_FORM_VALUES = {
   nome_season: '',
   inicio: '',
   fim: '',
-  tabuleiros: [],
+  tabuleiro: {} as GetBoardDto,
   skinsDog: [],
   skinsJaguar: []
 } as PostSeasonDto;
@@ -39,8 +38,6 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
 
   const {
-    boardArray,
-    setBoardArray,
     skinsDogArray,
     setSkinsDogArray,
     skinsJaguarArray,
@@ -59,17 +56,17 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
         nome_season: season.nome_season,
         inicio: season.inicio,
         fim: season.fim,
-        tabuleiros: season.tabuleiros?.length ? season.tabuleiros : [],
+        tabuleiro: season.tabuleiro,
         skinsDog: season.skinsDog?.length ? season.skinsDog : [],
         skinsJaguar: season.skinsJaguar?.length ? season.skinsJaguar : []
       });
 
-      season.tabuleiros?.length ? setBoardArray(season.tabuleiros) : setBoardArray([]);
       season.skinsDog?.length ? setSkinsDogArray(season.skinsDog) : setSkinsDogArray([]);
       season.skinsJaguar?.length ? setSkinsJaguarArray(season.skinsJaguar) : setSkinsJaguarArray([]);
     } else {
       setFormValues(INITIAL_FORM_VALUES);
-      setBoardArray([]);
+      setSkinsDogArray([]);
+      setSkinsJaguarArray([]);
     }
   }, [season, openModal]);
 
@@ -80,15 +77,16 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
   }
 
   const handleChange = (ev: any, { name, value }: any) => {
-    setFormValues({ ...formValues, [name]: value });
+    const split = name.split(".");
+    (split?.length > 1)
+      ? setFormValues({ ...formValues, tabuleiro: { ...formValues.tabuleiro, [split[1]]: value } })
+      : setFormValues({ ...formValues, [name]: value });
   }
 
-  const listDataTemplate = () => {
-
-  }
-
-  const formArrayTemplate = () => {
-
+  const formValidate = () => {
+    return !formValues.nome_season || !formValues.inicio || !formValues.fim
+      || !formValues.tabuleiro.name_tabuleiro || !formValues.tabuleiro.img_tabuleiro
+      || !skinsJaguarArray?.length || !skinsDogArray?.length
   }
 
   return (
@@ -101,6 +99,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
       <Modal.Content>
         <Modal.Description>
           <Form>
+
             <Form.Input
               fluid
               name="nome_season"
@@ -111,6 +110,32 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
               required
               error={!formValues.nome_season}
             />
+
+            <Form.Group widths='equal'>
+              <Form.Input
+                fluid
+                name="tabuleiro.name_tabuleiro"
+                label='Nome do Tabuleiro'
+                value={formValues.tabuleiro.name_tabuleiro}
+                onChange={handleChange}
+                placeholder='Nome'
+                error={!formValues.tabuleiro.name_tabuleiro}
+                required
+              />
+              <Form.Dropdown
+                fluid
+                name="tabuleiro.img_tabuleiro"
+                label='Imagem do Tabuleiro'
+                value={formValues.tabuleiro.img_tabuleiro}
+                options={boardImagesOptions}
+                selection
+                onChange={handleChange}
+                placeholder='Imagem do Tabuleiro'
+                error={!formValues.tabuleiro.img_tabuleiro}
+                required
+              />
+            </Form.Group>
+
             <Form.Group widths='equal'>
               <DateInput
                 name="inicio"
@@ -124,6 +149,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 onChange={handleChange}
                 required
                 error={!formValues.inicio}
+                disabled={!createMode}
               />
               <DateInput
                 name="fim"
@@ -137,55 +163,31 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
                 onChange={handleChange}
                 required
                 error={!formValues.fim}
-              />
-            </Form.Group>
-            <Form.Group widths='equal'>
-              {/* <Form.Dropdown
-                fluid
-                name="skinJaguar_id"
-                label='SKIN da Onça'
-                value={formValues.skinJaguar_id}
-                options={state.jaguarSkins.map(j => Object.assign({}, {
-                  key: j.id,
-                  text: j.name_skin,
-                  value: j.id,
-                  image: { avatar: true, src: j.img_skin },
-                }))}
-                selection
-                onChange={handleChange}
-                placeholder='SKIN da Onça'
                 disabled={!createMode}
-                required
-                error={!formValues.skinJaguar_id && createMode}
-              /> */}
+              />
             </Form.Group>
-            <Form.Field>
-              <label>Adicionar Tabuleiros</label>
-              <ListData
-                dataList={boardArray}
-                setDataList={setBoardArray}
-                typeList='board'
-                uniqItemName='name_tabuleiro'
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Adicionar Skins da Onça</label>
-              <ListData
-                dataList={skinsJaguarArray}
-                setDataList={setSkinsJaguarArray}
-                typeList='skinJaguar'
-                uniqItemName='name_skin'
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Adicionar Skins do Cachorro</label>
-              <ListData
-                dataList={setSkinsDogArray}
-                setDataList={setSkinsDogArray}
-                typeList='skinDog'
-                uniqItemName='name_skin'
-              />
-            </Form.Field>
+
+            <Form.Group widths='equal'>
+              <Form.Field>
+                <label>Adicionar Skins da Onça</label>
+                <ListData
+                  dataList={skinsJaguarArray}
+                  setDataList={setSkinsJaguarArray}
+                  typeList='skinJaguar'
+                  uniqItemName='name_skin'
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Adicionar Skins do Cachorro</label>
+                <ListData
+                  dataList={skinsDogArray}
+                  setDataList={setSkinsDogArray}
+                  typeList='skinDog'
+                  uniqItemName='name_skin'
+                />
+              </Form.Field>
+            </Form.Group>
+
           </Form>
         </Modal.Description>
       </Modal.Content>
@@ -199,7 +201,7 @@ const SeasonDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.nome_season || !formValues.inicio || !formValues.fim}
+          disabled={formValidate()}
           positive
         />
       </Modal.Actions>

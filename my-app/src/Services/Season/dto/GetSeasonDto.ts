@@ -7,7 +7,7 @@ export default interface GetSeasonDto {
     nome_season: string,
     inicio: string,
     fim: string,
-    tabuleiros: GetBoardDto[],
+    tabuleiro: GetBoardDto,
     skinsJaguar: GetJaguarSkinDto[],
     skinsDog: GetDogSkinDto[]
 }
