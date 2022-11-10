@@ -9,8 +9,11 @@ interface Props {
   skin: GetJaguarSkinDto;
   openModal: boolean;
   createMode: boolean;
-  onCreate: (values: PostJaguarSkinDto) => void;
-  onUpdate: (values: PostJaguarSkinDto) => void;
+  onCreate?: (values: PostJaguarSkinDto) => void;
+  onUpdate?: (values: PostJaguarSkinDto) => void;
+  disabledAction?: boolean;
+  isArray?: boolean;
+  editText?: string;
   loading?: boolean;
   setOpenModal: any;
 }
@@ -52,8 +55,8 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
 
   const handleSubmit = (values: PostJaguarSkinDto) => {
     createMode
-      ? onCreate(values)
-      : onUpdate(values);
+      ? onCreate?.(values)
+      : onUpdate?.(values);
   }
 
   const handleChange = (ev: any, { name, value }: any) => {
@@ -66,7 +69,7 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
       onOpen={() => setOpenModal(true)}
       open={openModal}
     >
-      <Modal.Header>{createMode ? "Adicionar Skin da Onça" : "Editar Skin da Onça"}</Modal.Header>
+      <Modal.Header>{createMode ? "Adicionar Skin da Onça" : props.editText}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form>
@@ -118,18 +121,24 @@ const SkinDetail: FunctionComponent<Props> = (props) => {
         <Button color='black' onClick={() => setOpenModal(false)}>
           Cancelar
         </Button>
-        <Button
+        {!props.disabledAction && <Button
           content="Salvar"
           labelPosition='right'
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.name_skin || !formValues.img_skin}
+          disabled={!formValues.name_skin || !formValues.img_skin || (props.isArray ? !props.isArray : !formValues.idSeason)}
           positive
-        />
+        />}
       </Modal.Actions>
     </Modal>
   )
 }
 
 export default SkinDetail
+
+SkinDetail.defaultProps = {
+  disabledAction: false,
+  isArray: false,
+  editText: "Editar Skin da Onça"
+}

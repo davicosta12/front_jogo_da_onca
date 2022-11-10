@@ -1,56 +1,60 @@
-import { FunctionComponent, useContext, useState } from 'react'
-import { Button, Form, Icon, Image, List, Modal, Popup } from 'semantic-ui-react'
+import { FunctionComponent, useState } from 'react'
+import { Button, Icon, Image, List, Popup } from 'semantic-ui-react'
 import _ from 'lodash';
-import GetBoardDto from '../../../Services/Board/dto/GetBoardDto';
 import BoardDetail from '../../ContentComponent/Board/Detail/Detail';
-import PostBoardDto from '../../../Services/Board/dto/PostBoardDto';
+import SkinDetailDog from '../../ContentComponent/Skin/Dog/Detail/Detail';
+import SkinDetailJaguar from '../../ContentComponent/Skin/Jaguar/Detail/Detail';
 
 interface Props {
-  dataList: GetBoardDto[];
-  setDataList: any
+  dataList: any[];
+  setDataList: any;
+  typeList: string;
+  uniqItemName: string;
 }
 
 const ListData: FunctionComponent<Props> = (props) => {
 
-  const [board, setBoard] = useState({} as GetBoardDto);
+  const [data, setData] = useState({} as any);
   const [openDetail, setOpenDetail] = useState(false);
   const [createMode, setCreateMode] = useState(false);
 
-  const handleCreate = (board: PostBoardDto) => {
-    handleAddArrayItem(board);
+  const { dataList, setDataList, typeList, uniqItemName } = props;
+
+  const handleCreate = (data: any) => {
+    handleAddArrayItem(data);
     setOpenDetail(false);
   }
 
   const handleAddArrayItem = (item: any) => {
-    if (item && props.dataList) {
-      const addItems = [...props.dataList, { ...item }];
-      const uniqItems = _.uniqBy(addItems, "name_tabuleiro");
-      props.setDataList(uniqItems);
+    if (item && dataList) {
+      const addItems = [...dataList, { ...item }];
+      const uniqItems = _.uniqBy(addItems, uniqItemName);
+      setDataList(uniqItems);
     }
   }
 
   const handleRemoveArrayItem = (rowIndex: number) => {
-    let listCopy = [...props.dataList];
+    let listCopy = [...dataList];
     listCopy.splice(rowIndex, 1);
-    props.setDataList(listCopy);
+    setDataList(listCopy);
   }
 
   const handleAdd = () => {
-    setBoard({} as GetBoardDto);
+    setData({} as any);
     setOpenDetail(true);
     setCreateMode(true);
   }
 
-  const handleEdit = (board: GetBoardDto) => {
-    setBoard(board);
+  const handleEdit = (data: any) => {
+    setData(data);
     setOpenDetail(true);
     setCreateMode(false);
   }
 
-  const editAction = (board: GetBoardDto) => <Popup
+  const editAction = (data: any) => <Popup
     content='Detalhes'
     trigger={
-      <Button icon onClick={() => handleEdit(board)}>
+      <Button icon onClick={() => handleEdit(data)}>
         <Icon name='edit' />
       </Button>
     }
@@ -64,6 +68,75 @@ const ListData: FunctionComponent<Props> = (props) => {
       </Button>
     }
   />
+
+  const choiceListByType = () => {
+
+    switch (typeList.toLowerCase()) {
+      case 'board': return <>
+        {
+          dataList.map((data: any, i: number) =>
+            <List.Item key={i}>
+              <List.Content floated='right'>
+                {editAction(data)}
+                {removeAction(i)}
+              </List.Content>
+              <Image avatar src={data?.img_tabuleiro} />
+              <List.Content>{data?.name_tabuleiro}</List.Content>
+            </List.Item>)
+        }
+      </>;
+      default: return <>
+        {
+          dataList.map((data: any, i: number) =>
+            <List.Item key={i}>
+              <List.Content floated='right'>
+                {editAction(data)}
+                {removeAction(i)}
+              </List.Content>
+              <Image avatar src={data?.img_skin} />
+              <List.Content>{data?.name_skin}</List.Content>
+            </List.Item>)
+        }
+      </>;
+    }
+  }
+
+  const choiceFormByType = () => {
+
+    switch (typeList.toLowerCase()) {
+      case 'board': return <BoardDetail
+        board={data}
+        openModal={openDetail}
+        createMode={createMode}
+        onCreate={handleCreate}
+        editText='Detalhes do Tabuleiro'
+        isArray
+        disabledAction={!createMode}
+        setOpenModal={setOpenDetail}
+      />;
+      case 'skinDog': return <SkinDetailDog
+        skin={data}
+        openModal={openDetail}
+        createMode={createMode}
+        onCreate={handleCreate}
+        editText='Detalhes da Skin do Cachorro'
+        isArray
+        disabledAction={!createMode}
+        setOpenModal={setOpenDetail}
+      />;
+      case 'skinJaguar': return <SkinDetailJaguar
+        skin={data}
+        openModal={openDetail}
+        createMode={createMode}
+        onCreate={handleCreate}
+        editText='Detalhes da Skin da Onça'
+        isArray
+        disabledAction={!createMode}
+        setOpenModal={setOpenDetail}
+      />
+      default: ;
+    }
+  }
 
   return (
     <div>
@@ -79,29 +152,10 @@ const ListData: FunctionComponent<Props> = (props) => {
       </div>
 
       <List divided verticalAlign='middle'>
-        {
-          props.dataList.map((data: GetBoardDto, i: number) =>
-            <List.Item key={i}>
-              <List.Content floated='right'>
-                {editAction(data)}
-                {removeAction(i)}
-              </List.Content>
-              <Image avatar src={data?.img_tabuleiro} />
-              <List.Content>{data?.name_tabuleiro}</List.Content>
-            </List.Item>
-          )}
+        {choiceListByType()}
       </List>
 
-      <BoardDetail
-        board={board}
-        openModal={openDetail}
-        createMode={createMode}
-        onCreate={handleCreate}
-        editText='Detalhes do Tabuleiro'
-        isArray
-        disabledAction={!createMode}
-        setOpenModal={setOpenDetail}
-      />
+      {choiceFormByType()}
     </div>
   )
 }
