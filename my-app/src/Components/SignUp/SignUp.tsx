@@ -40,6 +40,7 @@ const SignUp: FunctionComponent<Props> = (props) => {
 
     try {
       await authService.registerUser(payload);
+      toast.success("Usuário cadastrado com sucesso.", toastOptions(toast));
       navigate("/");
     }
     catch (err: any) {

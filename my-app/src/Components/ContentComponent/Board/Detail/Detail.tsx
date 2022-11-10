@@ -12,6 +12,7 @@ interface Props {
   onCreate?: (values: PostBoardDto) => void;
   onUpdate?: (values: PostBoardDto) => void;
   disabledAction?: boolean;
+  isArray?: boolean;
   editText?: string;
   loading?: boolean;
   setOpenModal: any;
@@ -69,7 +70,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
       <Modal.Content>
         <Modal.Description>
           <Form>
-            <Form.Dropdown
+            {!props.isArray && < Form.Dropdown
               fluid
               name="idSeason"
               label='Temporada'
@@ -85,7 +86,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
               disabled={!createMode}
               required
               error={!formValues.idSeason}
-            />
+            />}
             <Form.Group widths='equal'>
               <Form.Input
                 fluid
@@ -123,7 +124,7 @@ const BoardDetail: FunctionComponent<Props> = (props) => {
           icon='checkmark'
           onClick={() => handleSubmit(formValues)}
           loading={props.loading}
-          disabled={!formValues.name_tabuleiro}
+          disabled={!formValues.name_tabuleiro || !formValues.img_tabuleiro || (props.isArray ? !props.isArray : !formValues.idSeason)}
           positive
         />}
       </Modal.Actions>
@@ -135,5 +136,6 @@ export default BoardDetail
 
 BoardDetail.defaultProps = {
   disabledAction: false,
+  isArray: false,
   editText: "Editar Tabuleiro"
 }

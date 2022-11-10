@@ -1,9 +1,9 @@
 import { FunctionComponent, useContext, useState } from 'react'
 import { Button, Form, Icon, Image, List, Modal, Popup } from 'semantic-ui-react'
 import _ from 'lodash';
-import { ThemeContext } from '../../../App';
 import GetBoardDto from '../../../Services/Board/dto/GetBoardDto';
 import BoardDetail from '../../ContentComponent/Board/Detail/Detail';
+import PostBoardDto from '../../../Services/Board/dto/PostBoardDto';
 
 interface Props {
   dataList: GetBoardDto[];
@@ -13,9 +13,13 @@ interface Props {
 const ListData: FunctionComponent<Props> = (props) => {
 
   const [board, setBoard] = useState({} as GetBoardDto);
-  const [openModal, setOpenModal] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
-  const { state, dispatch } = useContext(ThemeContext);
+  const [createMode, setCreateMode] = useState(false);
+
+  const handleCreate = (board: PostBoardDto) => {
+    handleAddArrayItem(board);
+    setOpenDetail(false);
+  }
 
   const handleAddArrayItem = (item: any) => {
     if (item && props.dataList) {
@@ -32,12 +36,15 @@ const ListData: FunctionComponent<Props> = (props) => {
   }
 
   const handleAdd = () => {
-    setOpenModal(true);
+    setBoard({} as GetBoardDto);
+    setOpenDetail(true);
+    setCreateMode(true);
   }
 
   const handleEdit = (board: GetBoardDto) => {
-    setOpenDetail(true);
     setBoard(board);
+    setOpenDetail(true);
+    setCreateMode(false);
   }
 
   const editAction = (board: GetBoardDto) => <Popup
@@ -57,75 +64,6 @@ const ListData: FunctionComponent<Props> = (props) => {
       </Button>
     }
   />
-
-  const ChoiceDataModal = () => {
-
-    const INITIAL_FORM_VALUES = {
-      id: 0,
-      name_tabuleiro: '',
-      img_tabuleiro: ''
-    } as GetBoardDto;
-
-    const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
-
-    const handleSubmit = () => {
-      const board = state.boards.filter(b => b.id === formValues.id)[0];
-      handleAddArrayItem(board);
-      setOpenModal(false);
-    }
-
-    const handleChange = (ev: any, { name, value }: any) => {
-      setFormValues({ ...formValues, [name]: value });
-    }
-
-    return (
-      <Modal
-        onClose={() => setOpenModal(false)}
-        onOpen={() => setOpenModal(true)}
-        open={openModal}
-      >
-        <Modal.Header>Selecione um Tabuleiro</Modal.Header>
-        <Modal.Content>
-          <Modal.Description>
-            <Form>
-              <Form.Group widths='equal'>
-                <Form.Dropdown
-                  fluid
-                  name="id"
-                  label='Tabuleiro'
-                  value={formValues.id}
-                  options={state.boards.map(b => Object.assign({}, {
-                    key: b.id,
-                    text: b.name_tabuleiro,
-                    value: b.id,
-                    image: { avatar: true, src: b.img_tabuleiro },
-                  }))}
-                  selection
-                  onChange={handleChange}
-                  placeholder='Tabuleiro'
-                  required
-                  error={!formValues.id}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Description>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button color='black' onClick={() => setOpenModal(false)}>
-            Cancelar
-          </Button>
-          <Button
-            content="Salvar"
-            labelPosition='right'
-            icon='checkmark'
-            onClick={handleSubmit}
-            disabled={!formValues.id}
-            positive
-          />
-        </Modal.Actions>
-      </Modal>
-    );
-  }
 
   return (
     <div>
@@ -154,13 +92,14 @@ const ListData: FunctionComponent<Props> = (props) => {
           )}
       </List>
 
-      <ChoiceDataModal />
       <BoardDetail
         board={board}
         openModal={openDetail}
-        createMode={false}
-        disabledAction
+        createMode={createMode}
+        onCreate={handleCreate}
         editText='Detalhes do Tabuleiro'
+        isArray
+        disabledAction={!createMode}
         setOpenModal={setOpenDetail}
       />
     </div>
