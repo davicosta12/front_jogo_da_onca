@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { Button, Dimmer, Icon, Loader, Popup, Segment } from 'semantic-ui-react';
 import { ThemeContext } from '../../../App';
-import { formatDateTime, toastError, toastOptions } from '../../../misc/utils/utils/utils';
+import { formatDate, toastError, toastOptions } from '../../../misc/utils/utils/utils';
 import GetSeasonDto from '../../../Services/Season/dto/GetSeasonDto';
 import SeasonService from '../../../Services/Season/SeasonService';
 import { ActionTypes } from '../../../reducer/reducer';
@@ -172,8 +172,8 @@ const Season: FunctionComponent<Props> = (props) => {
               values: [
                 { label: s.id, ...defProps },
                 { label: s.nome_season, collapse: true },
-                { label: formatDateTime(s.inicio) },
-                { label: formatDateTime(s.fim) },
+                { label: formatDate(s.inicio) },
+                { label: formatDate(s.fim) },
                 { label: editAction(s), ...defProps },
                 { label: removeAction(s), ...defProps }
               ]

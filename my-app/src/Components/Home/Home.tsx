@@ -12,6 +12,8 @@ import SeasonService from '../../Services/Season/SeasonService';
 import "./Home.scss";
 import UserService from '../../Services/Users/UserService';
 import { ActionTypes } from '../../reducer/reducer';
+import GetJaguarSkinDto from '../../Services/Skins/dto/GetJaguarSkinDto';
+import GetDogSkinDto from '../../Services/Skins/dto/GetDogSkinDto';
 
 interface Props {
 }
@@ -167,12 +169,30 @@ const Home: FunctionComponent<Props> = (props) => {
               <Grid.Column mobile={16} tablet={8} computer={8}>
                 <h1 className='text-center'>Selecione a peça de tabuleiro que deseja jogar</h1>
                 <h2 className='text-center'>{`Peça Escolhida: ${playerChoiced}`}</h2>
-                <div className='flex justify-content-center align-items-center'>
-                  <div className='peca-onca flex justify-content-center align-items-center' onClick={() => setPlayerChoiced("Onça")}>
-                    <Image src={require('../../assets/oncaBase.png')} size='tiny' circular />
+                <div className='flex justify-content-center align-items-start'>
+                  <div className='flex-column justify-content-start align-items-center'>
+                    {activeSeason.skinsJaguar?.length
+                      ?
+                      activeSeason.skinsJaguar.map((skin: GetJaguarSkinDto, i: number) =>
+                        <div key={i} className='peca-onca flex justify-content-center align-items-center mb-1' onClick={() => setPlayerChoiced(`Onça (${skin.name_skin})`)}>
+                          <Image src={skin.img_skin} size='tiny' circular />
+                        </div>)
+                      :
+                      <div className='peca-onca flex justify-content-center align-items-center' onClick={() => setPlayerChoiced(`Onça`)}>
+                        <Image src={require('../../assets/oncaBase.png')} size='tiny' circular />
+                      </div>}
                   </div>
-                  <div className='peca-dog flex justify-content-center align-items-center ml-1' onClick={() => setPlayerChoiced("Cachorro")}>
-                    <Image src={require('../../assets/cachorroBase.png')} size='tiny' circular />
+                  <div className='flex-column justify-content-start align-items-center ml-1'>
+                    {activeSeason.skinsDog?.length
+                      ?
+                      activeSeason.skinsDog.map((skin: GetDogSkinDto, i: number) =>
+                        <div key={i} className='peca-dog flex justify-content-center align-items-center  mb-1' onClick={() => setPlayerChoiced(`Cachorro (${skin.name_skin})`)}>
+                          <Image src={skin.img_skin} size='tiny' circular />
+                        </div>)
+                      :
+                      <div className='peca-dog flex justify-content-center align-items-center' onClick={() => setPlayerChoiced("Cachorro")}>
+                        <Image src={require('../../assets/cachorroBase.png')} size='tiny' circular />
+                      </div>}
                   </div>
                 </div>
               </Grid.Column>

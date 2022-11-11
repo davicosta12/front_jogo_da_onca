@@ -9,6 +9,7 @@ import GetBoardDto from '../../../../Services/Board/dto/GetBoardDto';
 import GetDogSkinDto from '../../../../Services/Skins/dto/GetDogSkinDto';
 import GetJaguarSkinDto from '../../../../Services/Skins/dto/GetJaguarSkinDto';
 import { boardImagesOptions } from '../../../../misc/utils/utils/options';
+import { formatDate, formatDateToPayload } from '../../../../misc/utils/utils/utils';
 
 interface Props {
   skinsDogArray: GetDogSkinDto[],
@@ -28,7 +29,11 @@ const INITIAL_FORM_VALUES = {
   nome_season: '',
   inicio: '',
   fim: '',
-  tabuleiro: {} as GetBoardDto,
+  tabuleiro: {
+    id: 0,
+    name_tabuleiro: '',
+    img_tabuleiro: ''
+  } as GetBoardDto,
   skinsDog: [],
   skinsJaguar: []
 } as PostSeasonDto;

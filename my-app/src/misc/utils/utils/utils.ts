@@ -18,3 +18,13 @@ export const formatDateTime = (date: string) => {
   const dateMoment = moment(date);
   return dateMoment.isValid() ? dateMoment.format("DD/MM/YYYY - HH:mm:ss") : "";
 }
+
+export const formatDate = (date: string) => {
+  const dateMoment = moment(date);
+  return dateMoment.isValid() ? dateMoment.format("DD/MM/YYYY") : "";
+}
+
+export const formatDateToPayload = (date: string) => {
+  const dateMoment = moment(date);
+  return dateMoment.isValid() ? dateMoment.format("YYYY-MM-DD") : "";
+}

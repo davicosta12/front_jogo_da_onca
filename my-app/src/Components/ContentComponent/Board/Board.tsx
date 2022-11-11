@@ -153,10 +153,10 @@ const Board: FunctionComponent<Props> = (props) => {
             }
           />
 
-          <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
+          {/* <Button className='p-button-primary' icon labelPosition='left' onClick={handleAdd}>
             <Icon name='plus' />
             Adicionar
-          </Button>
+          </Button> */}
         </div>
 
         <div className='board-table mt-3'>
