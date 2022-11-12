@@ -1,3 +1,4 @@
+import GetBannerDto from "../Services/Banner/dto/GetBannerDto";
 import GetBoardDto from "../Services/Board/dto/GetBoardDto";
 import GetSeasonDto from "../Services/Season/dto/GetSeasonDto";
 import GetDogSkinDto from "../Services/Skins/dto/GetDogSkinDto";
@@ -10,7 +11,8 @@ export enum ActionTypes {
   ADD_JAGUAR_SKIN = 'ADD_JAGUAR_SKIN ',
   ADD_BOARD = 'ADD_BOARD',
   ADD_SEASON = 'ADD_SEASON',
-  ADD_USER = 'ADD_USER'
+  ADD_USER = 'ADD_USER',
+  ADD_BANNER = 'ADD_BANNER'
 }
 
 export interface ActionReducer {
@@ -24,7 +26,8 @@ export interface InitialState {
   jaguarSkins: GetJaguarSkinDto[],
   boards: GetBoardDto[],
   seasons: GetSeasonDto[],
-  users: GetUserDto[]
+  users: GetUserDto[],
+  banners: GetBannerDto[]
 }
 
 export const initialState = {
@@ -33,7 +36,8 @@ export const initialState = {
   jaguarSkins: [],
   boards: [],
   seasons: [],
-  users: []
+  users: [],
+  banners: []
 };
 
 export const reducer = (state: InitialState, action: ActionReducer) => {
@@ -74,6 +78,12 @@ export const reducer = (state: InitialState, action: ActionReducer) => {
         ...state,
         boards: [...action.payload]
       } as InitialState;
+
+      case ActionTypes.ADD_BANNER:
+        return {
+          ...state,
+          banners: [...action.payload]
+        } as InitialState;
 
     default:
       return state;

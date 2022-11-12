@@ -86,6 +86,14 @@ const ContentComponent: FunctionComponent<Props> = (props) => {
             <Icon name='black tie' />
             Skin
           </Menu.Item>
+          <Menu.Item
+            as='a'
+            name='banner'
+            active={activeItem === 'banner'}
+            onClick={() => handleActiveMenuItem('banner')}>
+            <Icon name='image outline' />
+            Banner
+          </Menu.Item>
         </Sidebar>
 
         <Sidebar.Pusher className='fix-pusher-semantic'>

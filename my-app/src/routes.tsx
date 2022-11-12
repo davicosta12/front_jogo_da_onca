@@ -18,6 +18,7 @@ import { isAdmin, isAuthenticated, userExist } from "./Services/AuthService/Auth
 import { useContext, useEffect } from "react";
 import { ThemeContext } from "./App";
 import AuthHelper from "./helpers/AuthHelper";
+import Banner from "./Components/ContentComponent/Banner/Banner";
 
 const verifyWhatPathChoice = () => {
   return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';
@@ -98,6 +99,12 @@ const NavigationRoutes = () => {
         <Route path="/config/skin" element={
           <PrivateContentComponent>
             <Skin />
+          </PrivateContentComponent>}>
+        </Route>
+
+        <Route path="/config/banner" element={
+          <PrivateContentComponent>
+            <Banner />
           </PrivateContentComponent>}>
         </Route>
 

@@ -3,9 +3,9 @@ import { useEffect, useRef, Fragment } from "react"
 import { useLocation } from 'react-router-dom';
 import p5 from 'p5';
 import Jogo from '../../misc/gameFunctionalities/Jogo';
-import skinTabuleiro from '../../assets/fundo.png';
-import skinOnca from '../../assets/onca.png'
-import skinCachorro from '../../assets/dog.png'
+import skinTabuleiro from '../../assets/fundoVerde.png';
+import skinOnca from '../../assets/oncaBase.png'
+import skinCachorro from '../../assets/cachorroBase.png'
 import pantherChew from '../../assets/panther-chew.mp3';
 import timerBell from '../../assets/bell.wav';
 import pieceMove from '../../assets/peca-efeito.mp3';
@@ -83,7 +83,12 @@ const GameBoard = (props) => {
 
   const location = useLocation();
 
-  console.log(location.state);
+  const state = location.state;
+  const activePlayer = state?.activePlayer;
+  const activeSeason = state?.season;
+  const playerData = state?.activePlayer?.playerData;
+
+  console.log(state)
 
   function ehMeuTurno(turnoPeca) {
     return (ehCachorro && turnoPeca == 1) || (!ehCachorro && turnoPeca == 0)
@@ -92,10 +97,10 @@ const GameBoard = (props) => {
   const sketch = (p) => {
 
     p.preload = () => {
-      fundo_img = p.loadImage(props.skinTabuleiro ? props.skinTabuleiro : skinTabuleiro)
-      dog_img = p.loadImage(props.skinCachorro ? props.skinCachorro : skinCachorro)
-      onca_img = p.loadImage(props.skinOnca ? props.skinOnca : skinOnca)
-      ehCachorro = props.ehCachorro
+      fundo_img = p.loadImage(activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : skinTabuleiro)
+      dog_img = p.loadImage(playerData?.img_skin ? playerData?.img_skin : skinCachorro)
+      onca_img = p.loadImage(playerData?.img_skin ? playerData?.img_skin : skinOnca)
+      ehCachorro = activePlayer?.isDog
       meu_turno = ehMeuTurno(props.turnoPeca)
     }
 

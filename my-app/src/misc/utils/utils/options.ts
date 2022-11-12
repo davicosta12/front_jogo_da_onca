@@ -1,4 +1,3 @@
-
 export const boardImagesOptions = [
   {
     key: 'boardImage01',
@@ -57,4 +56,13 @@ export const userIconsOptions = [
   //   value: require("../../../assets/logoOnca.jpeg"),
   //   image: { avatar: true, src: require("../../../assets/logoOnca.jpeg") },
   // }
+];
+
+export const BannerImagesOptions = [
+  {
+    key: 'banner01',
+    text: 'Banner01',
+    value: require("../../../assets/logoOnca.jpeg"),
+    image: { avatar: true, src: require("../../../assets/logoOnca.jpeg") },
+  }
 ];

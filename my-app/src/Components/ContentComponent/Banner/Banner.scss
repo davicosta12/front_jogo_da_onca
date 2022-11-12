@@ -1,0 +1,16 @@
+.banner-content {
+    padding: 3rem !important;
+    .banner-title{
+        color: #ffffff;
+        font-size: 3em;
+        font-weight: bold;
+        text-shadow: 2px 2px rgb(141, 208, 42);
+    }
+    .banner-section {
+        width: auto;
+        padding: 1rem;
+        background: #556b2f 0% 0% no-repeat padding-box;
+        box-shadow: 0px 10px 15px #00000029;
+        border-radius: 16px;
+    }
+}

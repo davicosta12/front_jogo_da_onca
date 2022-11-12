@@ -14,6 +14,7 @@ import UserService from '../../Services/Users/UserService';
 import { ActionTypes } from '../../reducer/reducer';
 import GetJaguarSkinDto from '../../Services/Skins/dto/GetJaguarSkinDto';
 import GetDogSkinDto from '../../Services/Skins/dto/GetDogSkinDto';
+import GetBoardDto from '../../Services/Board/dto/GetBoardDto';
 
 interface Props {
 }
@@ -48,7 +49,7 @@ const Home: FunctionComponent<Props> = (props) => {
     setIsLoading(true);
     try {
       const season = await seasonService.getSeasonByRangeDate(moment().format("YYYY-MM-DD"));
-      setActiveSeason({ ...season });
+      setActiveSeason({ ...season })
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
