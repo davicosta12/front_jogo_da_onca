@@ -19,8 +19,10 @@ interface Props {
 }
 
 const Home: FunctionComponent<Props> = (props) => {
+
   const [activeSeason, setActiveSeason] = useState({} as GetSeasonDto);
-  const [playerChoiced, setPlayerChoiced] = useState("");
+  const [playerChoiced, setPlayerChoiced] = useState({} as any);
+  const [playerChoicedLabel, setPlayerChoicedLabel] = useState("");
   const [thumbnailPosition, setThumbnailPosition] = useState(0);
   const [startIndexPosition, setStartIndexPosition] = useState(0);
   const [activeItem, setActiveItem] = useState('home');
@@ -92,8 +94,13 @@ const Home: FunctionComponent<Props> = (props) => {
   }
 
   const handleGamePlay = () => {
-    navigate("/jaguarboard", { state: activeSeason });
+    navigate("/jaguarboard", { state: { season: activeSeason, activePlayer: playerChoiced } });
     window.location.reload();
+  }
+
+  const handleActivePlayerChoiced = (namePlayer: string, playerData: any, isDog: boolean) => {
+    setPlayerChoicedLabel(namePlayer);
+    setPlayerChoiced({ playerData, isDog });
   }
 
   const onSlide = (index: number) => {
@@ -116,6 +123,11 @@ const Home: FunctionComponent<Props> = (props) => {
                 active={activeItem === 'sair'}
                 onClick={handleLogout}
               />
+            </Menu.Menu>
+            <Menu.Menu position='right'>
+              <div className='menu-right-season flex align-items-center text-center'>
+                <h1 className='m-0'>Temporada: {activeSeason.nome_season}</h1>
+              </div>
             </Menu.Menu>
           </Menu>
         </div>
@@ -168,13 +180,16 @@ const Home: FunctionComponent<Props> = (props) => {
             <Grid.Row columns={1} className="justify-content-center mt-2">
               <Grid.Column mobile={16} tablet={8} computer={8}>
                 <h1 className='text-center'>Selecione a peça de tabuleiro que deseja jogar</h1>
-                <h2 className='text-center'>{`Peça Escolhida: ${playerChoiced}`}</h2>
+                <h2 className='text-center'>{`Peça Escolhida: ${playerChoicedLabel}`}</h2>
                 <div className='flex justify-content-center align-items-start'>
                   <div className='flex-column justify-content-start align-items-center'>
                     {activeSeason.skinsJaguar?.length
                       ?
                       activeSeason.skinsJaguar.map((skin: GetJaguarSkinDto, i: number) =>
-                        <div key={i} className='peca-onca flex justify-content-center align-items-center mb-1' onClick={() => setPlayerChoiced(`Onça (${skin.name_skin})`)}>
+                        <div key={i}
+                          className='peca-onca flex justify-content-center align-items-center mb-1'
+                          onClick={() => handleActivePlayerChoiced(`Onça (${skin.name_skin})`, skin, false)}
+                        >
                           <Image src={skin.img_skin} size='tiny' circular />
                         </div>)
                       :
@@ -186,7 +201,10 @@ const Home: FunctionComponent<Props> = (props) => {
                     {activeSeason.skinsDog?.length
                       ?
                       activeSeason.skinsDog.map((skin: GetDogSkinDto, i: number) =>
-                        <div key={i} className='peca-dog flex justify-content-center align-items-center  mb-1' onClick={() => setPlayerChoiced(`Cachorro (${skin.name_skin})`)}>
+                        <div key={i}
+                          className='peca-dog flex justify-content-center align-items-center  mb-1'
+                          onClick={() => handleActivePlayerChoiced(`Cachorro (${skin.name_skin})`, skin, true)}
+                        >
                           <Image src={skin.img_skin} size='tiny' circular />
                         </div>)
                       :

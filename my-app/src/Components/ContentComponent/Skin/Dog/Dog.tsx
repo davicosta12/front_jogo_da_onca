@@ -163,8 +163,8 @@ const DogSkin: FunctionComponent<Props> = (props) => {
               ...d,
               values: [
                 { label: d.id, ...defProps },
-                { label: d.name_skin, collapse: true },
-                { label: <Image src={d.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
+                { label: <Image src={d.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, ...defProps },
+                { label: d.name_skin },
                 { label: d.season?.nome_season },
                 { label: editAction(d), ...defProps },
                 { label: removeAction(d), ...defProps }
@@ -202,8 +202,8 @@ const defProps = { collapse: true, align: 'center' };
 
 const tableHeaders = [
   { id: 'id', label: 'ID' },
-  { id: 'name_skin', label: 'Nome' },
   { id: 'img_skin', label: 'Imagem' },
+  { id: 'name_skin', label: 'Nome' },
   { id: 'temporada_associada', label: 'Temporada Associada' },
   { id: null, label: null },
   { id: null, label: null },

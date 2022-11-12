@@ -109,6 +109,7 @@ const SignUp: FunctionComponent<Props> = (props) => {
                   placeholder="Email"
                   size='large'
                   value={email}
+                  type="email"
                   onChange={e => setEmail(e.target.value)}
                   error={!validateEmail}
                 />

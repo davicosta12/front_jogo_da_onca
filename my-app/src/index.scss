@@ -31,6 +31,10 @@ code {
   display: flex !important;
 }
 
+.inline-flex {
+  display: inline-flex;
+}
+
 .flex-wrap {
   flex-wrap: wrap !important;
 }
@@ -90,6 +94,10 @@ code {
 
 .p-3 {
   padding: 3rem !important;
+}
+
+.m-0 {
+  margin: 0 !important;
 }
 
 .m-1 {

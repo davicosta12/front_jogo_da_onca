@@ -171,7 +171,7 @@ const Season: FunctionComponent<Props> = (props) => {
               ...s,
               values: [
                 { label: s.id, ...defProps },
-                { label: s.nome_season, collapse: true },
+                { label: s.nome_season },
                 { label: formatDate(s.inicio) },
                 { label: formatDate(s.fim) },
                 { label: editAction(s), ...defProps },
@@ -200,7 +200,8 @@ const Season: FunctionComponent<Props> = (props) => {
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
-          subtitle='Deseja realmente excluir a temporada?'
+          subtitle={`Deseja realmente excluir a temporada? 
+          (essa ação resultara na exclusão do tabuleiro e skins que estão associados)`}
           onDelete={handleDeleteSeason}
         />
       </div>

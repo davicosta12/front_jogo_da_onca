@@ -163,8 +163,8 @@ const JaguarSkin: FunctionComponent<Props> = (props) => {
               ...j,
               values: [
                 { label: j.id, ...defProps },
-                { label: j.name_skin, collapse: true },
-                { label: <Image src={j.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
+                { label: <Image src={j.img_skin || require('../../../../assets/defaultImage.png')} size='mini' circular />, ...defProps },
+                { label: j.name_skin },
                 { label: j.season?.nome_season },
                 { label: editAction(j), ...defProps },
                 { label: removeAction(j), ...defProps }
@@ -202,8 +202,8 @@ const defProps = { collapse: true, align: 'center' };
 
 const tableHeaders = [
   { id: 'id', label: 'ID' },
-  { id: 'name_skin', label: 'Nome' },
   { id: 'img_skin', label: 'Imagem' },
+  { id: 'name_skin', label: 'Nome' },
   { id: 'temporada_associada', label: 'Temporada Associada' },
   { id: null, label: null },
   { id: null, label: null },

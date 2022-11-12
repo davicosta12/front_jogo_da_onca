@@ -165,9 +165,9 @@ const Board: FunctionComponent<Props> = (props) => {
               ...b,
               values: [
                 { label: b.id, ...defProps },
-                { label: b.name_tabuleiro, collapse: true },
-                { label: <Image src={b.img_tabuleiro || require('../../../assets/defaultImage.png')} size='mini' circular />, collapse: true },
-                { label: b.season?.nome_season},
+                { label: <Image src={b.img_tabuleiro || require('../../../assets/defaultImage.png')} size='mini' circular />, ...defProps },
+                { label: b.name_tabuleiro },
+                { label: b.season?.nome_season },
                 { label: editAction(b), ...defProps },
                 { label: removeAction(b), ...defProps }
               ]
@@ -204,8 +204,8 @@ const defProps = { collapse: true, align: 'center' };
 
 const tableHeaders = [
   { id: 'id', label: 'ID' },
-  { id: 'name_tabuleiro', label: 'Nome' },
   { id: 'img_tabuleiro', label: 'Imagem' },
+  { id: 'name_tabuleiro', label: 'Nome' },
   { id: 'temporada_associada', label: 'Temporada Associada' },
   { id: null, label: null },
   { id: null, label: null },
