@@ -65,7 +65,7 @@ const BannerDetail: FunctionComponent<Props> = (props) => {
       onOpen={() => setOpenModal(true)}
       open={openModal}
     >
-      <Modal.Header>{createMode ? "Adicionar Tabuleiro" : props.editText}</Modal.Header>
+      <Modal.Header>{createMode ? "Adicionar Banner" : props.editText}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form>
@@ -83,12 +83,12 @@ const BannerDetail: FunctionComponent<Props> = (props) => {
               <Form.Dropdown
                 fluid
                 name="img_banner"
-                label='Imagem do Tabuleiro'
+                label='Imagem do Banner'
                 value={formValues.img_banner}
                 options={BannerImagesOptions}
                 selection
                 onChange={handleChange}
-                placeholder='Imagem do Tabuleiro'
+                placeholder='Imagem do Banner'
                 error={!formValues.img_banner}
                 required
               />
@@ -119,5 +119,5 @@ export default BannerDetail
 BannerDetail.defaultProps = {
   disabledAction: false,
   isArray: false,
-  editText: "Editar Tabuleiro"
+  editText: "Editar Banner"
 }

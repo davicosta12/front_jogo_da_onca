@@ -169,7 +169,7 @@ const Board: FunctionComponent<Props> = (props) => {
                 { label: b.name_tabuleiro },
                 { label: b.season?.nome_season },
                 { label: editAction(b), ...defProps },
-                { label: removeAction(b), ...defProps }
+                // { label: removeAction(b), ...defProps }
               ]
             }))}
             headers={tableHeaders}
@@ -186,13 +186,13 @@ const Board: FunctionComponent<Props> = (props) => {
           onUpdate={handleUpdateBoard}
         />
 
-        <DeleteModal
+        {/* <DeleteModal
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
           subtitle='Deseja realmente excluir o tabuleiro?'
           onDelete={handleDeleteBoard}
-        />
+        /> */}
       </div>
     </>
   );
@@ -208,5 +208,5 @@ const tableHeaders = [
   { id: 'name_tabuleiro', label: 'Nome' },
   { id: 'temporada_associada', label: 'Temporada Associada' },
   { id: null, label: null },
-  { id: null, label: null },
+  // { id: null, label: null },
 ];

@@ -15,6 +15,7 @@ import { ActionTypes } from '../../reducer/reducer';
 import GetJaguarSkinDto from '../../Services/Skins/dto/GetJaguarSkinDto';
 import GetDogSkinDto from '../../Services/Skins/dto/GetDogSkinDto';
 import GetBoardDto from '../../Services/Board/dto/GetBoardDto';
+import { userIconsThumbnail } from '../../misc/utils/utils/options';
 
 interface Props {
 }
@@ -36,6 +37,8 @@ const Home: FunctionComponent<Props> = (props) => {
 
   useEffect(() => {
     getSeasonByRangeDate();
+    setPlayerChoiced({} as any);
+    setPlayerChoicedLabel('');
   }, []);
 
   useEffect(() => {
@@ -95,13 +98,13 @@ const Home: FunctionComponent<Props> = (props) => {
   }
 
   const handleGamePlay = () => {
-    navigate("/jaguarboard", { state: { season: activeSeason, activePlayer: playerChoiced } });
+    navigate("/jaguarboard", { state: { season: activeSeason, playerData: { ...playerChoiced } } });
     window.location.reload();
   }
 
   const handleActivePlayerChoiced = (namePlayer: string, playerData: any, isDog: boolean) => {
     setPlayerChoicedLabel(namePlayer);
-    setPlayerChoiced({ playerData, isDog });
+    setPlayerChoiced({ ...playerData, isDog });
   }
 
   const onSlide = (index: number) => {
@@ -119,16 +122,16 @@ const Home: FunctionComponent<Props> = (props) => {
         <div className='home-navbar'>
           <Menu secondary>
             <Menu.Menu position='left'>
+              <div className='menu-left-season flex align-items-center text-center'>
+                <h1 className='m-0'>Temporada: {activeSeason.nome_season || "Padrão"}</h1>
+              </div>
+            </Menu.Menu>
+            <Menu.Menu position='right'>
               <Menu.Item
                 name='sair'
                 active={activeItem === 'sair'}
                 onClick={handleLogout}
               />
-            </Menu.Menu>
-            <Menu.Menu position='right'>
-              <div className='menu-right-season flex align-items-center text-center'>
-                <h1 className='m-0'>Temporada: {activeSeason.nome_season}</h1>
-              </div>
             </Menu.Menu>
           </Menu>
         </div>
@@ -194,8 +197,11 @@ const Home: FunctionComponent<Props> = (props) => {
                           <Image src={skin.img_skin} size='tiny' circular />
                         </div>)
                       :
-                      <div className='peca-onca flex justify-content-center align-items-center' onClick={() => setPlayerChoiced(`Onça`)}>
-                        <Image src={require('../../assets/oncaBase.png')} size='tiny' circular />
+                      <div
+                        className='peca-onca flex justify-content-center align-items-center'
+                        onClick={() => handleActivePlayerChoiced(`Onça Padrão`, { id: 1 }, false)}
+                      >
+                        <Image src={require('../../assets/pecas/oncaBase.png')} size='tiny' circular />
                       </div>}
                   </div>
                   <div className='flex-column justify-content-start align-items-center ml-1'>
@@ -209,8 +215,11 @@ const Home: FunctionComponent<Props> = (props) => {
                           <Image src={skin.img_skin} size='tiny' circular />
                         </div>)
                       :
-                      <div className='peca-dog flex justify-content-center align-items-center' onClick={() => setPlayerChoiced("Cachorro")}>
-                        <Image src={require('../../assets/cachorroBase.png')} size='tiny' circular />
+                      <div
+                        className='peca-dog flex justify-content-center align-items-center'
+                        onClick={() => handleActivePlayerChoiced(`Cachorro Padrão`, { id: 1 }, true)}
+                      >
+                        <Image src={require('../../assets/pecas/cachorroBase.png')} size='tiny' circular />
                       </div>}
                   </div>
                 </div>
@@ -221,7 +230,7 @@ const Home: FunctionComponent<Props> = (props) => {
                 <div className='home-user-action flex justify-content-center align-items-center'>
                   <Button
                     className='home-action-btn'
-                    disabled={!playerChoiced || isLoading || isLoadingChangeIcon}
+                    disabled={!playerChoiced?.id || isLoading || isLoadingChangeIcon}
                     onClick={handleGamePlay}
                   >
                     Jogar
@@ -237,24 +246,3 @@ const Home: FunctionComponent<Props> = (props) => {
 };
 
 export default Home;
-
-const userIconsThumbnail = [
-  {
-    original: require('../../assets/logoOnca.jpeg'),
-    thumbnail: require('../../assets/logoOnca.jpeg'),
-    originalClass: 'img-onca-base',
-    bulletClass: 'bulletClass'
-  },
-  {
-    original: 'https://picsum.photos/id/1015/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1015/1000/600/',
-    originalClass: 'img-onca-base',
-    bulletClass: 'bulletClass'
-  },
-  {
-    original: 'https://picsum.photos/id/1019/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1019/1000/600/',
-    originalClass: 'img-onca-base',
-    bulletClass: 'bulletClass'
-  },
-];

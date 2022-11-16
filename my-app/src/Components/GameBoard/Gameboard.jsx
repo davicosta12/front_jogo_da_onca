@@ -3,12 +3,12 @@ import { useEffect, useRef, Fragment } from "react"
 import { useLocation } from 'react-router-dom';
 import p5 from 'p5';
 import Jogo from '../../misc/gameFunctionalities/Jogo';
-import skinTabuleiro from '../../assets/fundoVerde.png';
-import skinOnca from '../../assets/oncaBase.png'
-import skinCachorro from '../../assets/cachorroBase.png'
-import pantherChew from '../../assets/panther-chew.mp3';
-import timerBell from '../../assets/bell.wav';
-import pieceMove from '../../assets/peca-efeito.mp3';
+import skinTabuleiro from '../../assets/fundo/fundoVerde.png';
+import skinOnca from '../../assets/pecas/oncaBase.png'
+import skinCachorro from '../../assets/pecas/cachorroBase.png'
+import pantherChew from '../../assets/sons/panther-chew.mp3';
+import timerBell from '../../assets/sons/bell.wav';
+import pieceMove from '../../assets/sons/peca-efeito.mp3';
 
 const LINHAS = 5
 const COLUNAS = 5
@@ -84,9 +84,8 @@ const GameBoard = (props) => {
   const location = useLocation();
 
   const state = location.state;
-  const activePlayer = state?.activePlayer;
+  const playerData = state?.playerData;
   const activeSeason = state?.season;
-  const playerData = state?.activePlayer?.playerData;
 
   console.log(state)
 
@@ -100,7 +99,7 @@ const GameBoard = (props) => {
       fundo_img = p.loadImage(activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : skinTabuleiro)
       dog_img = p.loadImage(playerData?.img_skin ? playerData?.img_skin : skinCachorro)
       onca_img = p.loadImage(playerData?.img_skin ? playerData?.img_skin : skinOnca)
-      ehCachorro = activePlayer?.isDog
+      ehCachorro = playerData?.isDog
       meu_turno = ehMeuTurno(props.turnoPeca)
     }
 

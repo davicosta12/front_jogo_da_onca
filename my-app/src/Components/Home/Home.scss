@@ -16,10 +16,10 @@
   }
 
   .home-navbar {
-    //background: #556b2f;
+    background: #556b2f;
     border-bottom: 2px solid #3e4e21;
-    background-image: url("../../assets/fundoVerde2md.png");
-    padding: 10px 35px;
+    // background-image: url("../../assets/fundo/fundoVerde2md.png");
+    padding: 0 35px;
 
     .ui.secondary.menu a {
       color: #fff !important;
@@ -27,7 +27,7 @@
       font-size: 30px;
     }
 
-    .ui.secondary.menu .right.menu .menu-right-season h1 {
+    .ui.secondary.menu .left.menu .menu-left-season h1 {
       color: #fff !important;
       font-weight: 800;
       font-size: 16px;
@@ -46,7 +46,7 @@
 
     .home-user-icons {
       .img-onca-base {
-        > img {
+        >img {
           border-radius: 50%;
           max-width: 300px !important;
           height: 300px !important;
@@ -68,7 +68,7 @@
         border-radius: 16px;
         padding: 0 10px;
 
-        > div p {
+        >div p {
           font-style: normal;
           font-weight: 800;
           font-size: 25px;
@@ -77,7 +77,7 @@
           text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
 
-        > div div {
+        >div div {
           font-style: normal;
           font-weight: 800;
           font-size: 25px;
