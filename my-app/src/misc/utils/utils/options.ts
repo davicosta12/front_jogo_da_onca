@@ -105,9 +105,33 @@ export const userIconsThumbnail = [
     bulletClass: 'bulletClass'
   },
   {
-    original: require("../../../assets/icons/iconQuake.webp"),
-    thumbnail: require("../../../assets/icons/iconQuake.webp"),
+    original: require("../../../assets/icons/professor1.png"),
+    thumbnail: require("../../../assets/icons/professor1.png"),
     originalClass: 'img-onca-base',
     bulletClass: 'bulletClass'
   },
+  {
+    original: require("../../../assets/icons/professor2.png"),
+    thumbnail: require("../../../assets/icons/professor2.png"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  // {
+  //   original: require("../../../assets/icons/boto1.png"),
+  //   thumbnail: require("../../../assets/icons/boto1.png"),
+  //   originalClass: 'img-onca-base',
+  //   bulletClass: 'bulletClass'
+  // },
+  {
+    original: require("../../../assets/icons/boto2.png"),
+    thumbnail: require("../../../assets/icons/boto2.png"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  // {
+  //   original: require("../../../assets/icons/iconQuake.webp"),
+  //   thumbnail: require("../../../assets/icons/iconQuake.webp"),
+  //   originalClass: 'img-onca-base',
+  //   bulletClass: 'bulletClass'
+  // },
 ];

@@ -1,6 +1,8 @@
 /* eslint-disable default-case */
 import { useEffect, useRef, Fragment } from "react"
 import { useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
+import uuid from 'uuid/v4';
 import p5 from 'p5';
 import Jogo from '../../misc/gameFunctionalities/Jogo';
 import skinTabuleiro from '../../assets/fundo/fundoVerde.png';
@@ -34,6 +36,10 @@ let BOARD_STATE = Jogo.getTabuleiroInicial()
 var oncaEating = new Audio(pantherChew) //efeito sonoro onça comendo
 var timerSound = new Audio(timerBell) //efeito sonoro turno
 var pecaMov = new Audio(pieceMove) //efeito sonoro peca movendo
+
+const myId = uuid();
+const socket = io('http://localhost:8080');
+socket.on('connect', () => console.log('[IO] Connect => New connection has been established'));
 
 function mudarPlacar() {
   document.getElementById('placar').innerText = placar
@@ -88,6 +94,35 @@ const GameBoard = (props) => {
   const activeSeason = state?.season;
 
   console.log(state)
+
+  const containerRef = useRef();
+
+  useEffect(() => {
+    const p5Instance = new p5(sketch, containerRef.current)
+    socket.emit('game.start', state);
+    if (props.socket == null) return
+
+    mudarMsgTurno()
+    // props.socket.on('serverMoverPeca', data => {
+    //   const meuTurnoAnterior = meu_turno
+    //   BOARD_STATE = data.novoTabuleiro
+    //   houveCaptura = data.houveCaptura
+    //   if (!data.timer && !data.emitirSomOnca) pecaMov.play()
+    //   if (data.emitirSomOnca) oncaEating.play()
+    //   meu_turno = ehMeuTurno(data.turnoPeca)
+    //   placar = data.placar
+    //   mudarPlacar()
+    //   mudarMsgTurno(meu_turno !== meuTurnoAnterior)
+    //   if (!meu_turno) POSSIBLE_MOVES_POINTS.length = []
+    // })
+
+    // props.socket.on('serverFimDeJogo', data => {
+    //   props.fimDeJogo(data)
+    // });
+    return () => {
+      document.getElementsByTagName('canvas').forEach(item => item.remove())
+    }
+  }, [])
 
   function ehMeuTurno(turnoPeca) {
     return (ehCachorro && turnoPeca == 1) || (!ehCachorro && turnoPeca == 0)
@@ -301,34 +336,6 @@ const GameBoard = (props) => {
       POSSIBLE_MOVES_POINTS.length = 0
     }
   }
-
-  const containerRef = useRef();
-
-  useEffect(() => {
-    const p5Instance = new p5(sketch, containerRef.current)
-    if (props.socket == null) return
-    mudarMsgTurno()
-    props.socket.on('serverMoverPeca', data => {
-      const meuTurnoAnterior = meu_turno
-      BOARD_STATE = data.novoTabuleiro
-      houveCaptura = data.houveCaptura
-      if (!data.timer && !data.emitirSomOnca) pecaMov.play()
-      if (data.emitirSomOnca) oncaEating.play()
-      meu_turno = ehMeuTurno(data.turnoPeca)
-      placar = data.placar
-      mudarPlacar()
-      mudarMsgTurno(meu_turno !== meuTurnoAnterior)
-      if (!meu_turno) POSSIBLE_MOVES_POINTS.length = []
-    })
-
-    props.socket.on('serverFimDeJogo', data => {
-      props.fimDeJogo(data)
-    });
-    return () => {
-      document.getElementsByTagName('canvas').forEach(item => item.remove())
-    }
-  }, [])
-
 
   return (
     <Fragment>
