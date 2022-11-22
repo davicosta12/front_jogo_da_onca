@@ -20,12 +20,12 @@ export const skinDogImagesOptions = [
     value: require("../../../assets/pecas/cachorroBase.png"),
     image: { avatar: true, src: require("../../../assets/pecas/cachorroBase.png") },
   },
-  // {
-  //   key: 'skinDog02',
-  //   text: 'Skin Dog 02',
-  //   value: require("../../../assets/pecas/dog.png"),
-  //   image: { avatar: true, src: require("../../../assets/pecas/dog.png") },
-  // }
+   {
+     key: 'skinDog02',
+     text: 'Skin Dog 02',
+     value: require("../../../assets/icons/iconCachorro.png"),
+     image: { avatar: true, src: require("../../../assets/icons/iconCachorro.png") },
+   }
 ]
 
 export const skinJaguarImagesOptions = [
