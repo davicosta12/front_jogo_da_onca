@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import './GameBoard2.scss';
 import '../../../misc/gameFunctionalities/Jogo2.js';
 import { useLocation } from 'react-router-dom';
+import { ThemeContext } from '../../../App';
 
 let dog_img, onca_img, fundo_img;
 
@@ -10,18 +11,19 @@ interface Props {
 
 const Gameboard2: FunctionComponent<Props> = (props) => {
 
+  const { state, dispatch } = useContext(ThemeContext);
   const location = useLocation();
 
-  const state = location.state;
-  const playerData = state?.playerData;
-  const activeSeason = state?.season;
+  const stateLocation = location.state;
+  const playerData = stateLocation?.playerData;
+  const activeSeason = stateLocation?.season;
 
   fundo_img = activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : require("../../../assets/fundo/fundo.png");
   dog_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/cachorroBase.png");
   onca_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/oncaBase.png");
 
   return (
-    <div className='gameboard-container'>
+    <div className='gameboard-container flex'>
       <section>
         <svg width="100%" height="100%" className='text-center'>
           <defs>
@@ -97,6 +99,10 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
           <circle className='point' id="c30" cx="1050" cy="150" r="25" />
         </svg>
       </section>
+
+      <div className='userIcon-container'>
+        <img src={state.activeUser.icone} alt="userIcon" width="150" height="150" />
+      </div>
     </div>
   );
 };

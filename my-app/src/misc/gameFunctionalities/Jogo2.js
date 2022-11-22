@@ -313,6 +313,7 @@ var monsterAttack = function () {
     if (conta >= 27) {
         //alert("Sorry, you lost! Press <F5> to start again.");
         alert("Puxa, você perdeu! Aperte <F5> para jogar outra vez.");
+        document.location.reload();
     }
 
 };
