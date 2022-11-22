@@ -9,7 +9,6 @@ import ContentComponent from "./Components/ContentComponent/ContentComponent";
 import Season from "./Components/ContentComponent/Season/Season";
 import Skin from "./Components/ContentComponent/Skin/Skin";
 import Users from "./Components/ContentComponent/Users/Users";
-import GameBoard from "./Components/GameBoard/Gameboard";
 import Home from "./Components/Home/Home";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
@@ -19,6 +18,7 @@ import { useContext, useEffect } from "react";
 import { ThemeContext } from "./App";
 import AuthHelper from "./helpers/AuthHelper";
 import Banner from "./Components/ContentComponent/Banner/Banner";
+import Gameboard2 from "./Components/GameBoard/GameBoard2/Gameboard2";
 
 const verifyWhatPathChoice = () => {
   return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';
@@ -68,7 +68,7 @@ const NavigationRoutes = () => {
 
         <Route path="/jaguarboard" element={
           <PrivateRoute>
-            <GameBoard />
+            <Gameboard2 />
           </PrivateRoute>
         }>
         </Route>

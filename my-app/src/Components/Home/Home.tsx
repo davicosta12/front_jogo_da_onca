@@ -119,6 +119,8 @@ const Home: FunctionComponent<Props> = (props) => {
       }
     });
 
+    document.location.reload();
+
   }
 
   const handleActivePlayerChoiced = (namePlayer: string, playerData: any, isDog: boolean) => {
