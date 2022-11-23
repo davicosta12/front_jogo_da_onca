@@ -80,9 +80,15 @@ h2 {
 
 .userIcon-container {
 
-  margin: 1rem 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
   img {
     border-radius: 50%;
+  }
+
+  .petSemataryContainer {
+    margin: 3rem;
   }
 }

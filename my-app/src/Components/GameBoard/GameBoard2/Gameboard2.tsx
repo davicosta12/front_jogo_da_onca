@@ -139,8 +139,10 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
       </section>
 
       <div className='userIcon-container'>
-        <img src={state.activeUser.icone} alt="userIcon" width="150" height="150" />
-        <div>
+        <div className='mr-1 mt-1'>
+          <img src={state.activeUser.icone} alt="userIcon" width="150" height="150" />
+        </div>
+        <div className='petSemataryContainer'>
           <PetSematary
             countDogsDeath={countDogsDeath}
             dog_img={dog_img}

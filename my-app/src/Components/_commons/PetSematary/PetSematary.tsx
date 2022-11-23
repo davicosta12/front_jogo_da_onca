@@ -13,32 +13,36 @@ const PetSematary: FunctionComponent<Props> = (props) => {
   const arrNumbers = new Array(countDogsDeath).fill(0);
 
   const Container = styled.div`
-    width: 250px;
+    width: 350px;
     height: 250px;
 `;
 
   const Title = styled.h1`
-    font-size: 18px;
+    font-size: 3em;
     font-weight: 600;
     color: #fff;
-    textAlign: center;
+    text-align: center;
 `;
   const Header = styled.div`
-    width: 250px;
+    width: 100%;
     padding: 10px 0;
     background-image: url(${require("../../../assets/petSematary/headerPetSematary.png")});
+    background-repeat: no-repeat;
+    background-position: center; 
 `;
 
   const Content = styled.div`
-    width: 250px;
+    width: 100%;
     height: 250px;
     background-image: url(${require("../../../assets/petSematary/backGroundPetSematary.png")});
+    background-repeat: no-repeat;
+    background-position: center; 
 `;
 
   return (
     <Container>
 
-      <Header>
+      <Header className='flex justify-content-center align-items-center'>
         <Title>
           Cemitério
         </Title>
