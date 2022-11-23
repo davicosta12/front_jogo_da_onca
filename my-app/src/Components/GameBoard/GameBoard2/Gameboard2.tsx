@@ -23,9 +23,12 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
   const playerData = stateLocation?.playerData;
   const activeSeason = stateLocation?.season;
 
+  console.log(stateLocation)
+
   fundo_img = activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : require("../../../assets/fundo/fundo.png");
   dog_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/cachorroBase.png");
-  onca_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/oncaBase.png");
+  // onca_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/oncaBase.png");
+  onca_img = require("../../../assets/pecas/oncaBase.png");
 
   useEffect(() => {
 
