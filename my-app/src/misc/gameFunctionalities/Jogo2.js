@@ -3,6 +3,11 @@ import $ from 'jquery';
 let conta = -1;
 let position = [];
 
+sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: false, isDogVictory: false }));
+window.dispatchEvent(new Event("storage"));
+sessionStorage.setItem("countDogsDeath", 0);
+window.dispatchEvent(new Event("storage"));
+
 for (let i = 0; i <= 6; i++) {
     for (let j = 0; j <= 4; j++) {
         if ((i == 5 && j == 0) || (i == 5 && j == 4) || (i == 6 && j == 0) || (i == 6 && j == 4)) { continue }
@@ -301,19 +306,26 @@ var monsterAttack = function () {
         //  monsterMovement.push(simpleMoveSelect[0]);// hard version
         attack = false;
         monsterMoving(monsterMovement);
-    } else if (monsterPosition == 26) { alert("Parabéns, você venceu!!!") };
+    } else if (monsterPosition == 26) {
+        //alert("Parabéns, você venceu!!!");
+        sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: true, isDogVictory: true }));
+        window.dispatchEvent(new Event("storage"));
+    };
 
     for (let i = 0; i < 31; i++) {
 
         if (positionIsFree[i]) {
             conta++;
+            sessionStorage.setItem("countDogsDeath", conta);
+            window.dispatchEvent(new Event("storage"));
         }
     }
 
     if (conta >= 27) {
         //alert("Sorry, you lost! Press <F5> to start again.");
-        alert("Puxa, você perdeu! Aperte <F5> para jogar outra vez.");
-        document.location.reload();
+        //alert("Puxa, você perdeu! Aperte <F5> para jogar outra vez.");
+        sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: true, isDogVictory: false }));
+        window.dispatchEvent(new Event("storage"));
     }
 
 };

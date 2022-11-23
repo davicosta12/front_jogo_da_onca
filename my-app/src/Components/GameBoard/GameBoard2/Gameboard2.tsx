@@ -1,8 +1,10 @@
-import { FunctionComponent, useContext } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import './GameBoard2.scss';
 import '../../../misc/gameFunctionalities/Jogo2.js';
 import { useLocation } from 'react-router-dom';
 import { ThemeContext } from '../../../App';
+import VictoryLoseModal from '../../_commons/VictoryLoseModal/VictoryLoseModal';
+import PetSematary from '../../_commons/PetSematary/PetSematary';
 
 let dog_img, onca_img, fundo_img;
 
@@ -10,6 +12,9 @@ interface Props {
 }
 
 const Gameboard2: FunctionComponent<Props> = (props) => {
+
+  const [variablesGame, setVariablesGame] = useState({ openModal: false, isDogVictory: false } as { openModal: boolean, isDogVictory: boolean });
+  const [countDogsDeath, setCountDogsDeath] = useState(0);
 
   const { state, dispatch } = useContext(ThemeContext);
   const location = useLocation();
@@ -21,6 +26,36 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
   fundo_img = activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : require("../../../assets/fundo/fundo.png");
   dog_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/cachorroBase.png");
   onca_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/oncaBase.png");
+
+  useEffect(() => {
+
+    const checkVariablesGame = (ev: any) => {
+      try {
+
+        const _variablesGame = sessionStorage.getItem('variablesGame');
+        const countDogsDeath = sessionStorage.getItem('countDogsDeath');
+
+        if (_variablesGame) {
+          setVariablesGame(JSON.parse(_variablesGame));
+        }
+
+        if (countDogsDeath) {
+          setCountDogsDeath(parseInt(countDogsDeath) - 16);
+        }
+
+      }
+      catch (err: any) {
+        console.log(err);
+      }
+    }
+
+    window.addEventListener("storage", checkVariablesGame);
+
+    return () => {
+      window.removeEventListener("storage", checkVariablesGame);
+    };
+
+  }, []);
 
   return (
     <div className='gameboard-container flex'>
@@ -102,7 +137,22 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
 
       <div className='userIcon-container'>
         <img src={state.activeUser.icone} alt="userIcon" width="150" height="150" />
+        <div>
+          <PetSematary
+            countDogsDeath={countDogsDeath}
+            dog_img={dog_img}
+          />
+        </div>
       </div>
+
+      <VictoryLoseModal
+        variablesGame={variablesGame}
+        openModal={variablesGame.openModal}
+        isDog={variablesGame.isDogVictory}
+        dogImg={dog_img}
+        jaguarImg={onca_img}
+        setOpenModal={setVariablesGame}
+      />
     </div>
   );
 };

@@ -76,7 +76,7 @@ const Home: FunctionComponent<Props> = (props) => {
   const handleLogout = (ev: any, { name }: any) => {
     setActiveItem(name);
     logout();
-    navigate("/")
+    navigate("/");
   }
 
   const handleChangeUserIcon = async () => {
