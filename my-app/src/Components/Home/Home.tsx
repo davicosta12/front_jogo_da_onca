@@ -207,7 +207,7 @@ const Home: FunctionComponent<Props> = (props) => {
                 <h1 className='text-center'>Selecione a peça de tabuleiro que deseja jogar</h1>
                 <h2 className='text-center'>{`Peça Escolhida: ${playerChoicedLabel}`}</h2>
                 <div className='flex justify-content-center align-items-start'>
-                  <div className='flex-column justify-content-start align-items-center'>
+                  {/* <div className='flex-column justify-content-start align-items-center'>
                     {activeSeason.skinsJaguar?.length
                       ?
                       activeSeason.skinsJaguar.map((skin: GetJaguarSkinDto, i: number) =>
@@ -224,7 +224,7 @@ const Home: FunctionComponent<Props> = (props) => {
                       >
                         <Image src={require('../../assets/pecas/oncaBase.png')} size='tiny' circular />
                       </div>}
-                  </div>
+                  </div> */}
                   <div className='flex-column justify-content-start align-items-center ml-1'>
                     {activeSeason.skinsDog?.length
                       ?
