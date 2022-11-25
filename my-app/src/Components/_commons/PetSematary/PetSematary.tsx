@@ -49,7 +49,7 @@ const PetSematary: FunctionComponent<Props> = (props) => {
       </Header>
 
       <Content>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap justify-content-center'>
           {arrNumbers.map(item =>
             <div style={{ margin: '5px' }}>
               <img

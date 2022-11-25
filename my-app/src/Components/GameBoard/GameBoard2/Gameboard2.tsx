@@ -5,6 +5,11 @@ import { useLocation } from 'react-router-dom';
 import { ThemeContext } from '../../../App';
 import VictoryLoseModal from '../../_commons/VictoryLoseModal/VictoryLoseModal';
 import PetSematary from '../../_commons/PetSematary/PetSematary';
+import UserService from '../../../Services/Users/UserService';
+import { toast } from 'react-toastify';
+import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
+import { ActionTypes } from '../../../reducer/reducer';
+import { setUserCache } from '../../../Services/AuthService/Auth';
 
 let dog_img, onca_img, fundo_img;
 
@@ -18,6 +23,7 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
 
   const { state, dispatch } = useContext(ThemeContext);
   const location = useLocation();
+  const userService = new UserService();
 
   const stateLocation = location.state;
   const playerData = stateLocation?.playerData;
@@ -25,8 +31,7 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
 
   fundo_img = activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : require("../../../assets/fundo/fundo.png");
   dog_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/cachorroBase.png");
-  // onca_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/oncaBase.png");
-  onca_img = require("../../../assets/pecas/oncaBase.png");
+  onca_img = activeSeason?.skinsJaguar?.length ? activeSeason?.skinsJaguar?.[0]?.img_skin : require("../../../assets/pecas/oncaBase.png");
 
   useEffect(() => {
 
@@ -58,10 +63,35 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
 
   }, []);
 
+  useEffect(() => {
+    if (variablesGame.openModal) {
+      changeWinOrLose();
+    }
+  }, [variablesGame.openModal]);
+
+  const changeWinOrLose = async () => {
+    try {
+      const user = await userService.changeWinOrLose(variablesGame.isDogVictory, state.activeUser.id);
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_USER,
+        payload: user
+      });
+      setUserCache(user);
+    }
+    catch (err: any) {
+      toast.error(toastError(err), toastOptions(toast));
+    }
+  }
+
   return (
-    <div className='gameboard-container flex'>
+    <div style={{
+      overflow: 'hidden',
+      backgroundImage: `url(${fundo_img})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'contain',
+    }}>
       <section>
-        <svg width="100%" height="100%" className='text-center'>
+        <svg className='text-center' transform="translate(-20, -50)" viewBox='0 0 1700 1700'>
           <defs>
             <pattern className='pattern-div' id="dogSkin" height="50" width="50">
               <image className='image-peca' height="50" width="50" xlinkHref={dog_img}></image>
@@ -80,13 +110,7 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
             </pattern>
           </defs>
 
-          <defs>
-            <pattern className='pattern-div' id="fundoTabuleiro" height="50" width="50">
-              <img src={fundo_img} />
-            </pattern>
-          </defs>
-
-          <rect width="100%" height="100%" fillOpacity="0" />
+          <rect fillOpacity="0" />
           <rect x="150" y="150" id="gameTable" width="600" height="600" />
           <polygon id="gameTable" points="150,450 450,150 1050,750 1050,150 450,750 150,450" />
           <line id="tableline" x1="150" y1="300" x2="750" y2="300" />
@@ -133,11 +157,12 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
           <circle className='point' id="c28" cx="1050" cy="750" r="25" />
           <circle className='point' id="c29" cx="1050" cy="450" r="25" />
           <circle className='point' id="c30" cx="1050" cy="150" r="25" />
+
         </svg>
       </section>
 
       <div className='userIcon-container'>
-        <div className='mr-1 mt-1'>
+        <div className='mr-1 mt-1 userIcon-img'>
           <img src={state.activeUser.icone} alt="userIcon" width="150" height="150" />
         </div>
         <div className='petSemataryContainer'>

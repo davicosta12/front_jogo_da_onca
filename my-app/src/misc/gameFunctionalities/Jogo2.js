@@ -401,7 +401,7 @@ function verifyMovement(movement) {
 }
 
 $(document).ready(function () {
-
+    
     $("#b00").click(function () {
         $(this).hide();
         setTimeout(initiate, 400)

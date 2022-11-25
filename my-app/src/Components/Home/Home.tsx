@@ -195,8 +195,8 @@ const Home: FunctionComponent<Props> = (props) => {
                   <div className='user-info flex align-items-center'>
                     <div className='w-full'>
                       <div className='flex justify-content-between flex align-items-center'><p>Nome</p><div>{state.activeUser?.nome}</div></div>
-                      <div className='flex justify-content-between flex align-items-center'><p>Vitórias</p><div>{state.activeUser?.nro_win}</div></div>
-                      <div className='flex justify-content-between flex align-items-center'><p>Derrotas</p><div>{state.activeUser?.nro_lose}</div></div>
+                      <div className='flex justify-content-between flex align-items-center'><p>Vitórias</p><div>{state.activeUser?.nro_win || 0}</div></div>
+                      <div className='flex justify-content-between flex align-items-center'><p>Derrotas</p><div>{state.activeUser?.nro_lose || 0}</div></div>
                     </div>
                   </div>
                 </div>

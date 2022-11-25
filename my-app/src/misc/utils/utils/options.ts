@@ -8,8 +8,8 @@ export const boardImagesOptions = [
   {
     key: 'boardImage02',
     text: 'Imagem Tabuleiro 02',
-    value: require("../../../assets/fundo/fundoCampo.svg"),
-    image: { avatar: true, src: require("../../../assets/fundo/fundoCampo.svg") },
+    value: require("../../../assets/fundo/fundoCampo.png"),
+    image: { avatar: true, src: require("../../../assets/fundo/fundoCampo.png") },
   }
 ]
 
