@@ -321,7 +321,7 @@ var monsterAttack = function () {
         }
     }
 
-    if (conta >= 27) {
+    if (conta >= 21) {
         //alert("Sorry, you lost! Press <F5> to start again.");
         //alert("Puxa, você perdeu! Aperte <F5> para jogar outra vez.");
         sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: true, isDogVictory: false }));
