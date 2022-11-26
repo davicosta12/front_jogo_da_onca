@@ -301,7 +301,7 @@ var monsterAttack = function () {
         tam = simpleMoveSelect.length;
 
         let easy = Math.floor(Math.random() * tam);
-        //  console.log(easy);
+        console.log(easy);
         monsterMovement.push(simpleMoveSelect[easy]); //easy version
         //  monsterMovement.push(simpleMoveSelect[0]);// hard version
         attack = false;
