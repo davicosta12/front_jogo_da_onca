@@ -202,7 +202,32 @@ const Home: FunctionComponent<Props> = (props) => {
                 </div>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row columns={1} className="justify-content-center mt-2">
+            <Grid.Row columns={2} className="justify-content-center mt-2">
+              <Grid.Column mobile={16} tablet={8} computer={8}>
+                <div className='w-full imageGalleryBanner'>
+                  <ImageGallery
+                    showBullets={false}
+                    infinite
+                    showThumbnails={false}
+                    showNav={false}
+                    showFullscreenButton={false}
+                    showPlayButton={false}
+                    items={state.banners?.length
+                      ? state.banners.map(b => Object.assign({}, {
+                        original: b.img_banner,
+                        thumbnail: b.img_banner,
+                        originalClass: 'img-banner',
+                      }))
+                      : []}
+                    slideDuration={5000}
+                    slideInterval={5000}
+                    slideOnThumbnailOver={false}
+                    lazyLoad
+                    autoPlay
+                    thumbnailPosition='bottom'
+                  />
+                </div>
+              </Grid.Column>
               <Grid.Column mobile={16} tablet={8} computer={8}>
                 <h1 className='text-center'>Selecione a peça de tabuleiro que deseja jogar</h1>
                 <h2 className='text-center'>{`Peça Escolhida: ${playerChoicedLabel}`}</h2>
@@ -244,10 +269,6 @@ const Home: FunctionComponent<Props> = (props) => {
                       </div>}
                   </div>
                 </div>
-              </Grid.Column>
-            </Grid.Row>
-            <GridRow className="justify-content-center">
-              <Grid.Column mobile={16} tablet={8} computer={8}>
                 <div className='home-user-action flex justify-content-center align-items-center'>
                   <Button
                     className='home-action-btn'
@@ -258,7 +279,7 @@ const Home: FunctionComponent<Props> = (props) => {
                   </Button>
                 </div>
               </Grid.Column>
-            </GridRow>
+            </Grid.Row>
           </Grid>
         </div>
       </div>

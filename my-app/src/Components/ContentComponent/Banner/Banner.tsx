@@ -55,7 +55,7 @@ const Banner: FunctionComponent<Props> = (props) => {
       await bannerService.createBanner(values);
       getBanners();
       setOpenModal(false);
-      toast.success("Tabuleiro criado com sucesso.", toastOptions(toast));
+      toast.success("Banner criado com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -71,7 +71,7 @@ const Banner: FunctionComponent<Props> = (props) => {
       await bannerService.updateBanner(values, +banner.id);
       getBanners();
       setOpenModal(false);
-      toast.success("Tabuleiro atualizado com sucesso.", toastOptions(toast));
+      toast.success("Banner atualizado com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -87,7 +87,7 @@ const Banner: FunctionComponent<Props> = (props) => {
       await bannerService.deleteBanner(+banner.id);
       getBanners();
       setOpenDeleteModal(false);
-      toast.success("Tabuleiro removido com sucesso.", toastOptions(toast));
+      toast.success("Banner removido com sucesso.", toastOptions(toast));
     }
     catch (err: any) {
       toast.error(toastError(err), toastOptions(toast));
@@ -189,7 +189,7 @@ const Banner: FunctionComponent<Props> = (props) => {
           openModal={openDeleteModal}
           setOpenModal={setOpenDeleteModal}
           title='Confirmar exclusão'
-          subtitle='Deseja realmente excluir o tabuleiro?'
+          subtitle='Deseja realmente excluir o Banner?'
           onDelete={handleDeleteBanner}
         />
       </div>

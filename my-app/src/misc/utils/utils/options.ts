@@ -74,8 +74,20 @@ export const BannerImagesOptions = [
   {
     key: 'banner01',
     text: 'Banner 01',
-    value: require("../../../assets/logoOnca.jpeg"),
-    image: { avatar: true, src: require("../../../assets/logoOnca.jpeg") },
+    value: require("../../../assets/banner/banner01.png"),
+    image: { avatar: true, src: require("../../../assets/banner/banner01.png") },
+  },
+  {
+    key: 'banner02',
+    text: 'Banner 02',
+    value: require("../../../assets/banner/banner02.png"),
+    image: { avatar: true, src: require("../../../assets/banner/banner02.png") },
+  },
+  {
+    key: 'banner03',
+    text: 'Banner 03',
+    value: require("../../../assets/banner/banner03.png"),
+    image: { avatar: true, src: require("../../../assets/banner/banner03.png") },
   }
 ];
 

@@ -57,7 +57,7 @@ const dispatchAction = (res: any, index: number, dispatch: any) => {
       payload: [...res]
     });
       break;
-    case 3: dispatch({
+    case 4: dispatch({
       type: ActionTypes.ADD_BANNER,
       payload: [...res]
     });

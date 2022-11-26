@@ -59,6 +59,17 @@
       }
     }
 
+    .imageGalleryBanner {}
+
+    .img-banner {
+      >img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 350px !important;
+        object-fit: cover;
+      }
+    }
+
     .home-user-info {
       .user-info {
         width: 25rem;
