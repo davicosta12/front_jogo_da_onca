@@ -34,12 +34,14 @@ const VictoryLoseModal: FunctionComponent<Props> = (props) => {
 
   const handleBackHome = () => {
     soundVictory.pause();
+    soundVictory.currentTime = 0;
     setOpenModal({ ...variablesGame, openModal: false });
     navigate("/home");
   }
 
   const handlePlayAgain = () => {
     soundVictory.pause();
+    soundVictory.currentTime = 0;
     setOpenModal({ ...variablesGame, openModal: false });
     document.location.reload();
   }
