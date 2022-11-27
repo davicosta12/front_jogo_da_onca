@@ -18,6 +18,7 @@ import GetJaguarSkinDto from '../../Services/Skins/dto/GetJaguarSkinDto';
 import GetDogSkinDto from '../../Services/Skins/dto/GetDogSkinDto';
 import GetBoardDto from '../../Services/Board/dto/GetBoardDto';
 import { userIconsThumbnail } from '../../misc/utils/utils/options';
+import DifficultModal from '../_commons/DifficultModal/DifficultModal';
 
 interface Props {
 }
@@ -30,6 +31,7 @@ const Home: FunctionComponent<Props> = (props) => {
   const [thumbnailPosition, setThumbnailPosition] = useState(0);
   const [startIndexPosition, setStartIndexPosition] = useState(0);
   const [activeItem, setActiveItem] = useState('home');
+  const [openDifficultModal, setOpenDifficultModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingChangeIcon, setIsLoadingChangeIcon] = useState(false);
   const { state, dispatch } = useContext(ThemeContext);
@@ -103,26 +105,6 @@ const Home: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handleGamePlay = () => {
-
-    navigate("/jaguarboard", {
-      state: {
-        season: activeSeason,
-        playerData: { ...playerChoiced },
-        vetorTabuleiro: null,
-        turnoPeca: 1,
-        corPecaCachorro: 'yellow',
-        corPecaOnca: 'green',
-        corPreview: 'yellow',
-        preview: false,
-        corTematica: '#ccc'
-      }
-    });
-
-    document.location.reload();
-
-  }
-
   const handleActivePlayerChoiced = (namePlayer: string, playerData: any, isDog: boolean) => {
     setPlayerChoicedLabel(namePlayer);
     setPlayerChoiced({ ...playerData, isDog });
@@ -130,6 +112,10 @@ const Home: FunctionComponent<Props> = (props) => {
 
   const onSlide = (index: number) => {
     setThumbnailPosition(index);
+  }
+
+  const handleOpenDiffcultModal = () => {
+    setOpenDifficultModal(true);
   }
 
   return (
@@ -273,7 +259,7 @@ const Home: FunctionComponent<Props> = (props) => {
                   <Button
                     className='home-action-btn'
                     disabled={!playerChoiced?.id || isLoading || isLoadingChangeIcon}
-                    onClick={handleGamePlay}
+                    onClick={handleOpenDiffcultModal}
                   >
                     Jogar
                   </Button>
@@ -283,6 +269,13 @@ const Home: FunctionComponent<Props> = (props) => {
           </Grid>
         </div>
       </div>
+
+      <DifficultModal 
+        activeSeason={activeSeason}
+        playerChoiced={playerChoiced}
+        openModal={openDifficultModal}
+        setOpenModal={setOpenDifficultModal}
+      />
     </>
   );
 };

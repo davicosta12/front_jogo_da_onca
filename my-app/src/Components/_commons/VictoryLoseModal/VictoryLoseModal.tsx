@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'semantic-ui-react';
 
@@ -15,6 +15,7 @@ interface Props {
 const VictoryLoseModal: FunctionComponent<Props> = (props) => {
 
   const navigate = useNavigate();
+  var soundVictory = new Audio(require('../../../assets/sons/VictoryFanfare.mp3'));
 
   const {
     variablesGame,
@@ -25,12 +26,20 @@ const VictoryLoseModal: FunctionComponent<Props> = (props) => {
     isDog,
   } = props;
 
+  useEffect(() => {
+    if (openModal) {
+      soundVictory.play();
+    }
+  }, [openModal]);
+
   const handleBackHome = () => {
+    soundVictory.pause();
     setOpenModal({ ...variablesGame, openModal: false });
     navigate("/home");
   }
 
   const handlePlayAgain = () => {
+    soundVictory.pause();
     setOpenModal({ ...variablesGame, openModal: false });
     document.location.reload();
   }

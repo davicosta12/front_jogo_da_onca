@@ -1,4 +1,7 @@
 import $ from 'jquery';
+import timerBell from '../../assets/sons/bell.wav';
+import pieceMove from '../../assets/sons/peca-efeito.mp3';
+import pantherChew from '../../assets/sons/panther-chew.mp3';
 
 let conta = -1;
 let position = [];
@@ -7,6 +10,12 @@ sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: false, isDog
 window.dispatchEvent(new Event("storage"));
 sessionStorage.setItem("countDogsDeath", 0);
 window.dispatchEvent(new Event("storage"));
+
+const difficult = sessionStorage.getItem('difficult');
+
+var oncaEating = new Audio(pantherChew) //efeito sonoro onça comendo
+var timerSound = new Audio(timerBell) //efeito sonoro turno
+var pecaMov = new Audio(pieceMove) //efeito sonoro peca movendo
 
 for (let i = 0; i <= 6; i++) {
     for (let j = 0; j <= 4; j++) {
@@ -67,6 +76,7 @@ var canMove = [[[1, 2], [6, 12], [5, 10]],//0
 
 //colocando as peças no tabuleiro   
 var initiate = function () {
+    timerSound.play();
     $("#target").removeClass("point");
     $("#target").addClass("target_point");
     $("#c00").removeClass("point");
@@ -167,6 +177,7 @@ var select = function (value) {
 /************************************MONSTER*****************************/
 
 var monsterPosition = 12;
+var oldMonsterPosition = 12;
 
 var capture = [];     /************************/
 var monsterSearch = []; /************************/
@@ -196,6 +207,7 @@ var monsterMoving = function (coord) {
     $(monsterOrigin).addClass("point");
 
     if (attack == true) {
+        oncaEating.play();
         if (coord[2] < 10) {
             target = "#c0" + coord[2];
         } else {
@@ -213,12 +225,15 @@ var monsterMoving = function (coord) {
         testWait();
         positionIsFree[(coord[2])] = true;
         //        console.log("PIF 248"+ capture);
+    } else {
+        pecaMov.play();
     }
 
     $(monsterDestiny).removeClass("point");
     $(monsterDestiny).addClass("monster");
 
     monsterPosition = parseInt(coord[1]); /***************************************/
+    oldMonsterPosition = monsterPosition;
 
     //    console.log("236 "+ coord[0]);
     positionIsFree[parseInt(coord[0])] = true;
@@ -301,12 +316,15 @@ var monsterAttack = function () {
         tam = simpleMoveSelect.length;
 
         let easy = Math.floor(Math.random() * tam);
-        console.log(easy);
-        monsterMovement.push(simpleMoveSelect[easy]); //easy version
-        //  monsterMovement.push(simpleMoveSelect[0]);// hard version
+        //console.log(easy);
+
+        (difficult === "normal")
+            ? monsterMovement.push(simpleMoveSelect[easy]) //easy version
+            : monsterMovement.push(simpleMoveSelect[0]);// hard version
+
         attack = false;
         monsterMoving(monsterMovement);
-    } else if (monsterPosition == 26) {
+    } else if (monsterPosition == 26 || monsterPosition === oldMonsterPosition) {
         //alert("Parabéns, você venceu!!!");
         sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: true, isDogVictory: true }));
         window.dispatchEvent(new Event("storage"));
@@ -321,7 +339,7 @@ var monsterAttack = function () {
         }
     }
 
-    if (conta >= 21) {
+    if (conta >= (difficult === 'normal' ? 26 : 21)) {
         //alert("Sorry, you lost! Press <F5> to start again.");
         //alert("Puxa, você perdeu! Aperte <F5> para jogar outra vez.");
         sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: true, isDogVictory: false }));
@@ -345,6 +363,7 @@ var moveSoldier = function (movement) {
 
     //Se há um soldado na origem e o destino está livre
     if ((!(positionIsFree[parseInt(movement[0])])) && (positionIsFree[parseInt(movement[1])])) {
+        pecaMov.play();
         $(origin).removeClass("soldierSelect");
         $(origin).addClass("point");
         $(destiny).removeClass("point");
@@ -401,7 +420,7 @@ function verifyMovement(movement) {
 }
 
 $(document).ready(function () {
-    
+
     $("#b00").click(function () {
         $(this).hide();
         setTimeout(initiate, 400)
