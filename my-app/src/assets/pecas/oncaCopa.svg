@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="202.45433mm"
+   height="203.89827mm"
+   viewBox="0 0 202.45433 203.89827"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="onca copa.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:lockguides="false"
+     inkscape:zoom="1.0148413"
+     inkscape:cx="392.17955"
+     inkscape:cy="406.96019"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7455">
+      <ellipse
+         style="fill:#10770f;fill-opacity:1;stroke:#e9efdc;stroke-width:2.006"
+         id="ellipse7457"
+         ry="100.94614"
+         rx="100.22417"
+         cy="103.91691"
+         cx="103.08155" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7493">
+      <ellipse
+         style="fill:#10770f;fill-opacity:1;stroke:#e9efdc;stroke-width:2.006"
+         id="ellipse7495"
+         ry="100.94614"
+         rx="100.22417"
+         cy="104.68777"
+         cx="103.86321" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7514">
+      <ellipse
+         style="fill:#10770f;fill-opacity:1;stroke:#e9efdc;stroke-width:2.006"
+         id="ellipse7516"
+         ry="100.94614"
+         rx="100.22417"
+         cy="105.5501"
+         cx="103.93821" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7531">
+      <ellipse
+         style="fill:#10770f;fill-opacity:1;stroke:#e9efdc;stroke-width:2.006"
+         id="ellipse7533"
+         ry="100.94614"
+         rx="100.22417"
+         cy="105.10587"
+         cx="105.4924" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-1.8543761,-1.9677718)">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.006"
+       id="rect7052"
+       width="200.75336"
+       height="76.229774"
+       x="2.557081"
+       y="2.9552264"
+       clip-path="url(#clipPath7493)" />
+    <rect
+       style="fill:#ff0e0e;fill-opacity:1;stroke:none;stroke-width:2.006"
+       id="rect7052-8"
+       width="200.75336"
+       height="76.229774"
+       x="3.1890397"
+       y="71.559921"
+       clip-path="url(#clipPath7514)"
+       transform="translate(0,-1.4000367)" />
+    <rect
+       style="fill:#edc200;fill-opacity:1;stroke:none;stroke-width:2.006"
+       id="rect7052-8-4"
+       width="200.75336"
+       height="76.229774"
+       x="2.2122436"
+       y="140.6812"
+       clip-path="url(#clipPath7531)"
+       transform="translate(-1.6282244,-0.65983205)" />
+    <path
+       style="fill:#000bd2;fill-opacity:1;stroke:none;stroke-width:2.006"
+       id="path6367"
+       sodipodi:type="arc"
+       sodipodi:cx="105.27224"
+       sodipodi:cy="105.63907"
+       sodipodi:rx="34.543404"
+       sodipodi:ry="30.706835"
+       sodipodi:start="0"
+       sodipodi:end="0.00044114191"
+       sodipodi:arc-type="slice"
+       d="m 139.81564,105.63907 a 34.543404,30.706835 0 0 1 0,0.0135 l -34.5434,-0.0135 z" />
+  </g>
+</svg>

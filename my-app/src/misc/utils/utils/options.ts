@@ -20,12 +20,24 @@ export const skinDogImagesOptions = [
     value: require("../../../assets/pecas/cachorroBase.png"),
     image: { avatar: true, src: require("../../../assets/pecas/cachorroBase.png") },
   },
-   {
-     key: 'skinDog02',
-     text: 'Skin Dog 02',
-     value: require("../../../assets/icons/iconCachorro.png"),
-     image: { avatar: true, src: require("../../../assets/icons/iconCachorro.png") },
-   }
+  {
+    key: 'skinDog02',
+    text: 'Skin Dog 02',
+    value: require("../../../assets/icons/iconCachorro.png"),
+    image: { avatar: true, src: require("../../../assets/icons/iconCachorro.png") },
+  },
+  {
+    key: 'skinDog03',
+    text: 'Skin Dog 03',
+    value: require("../../../assets/icons/iconCachorroCopa.png"),
+    image: { avatar: true, src: require("../../../assets/icons/iconCachorroCopa.png") },
+  },
+  {
+    key: 'skinDog04',
+    text: 'Skin Dog 04',
+    value: require("../../../assets/pecas/cachorroCopa.png"),
+    image: { avatar: true, src: require("../../../assets/pecas/cachorroCopa.png") },
+  }
 ]
 
 export const skinJaguarImagesOptions = [
@@ -40,7 +52,19 @@ export const skinJaguarImagesOptions = [
     text: 'Skin Jaguar 02',
     value: require("../../../assets/pecas/onca.png"),
     image: { avatar: true, src: require("../../../assets/pecas/onca.png") },
-  }
+  },
+  {
+    key: 'jaguarImage03',
+    text: 'Skin Jaguar 03',
+    value: require("../../../assets/pecas/oncaCopa.png"),
+    image: { avatar: true, src: require("../../../assets/pecas/oncaCopa.png") },
+  },
+  {
+    key: 'jaguarImage04',
+    text: 'Skin Jaguar 04',
+    value: require("../../../assets/icons/iconOncaCopa.png"),
+    image: { avatar: true, src: require("../../../assets/icons/iconOncaCopa.png") },
+  },
 ]
 
 export const userIconsOptions = [
@@ -111,6 +135,30 @@ export const userIconsThumbnail = [
     bulletClass: 'bulletClass'
   },
   {
+    original: require("../../../assets/pecas/cachorroCopa.png"),
+    thumbnail: require("../../../assets/pecas/cachorroCopa.png"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  {
+    original: require("../../../assets/pecas/oncaCopa.png"),
+    thumbnail: require("../../../assets/pecas/oncaCopa.png"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  {
+    original: require("../../../assets/icons/iconCachorroCopa.png"),
+    thumbnail: require("../../../assets/icons/iconCachorroCopa.png"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  {
+    original: require("../../../assets/icons/iconOncaCopa.png"),
+    thumbnail: require("../../../assets/icons/iconOncaCopa.png"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
+  {
     original: require("../../../assets/icons/iconSuperuser.png"),
     thumbnail: require("../../../assets/icons/iconSuperuser.png"),
     originalClass: 'img-onca-base',
@@ -128,22 +176,16 @@ export const userIconsThumbnail = [
     originalClass: 'img-onca-base',
     bulletClass: 'bulletClass'
   },
-  // {
-  //   original: require("../../../assets/icons/boto1.png"),
-  //   thumbnail: require("../../../assets/icons/boto1.png"),
-  //   originalClass: 'img-onca-base',
-  //   bulletClass: 'bulletClass'
-  // },
   {
     original: require("../../../assets/icons/boto2.png"),
     thumbnail: require("../../../assets/icons/boto2.png"),
     originalClass: 'img-onca-base',
     bulletClass: 'bulletClass'
   },
-  // {
-  //   original: require("../../../assets/icons/iconQuake.webp"),
-  //   thumbnail: require("../../../assets/icons/iconQuake.webp"),
-  //   originalClass: 'img-onca-base',
-  //   bulletClass: 'bulletClass'
-  // },
+  {
+    original: require("../../../assets/icons/iconQuake.webp"),
+    thumbnail: require("../../../assets/icons/iconQuake.webp"),
+    originalClass: 'img-onca-base',
+    bulletClass: 'bulletClass'
+  },
 ];
