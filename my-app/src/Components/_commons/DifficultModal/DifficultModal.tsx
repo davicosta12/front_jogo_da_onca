@@ -114,7 +114,7 @@ const DifficultModal: FunctionComponent<Props> = (props) => {
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 1}>
               <p>
-                Os jogadores escolhem ou sorteiam quem vai ser a onça e quem vai representar os 14 cachorros. A peça que representa a onça fica bem no centro do tabuleiro e as demais, atrás dela, à direita e à esquerda. A onça começa. Tanto ela como os cães podem andar para uma casa vizinha vazia por vez, em qualquer direção. A onça ganha se conseguir "comer" cinco cães, como no jogo de dama - pulando o cachorro e se dirigindo à próxima casa vazia. Ela também pode "comer" cães em sequência, seguindo o mesmo princípio. Os cachorros não podem "comer" a onça. O objetivo é cercá-la por todos os lados. A dica aos cães é encurralar a onça para o espaço representado pelo triângulo no tabuleiro, uma espécie de armadilha.
+              A onça é quem dá início a partida. Tanto ela como os cães podem andar para uma casa vizinha por vez, em qualquer direção. A onça tentará capturar 5 cachorros da mesma forma que ocorre em um jogo de dama, ou seja, pulando o cachorro e se dirigindo à próxima casa vazia.E, como ocorre no jogo de damas também é permitido capturar os cães em sequência. Já os cachorros não podem capturar a onça, mas sim cercá-la por todos os lados. Dessa maneira, a onça ficará imobilizada e os cachorros vencem a partida.
               </p>
             </Accordion.Content>
 
