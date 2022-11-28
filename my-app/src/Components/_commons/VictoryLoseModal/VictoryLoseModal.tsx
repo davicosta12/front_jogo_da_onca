@@ -15,7 +15,8 @@ interface Props {
 const VictoryLoseModal: FunctionComponent<Props> = (props) => {
 
   const navigate = useNavigate();
-  var soundVictory = new Audio(require('../../../assets/sons/VictoryFanfare.mp3'));
+  var soundVictory = new Audio(require('../../../assets/sons/Vitoria.mp3'));
+  var soundLose = new Audio(require('../../../assets/sons/Derrota.mp3'));
 
   const {
     variablesGame,
@@ -28,20 +29,35 @@ const VictoryLoseModal: FunctionComponent<Props> = (props) => {
 
   useEffect(() => {
     if (openModal) {
-      soundVictory.play();
+      isDog
+        ? soundVictory.play()
+        : soundLose.play()
     }
   }, [openModal]);
 
   const handleBackHome = () => {
-    soundVictory.pause();
-    soundVictory.currentTime = 0;
+    if (isDog) {
+      soundVictory.pause();
+      soundVictory.currentTime = 0;
+    } else {
+      soundLose.pause();
+      soundLose.currentTime = 0;
+    }
+
     setOpenModal({ ...variablesGame, openModal: false });
     navigate("/home");
+    document.location.reload();
   }
 
   const handlePlayAgain = () => {
-    soundVictory.pause();
-    soundVictory.currentTime = 0;
+    if (isDog) {
+      soundVictory.pause();
+      soundVictory.currentTime = 0;
+    } else {
+      soundLose.pause();
+      soundLose.currentTime = 0;
+    }
+
     setOpenModal({ ...variablesGame, openModal: false });
     document.location.reload();
   }
