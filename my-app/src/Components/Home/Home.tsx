@@ -4,7 +4,7 @@ import { FunctionComponent, useContext, useEffect, useState } from 'react';
 // import uuid from 'uuid/v4';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Grid, Menu, Button, Segment, Dimmer, Loader, Image, GridRow } from 'semantic-ui-react';
+import { Grid, Menu, Button, Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 import ImageGallery from 'react-image-gallery';
 import { ThemeContext } from '../../App';
 import { toastError, toastOptions } from '../../misc/utils/utils/utils';
@@ -14,9 +14,7 @@ import SeasonService from '../../Services/Season/SeasonService';
 import "./Home.scss";
 import UserService from '../../Services/Users/UserService';
 import { ActionTypes } from '../../reducer/reducer';
-import GetJaguarSkinDto from '../../Services/Skins/dto/GetJaguarSkinDto';
 import GetDogSkinDto from '../../Services/Skins/dto/GetDogSkinDto';
-import GetBoardDto from '../../Services/Board/dto/GetBoardDto';
 import { userIconsThumbnail } from '../../misc/utils/utils/options';
 import DifficultModal from '../_commons/DifficultModal/DifficultModal';
 
@@ -241,14 +239,14 @@ const Home: FunctionComponent<Props> = (props) => {
                       ?
                       activeSeason.skinsDog.map((skin: GetDogSkinDto, i: number) =>
                         <div key={i}
-                          className='peca-dog flex justify-content-center align-items-center  mb-1'
+                          className='peca-dog flex justify-content-center align-items-center mb-1'
                           onClick={() => handleActivePlayerChoiced(`Cachorro (${skin.name_skin})`, skin, true)}
                         >
                           <Image src={skin.img_skin} size='tiny' circular />
                         </div>)
                       :
                       <div
-                        className='peca-dog flex justify-content-center align-items-center'
+                        className='peca-dog flex justify-content-center align-items-center mb-1'
                         onClick={() => handleActivePlayerChoiced(`Cachorro Padrão`, { id: 1 }, true)}
                       >
                         <Image src={require('../../assets/pecas/cachorroBase.png')} size='tiny' circular />

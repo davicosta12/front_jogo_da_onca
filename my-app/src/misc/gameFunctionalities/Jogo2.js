@@ -4,6 +4,7 @@ import pieceMove from '../../assets/sons/peca-efeito.mp3';
 import pantherChew from '../../assets/sons/panther-chew.mp3';
 
 let conta = -1;
+let isJaguarTurn = false;
 let position = [];
 
 sessionStorage.setItem("variablesGame", JSON.stringify({ openModal: false, isDogVictory: false }));
@@ -127,7 +128,7 @@ var select = function (value) {
 
     let test = "#c" + value;
     //console.log(monsterTest);
-    if ((movement.length == 0) && ($(test).hasClass("soldier"))) {
+    if ((movement.length == 0) && ($(test).hasClass("soldier")) && !isJaguarTurn) {
         let options = canMove[parseInt(value)];
         console.log(options);
         for (let i = 0; i < options.length; i++) {
@@ -170,7 +171,12 @@ var select = function (value) {
         //  console.log("antes do monstro"+ movement);
 
         //Aqui é a vez do monstro atacar...
-        setTimeout(monsterAttack, 1000)
+
+        isJaguarTurn = true;
+        setTimeout(() => {
+            monsterAttack();
+            isJaguarTurn = false;
+        }, 1200);
     }
 };
 
@@ -266,7 +272,6 @@ var monsterMoving = function (coord) {
 };
 
 var monsterAttack = function () {
-
     let monsterMovement = [];
     let simpleMoveSelect = [];
     let attackSelect = [];
@@ -643,5 +648,4 @@ $(document).ready(function () {
         console.log(val);
         select(val);
     });
-
 });
