@@ -18,7 +18,7 @@ import { useContext, useEffect } from "react";
 import { ThemeContext } from "./App";
 import AuthHelper from "./helpers/AuthHelper";
 import Banner from "./Components/ContentComponent/Banner/Banner";
-import Gameboard2 from "./Components/GameBoard/GameBoard2/Gameboard2";
+import Gameboard from "./Components/GameBoard/Gameboard";
 
 const verifyWhatPathChoice = () => {
   return userExist() ? (!isAdmin() ? '/home' : '/config/season') : '/';
@@ -68,7 +68,7 @@ const NavigationRoutes = () => {
 
         <Route path="/jaguarboard" element={
           <PrivateRoute>
-            <Gameboard2 />
+            <Gameboard />
           </PrivateRoute>
         }>
         </Route>

@@ -1,7 +1,5 @@
 import moment from 'moment';
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
-// import io from 'socket.io-client';
-// import uuid from 'uuid/v4';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Grid, Menu, Button, Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
@@ -37,10 +35,6 @@ const Home: FunctionComponent<Props> = (props) => {
   const seasonService = new SeasonService();
   const userService = new UserService();
 
-  // const myId = uuid();
-  // const socket = io('http://localhost:8080');
-  // socket.on('connect', () => console.log('[IO] Connect => New connection has been established'));
-
   useEffect(() => {
     getSeasonByRangeDate();
     setPlayerChoiced({} as any);
@@ -67,11 +61,6 @@ const Home: FunctionComponent<Props> = (props) => {
       setIsLoading(false);
     }
   }
-
-  // const handleActiveItem = (ev: any, { name }: any) => {
-  //   setActiveItem(name);
-  //   navigate("/");
-  // }
 
   const handleLogout = (ev: any, { name }: any) => {
     setActiveItem(name);

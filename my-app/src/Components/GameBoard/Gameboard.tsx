@@ -1,22 +1,22 @@
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
-import './GameBoard2.scss';
-import '../../../misc/gameFunctionalities/Jogo2.js';
+import './GameBoard.scss';
+import '../../misc/gameFunctionalities/Jogo.js';
 import { useLocation } from 'react-router-dom';
-import { ThemeContext } from '../../../App';
-import VictoryLoseModal from '../../_commons/VictoryLoseModal/VictoryLoseModal';
-import PetSematary from '../../_commons/PetSematary/PetSematary';
-import UserService from '../../../Services/Users/UserService';
+import { ThemeContext } from '../../App';
+import VictoryLoseModal from '../_commons/VictoryLoseModal/VictoryLoseModal';
+import PetSematary from '../_commons/PetSematary/PetSematary';
+import UserService from '../../Services/Users/UserService';
 import { toast } from 'react-toastify';
-import { toastError, toastOptions } from '../../../misc/utils/utils/utils';
-import { ActionTypes } from '../../../reducer/reducer';
-import { setUserCache } from '../../../Services/AuthService/Auth';
+import { toastError, toastOptions } from '../../misc/utils/utils/utils';
+import { ActionTypes } from '../../reducer/reducer';
+import { setUserCache } from '../../Services/AuthService/Auth';
 
 let dog_img, onca_img, fundo_img;
 
 interface Props {
 }
 
-const Gameboard2: FunctionComponent<Props> = (props) => {
+const Gameboard: FunctionComponent<Props> = (props) => {
 
   const [variablesGame, setVariablesGame] = useState({ openModal: false, isDogVictory: false } as { openModal: boolean, isDogVictory: boolean });
   const [countDogsDeath, setCountDogsDeath] = useState(0);
@@ -29,9 +29,9 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
   const playerData = stateLocation?.playerData;
   const activeSeason = stateLocation?.season;
 
-  fundo_img = activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : require("../../../assets/fundo/fundo.png");
-  dog_img = playerData?.img_skin ? playerData?.img_skin : require("../../../assets/pecas/cachorroBase.png");
-  onca_img = activeSeason?.skinsJaguar?.length ? activeSeason?.skinsJaguar?.[0]?.img_skin : require("../../../assets/pecas/oncaBase.png");
+  fundo_img = activeSeason.tabuleiro?.img_tabuleiro ? activeSeason.tabuleiro?.img_tabuleiro : require("../../assets/fundo/fundo.png");
+  dog_img = playerData?.img_skin ? playerData?.img_skin : require("../../assets/pecas/cachorroBase.png");
+  onca_img = activeSeason?.skinsJaguar?.length ? activeSeason?.skinsJaguar?.[0]?.img_skin : require("../../assets/pecas/oncaBase.png");
 
   useEffect(() => {
 
@@ -185,4 +185,4 @@ const Gameboard2: FunctionComponent<Props> = (props) => {
   );
 };
 
-export default Gameboard2;
+export default Gameboard;
