@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "16.17.0",
-    "npm": "8.5.1"
+    "node": "16.x",
+    "npm": "8.x",
+    "yarn": "1.x"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
